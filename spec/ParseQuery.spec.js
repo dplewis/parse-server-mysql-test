@@ -5,8 +5,13 @@
 'use strict';
 
 const Parse = require('parse/node');
-
+const delay = (t) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, t);
+  });
+}
 describe('Parse.Query testing', () => {
+
   it("basic query", function(done) {
     var baz = new TestObject({ foo: 'baz' });
     var qux = new TestObject({ foo: 'qux' });
@@ -617,7 +622,6 @@ describe('Parse.Query testing', () => {
       });
   });
 
-
   it("objectId containedIn queries", function(done) {
     var makeBoxedNumber = function(i) {
       return new BoxedNumber({ number: i });
@@ -1079,13 +1083,17 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it("order by _created_at", function(done) {
+  it_exclude_dbs(['mysql'])("order by _created_at", function(done) {
     var makeBoxedNumber = function(i) {
       return new BoxedNumber({ number: i });
     };
     var numbers = [3, 1, 2].map(makeBoxedNumber);
     numbers[0].save().then(() => {
+      return delay(2000);
+    }).then(() => {
       return numbers[1].save();
+    }).then(() => {
+      return delay(2000);
     }).then(() => {
       return numbers[2].save();
     }).then(function() {
@@ -1107,7 +1115,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it("order by createdAt", function(done) {
+  it_exclude_dbs(['mysql'])("order by createdAt", function(done) {
     var makeBoxedNumber = function(i) {
       return new BoxedNumber({ number: i });
     };
@@ -1131,7 +1139,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it("order by _updated_at", function(done) {
+  it_exclude_dbs(['mysql'])("order by _updated_at", function(done) {
     var makeBoxedNumber = function(i) {
       return new BoxedNumber({ number: i });
     };
@@ -1160,7 +1168,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it("order by updatedAt", function(done) {
+  it_exclude_dbs(['mysql'])("order by updatedAt", function(done) {
     var makeBoxedNumber = function(i) { return new BoxedNumber({ number: i }); };
     var numbers = [3, 1, 2].map(makeBoxedNumber);
     numbers[0].save().then(() => {
@@ -1348,7 +1356,7 @@ describe('Parse.Query testing', () => {
   var someAscii = "\\E' !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTU" +
     "VWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'";
 
-  it("contains", function(done) {
+  it_exclude_dbs(['mysql'])("contains", function(done) {
     Parse.Object.saveAll([new TestObject({myString: "zax" + someAscii + "qub"}),
       new TestObject({myString: "start" + someAscii}),
       new TestObject({myString: someAscii + "end"}),
@@ -1364,7 +1372,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it("startsWith", function(done) {
+  it_exclude_dbs(['mysql'])("startsWith", function(done) {
     Parse.Object.saveAll([new TestObject({myString: "zax" + someAscii + "qub"}),
       new TestObject({myString: "start" + someAscii}),
       new TestObject({myString: someAscii + "end"}),
@@ -1380,7 +1388,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it("endsWith", function(done) {
+  it_exclude_dbs(['mysql'])("endsWith", function(done) {
     Parse.Object.saveAll([new TestObject({myString: "zax" + someAscii + "qub"}),
       new TestObject({myString: "start" + someAscii}),
       new TestObject({myString: someAscii + "end"}),
@@ -2463,7 +2471,7 @@ describe('Parse.Query testing', () => {
   });
 
   // PG don't support creating a null column
-  it_exclude_dbs(['postgres'])('querying for null value', (done) => {
+  it_exclude_dbs(['postgres','mysql'])('querying for null value', (done) => {
     var obj = new Parse.Object('TestObject');
     obj.set('aNull', null);
     obj.save().then(() => {
@@ -2657,7 +2665,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it('should find objects with array of pointers', (done) => {
+  it_exclude_dbs(['mysql'])('should find objects with array of pointers', (done) => {
     var objects = [];
     while(objects.length != 5) {
       var object = new Parse.Object('ContainedObject');

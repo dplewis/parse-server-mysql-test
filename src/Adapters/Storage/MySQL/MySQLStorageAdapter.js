@@ -56,7 +56,7 @@ const ParseToPosgresComparator = {
 const toPostgresValue = value => {
   if (typeof value === 'object') {
     if (value.__type === 'Date') {
-      return new Date(value.iso).toISOString().slice(0, 19).replace('T', ' ');
+      return new Date(value.iso).toISOString().slice(0, 19).replace('T', ' ')
     }
     if (value.__type === 'File') {
       return value.name;
@@ -219,7 +219,7 @@ const buildWhereClause = ({ schema, query, index }) => {
         patterns.push(`${name} = '${fieldValue}'`);
       }
     } else if (fieldValue === null) {
-      patterns.push(`$${index}:name IS NULL`);
+      patterns.push(`\`$${index}:name\` IS NULL`);
       values.push(fieldName);
       index += 1;
       continue;
@@ -254,7 +254,7 @@ const buildWhereClause = ({ schema, query, index }) => {
     if (fieldValue.$ne !== undefined) {
       if (isArrayField) {
         fieldValue.$ne = JSON.stringify([fieldValue.$ne]);
-        patterns.push(`NOT array_contains($${index}:name, $${index + 1}:name)`);
+        patterns.push(`JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') != 1`);
       } else {
         if (fieldValue.$ne === null) {
           patterns.push(`$${index}:name IS NOT NULL`);
@@ -273,7 +273,7 @@ const buildWhereClause = ({ schema, query, index }) => {
     }
 
     if (fieldValue.$eq) {
-      patterns.push(`$${index}:name = $${index + 1}:name`);
+      patterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
       values.push(fieldName, fieldValue.$eq);
       index += 2;
     }
@@ -305,7 +305,8 @@ const buildWhereClause = ({ schema, query, index }) => {
         if (baseArray.length > 0) {
           const not = notIn ? ' NOT ' : '';
           if (isArrayField) {
-            patterns.push(`${not} array_contains($${index}:name, $${index + 1}:name)`);
+            const operator = notIn ? ' != ' : ' = ';
+            patterns.push(`JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') ${operator} 1`);
             values.push(fieldName, JSON.stringify(baseArray));
             index += 2;
           } else {
@@ -333,7 +334,7 @@ const buildWhereClause = ({ schema, query, index }) => {
     }
 
     if (Array.isArray(fieldValue.$all) && isArrayField) {
-      patterns.push(`array_contains_all($${index}:name, $${index + 1}:name)`);
+      patterns.push(`JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') = 1`);
       values.push(fieldName, JSON.stringify(fieldValue.$all));
       index += 2;
     }
@@ -450,12 +451,12 @@ const buildWhereClause = ({ schema, query, index }) => {
 
     if (fieldValue.$regex) {
       let regex = fieldValue.$regex;
-      let operator = '~';
+      const operator = 'REGEXP';
       const opts = fieldValue.$options;
       if (opts) {
-        if (opts.indexOf('i') >= 0) {
-          operator = '~*';
-        }
+        // if (opts.indexOf('i') >= 0) {
+        //   operator = '~*';
+        // }
         if (opts.indexOf('x') >= 0) {
           regex = removeWhiteSpace(regex);
         }
@@ -463,14 +464,14 @@ const buildWhereClause = ({ schema, query, index }) => {
 
       regex = processRegexPattern(regex);
 
-      patterns.push(`$${index}:name ${operator} '$${index + 1}:raw'`);
+      patterns.push(`\`$${index}:name\` ${operator} '$${index + 1}:name'`);
       values.push(fieldName, regex);
       index += 2;
     }
 
     if (fieldValue.__type === 'Pointer') {
       if (isArrayField) {
-        patterns.push(`array_contains($${index}:name, $${index + 1}):name`);
+        patterns.push(`JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') = 1`);
         values.push(fieldName, JSON.stringify([fieldValue]));
         index += 2;
       } else {
@@ -481,8 +482,8 @@ const buildWhereClause = ({ schema, query, index }) => {
     }
 
     if (fieldValue.__type === 'Date') {
-      patterns.push(`$${index}:name = '$${index + 1}:name'`);
-      values.push(fieldName, fieldValue.iso);
+      patterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
+      values.push(fieldName, toPostgresValue(fieldValue));
       index += 2;
     }
 
@@ -495,7 +496,7 @@ const buildWhereClause = ({ schema, query, index }) => {
     Object.keys(ParseToPosgresComparator).forEach(cmp => {
       if (fieldValue[cmp]) {
         const pgComparator = ParseToPosgresComparator[cmp];
-        patterns.push(`$${index}:name ${pgComparator} $${index + 1}:name`);
+        patterns.push(`\`$${index}:name\` ${pgComparator} '$${index + 1}:name'`);
         values.push(fieldName, toPostgresValue(fieldValue[cmp]));
         index += 2;
       }
@@ -592,9 +593,8 @@ export class MySQLStorageAdapter {
     this.database.end();
   }
 
-  _ensureSchemaCollectionExists(conn) {
+  _ensureSchemaCollectionExists() {
     debug('_ensureSchemaCollectionExists');
-    conn = conn || this.database;
     return this.connect()
       .then(() => this.database.query('CREATE TABLE IF NOT EXISTS `_SCHEMA` (`className` VARCHAR(120), `schema` JSON, `isParseClass` BOOL, PRIMARY KEY (`className`));'))
       .catch(error => {
@@ -612,10 +612,10 @@ export class MySQLStorageAdapter {
   }
 
   classExists(name) {
+    const qs = 'SELECT EXISTS (SELECT 1 FROM `information_schema.tables` WHERE `table_name` = \'$1:name\')';
     return this.connect()
-      .then(() => this.database.query('SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = $1:name)'), [name]).then((res) => {
-        return res.exists;
-      })
+      .then(() => this.database.query(qs, [name]))
+      .then((res) => res.exists)
       .catch(error => {
         console.log(error);
       });
@@ -648,8 +648,7 @@ export class MySQLStorageAdapter {
   }
 
   // Just create a table, do not insert in schema
-  createTable(className, schema, conn) {
-    conn = conn || this.database;
+  createTable(className, schema) {
     debug('createTable', className, schema);
     const valuesArray = [];
     const patternsArray = [];
@@ -701,14 +700,13 @@ export class MySQLStorageAdapter {
       }
       index = index + 2;
     });
-    const qs = `CREATE TABLE IF NOT EXISTS $1:name (${patternsArray.join(',')})`;
+    const qs = `CREATE TABLE IF NOT EXISTS \`$1:name\` (${patternsArray.join(',')})`;
     const values = [className, ...valuesArray];
-    return this._ensureSchemaCollectionExists(conn)
-      .then(() => {
-       return conn.query(qs, values);
-      })
+    return this.connect()
+      .then(() => this._ensureSchemaCollectionExists())
+      .then(() => this.database.query(qs, values))
       .catch(error => {
-        console.log('we fucked up');
+        console.log('we messed up');
         if (error.code === PostgresDuplicateRelationError) {
         // Table already exists, must have been created by a different request. Ignore error.
         } else {
@@ -717,7 +715,7 @@ export class MySQLStorageAdapter {
       }).then(() => {
       // Create the relation tables
         return Promise.all(relations.map((fieldName) => {
-          return conn.query('CREATE TABLE IF NOT EXISTS `$1:name` (`relatedId` varChar(120), `owningId` varChar(120), PRIMARY KEY(`relatedId`, `owningId`))', [`_Join:${fieldName}:${className}`]);
+          return this.database.query('CREATE TABLE IF NOT EXISTS `$1:name` (`relatedId` varChar(120), `owningId` varChar(120), PRIMARY KEY(`relatedId`, `owningId`))', [`_Join:${fieldName}:${className}`]);
         }));
       }).catch(error => {
         console.log('join error');
@@ -732,10 +730,14 @@ export class MySQLStorageAdapter {
       .then(() => {
         let promise = Promise.resolve();
         if (type.type !== 'Relation') {
-          promise = this.database.query('ALTER TABLE $1:name ADD COLUMN `$2:name` $3:name', [className, fieldName, parseTypeToPostgresType(type)])
+          let postgresType = parseTypeToPostgresType(type);
+          if (type.type === 'Date') {
+            postgresType = 'timestamp null default null';
+          }
+          promise = this.database.query('ALTER TABLE `$1:name` ADD COLUMN `$2:name` $3:name', [className, fieldName, postgresType])
             .catch((error) => {
               if (error.code === PostgresRelationDoesNotExistError) {
-                console.log('doSomething');
+
               } else if (error.code === MySQLDuplicateColumnError) {
                 // Column already exists, created by other request. Carry on to
                 // See if it's the right type.
@@ -745,7 +747,7 @@ export class MySQLStorageAdapter {
               }
             })
         } else {
-          promise = this.database.query('CREATE TABLE IF NOT EXISTS $1:name ("relatedId" varChar(120), "owningId" varChar(120), PRIMARY KEY("relatedId", "owningId") )', [`_Join:${fieldName}:${className}`]);
+          promise = this.database.query("CREATE TABLE IF NOT EXISTS `$1:name` (`relatedId` varChar(120), `owningId` varChar(120), PRIMARY KEY(`relatedId`, `owningId`))", [`_Join:${fieldName}:${className}`]);
         }
         return promise;
       })
@@ -760,7 +762,7 @@ export class MySQLStorageAdapter {
         }
       })
       .catch((error) => {
-        console.log('what the fuck');
+        console.log('what the hek');
         console.log(error);
       });
   }
@@ -1252,9 +1254,9 @@ export class MySQLStorageAdapter {
       const sorting = Object.keys(sort).map((key) => {
         // Using $idx pattern gives:  non-integer constant in ORDER BY
         if (sort[key] === 1) {
-          return `"${key}" ASC`;
+          return `\`${key}\` ASC`;
         }
-        return `"${key}" DESC`;
+        return `\`${key}\` DESC`;
       }).join(',');
       sortPattern = sort !== undefined && Object.keys(sort).length > 0 ? `ORDER BY ${sorting}` : '';
     }
@@ -1272,7 +1274,7 @@ export class MySQLStorageAdapter {
         if (key === '$score') {
           return `ts_rank_cd(to_tsvector($${2}:name, $${3}:name), to_tsquery($${4}:name, $${5}:name), 32) as score`;
         }
-        return `$${index + values.length + 1}:name`;
+        return `\`$${index + values.length + 1}:name\``;
       }).join(',');
       values = values.concat(keys);
     }
@@ -1388,10 +1390,9 @@ export class MySQLStorageAdapter {
 
     const wherePattern = where.pattern.length > 0 ? `WHERE ${where.pattern}` : '';
     const qs = `SELECT count(*) FROM $1:name ${wherePattern}`;
-    return this.connect().then(() => this.database.query(qs, values))
-      .then(([result]) => {
-        return result[0]['count(*)'];
-      })
+    return this.connect()
+      .then(() => this.database.query(qs, values))
+      .then(([result]) => result[0]['count(*)'])
       .catch((err) => {
         if (err.code === PostgresRelationDoesNotExistError) {
           return 0;
@@ -1493,6 +1494,7 @@ function literalizeRegexPart(s) {
     .replace(/^\\Q/, '')
     .replace(/([^'])'/, `$1''`)
     .replace(/^'([^'])/, `''$1`)
+    .replace('\\w','[0-9a-zA-Z]')
   );
 }
 
