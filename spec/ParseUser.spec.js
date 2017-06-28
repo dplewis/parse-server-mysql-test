@@ -592,7 +592,6 @@ describe('Parse.User testing', () => {
     });
   });
 
-return;
   it("saving a user signs them up but doesn't log them in", (done) => {
     var user = new Parse.User();
     user.save({
@@ -606,7 +605,7 @@ return;
       }
     });
   });
-return;
+
   it("user updates", (done) => {
     var user = new Parse.User();
     user.signUp({
@@ -752,7 +751,6 @@ return;
       }
     });
   });
-
 
   it("user loaded from localStorage from login", (done) => {
     var id;
@@ -1092,6 +1090,7 @@ return;
     });
   });
 
+
   it("user authData should be available in cloudcode (#2342)", (done) => {
 
     Parse.Cloud.define('checkLogin', (req, res) => {
@@ -1352,10 +1351,12 @@ return;
               success: function() {
                 user2._linkWith('facebook', {
                   success: (err) => {
+                    console.log('here');
                     jfail(err);
                     done();
                   },
                   error: function(model, error) {
+                    console.log('there');
                     expect(error.code).toEqual(
                       Parse.Error.ACCOUNT_ALREADY_LINKED);
                     done();
@@ -1363,18 +1364,21 @@ return;
                 });
               },
               error: function() {
+                console.log('yello');
                 ok(false, "linking should have failed");
                 done();
               }
             });
           },
           error: function() {
+            console.log('yolo');
             ok(false, "linking should have succeeded");
             done();
           }
         });
       },
       error: function() {
+        console.log('too long');
         ok(false, "signup should not have failed");
         done();
       }
@@ -2500,7 +2504,7 @@ return;
     });
   });
 
-  it_exclude_dbs(['postgres'])('should cleanup null authData keys (regression test for #935)', (done) => {
+  it_exclude_dbs(['postgres','mysql'])('should cleanup null authData keys (regression test for #935)', (done) => {
     const database = new Config(Parse.applicationId).database;
     database.create('_User', {
       username: 'user',
@@ -2534,7 +2538,7 @@ return;
     })
   });
 
-  it_exclude_dbs(['postgres'])('should not serve null authData keys', (done) => {
+  it_exclude_dbs(['postgres','mysql'])('should not serve null authData keys', (done) => {
     const database = new Config(Parse.applicationId).database;
     database.create('_User', {
       username: 'user',
@@ -2736,7 +2740,6 @@ return;
       },
     });
   });
-
 
   it('should aftersave with full object', (done) => {
     var hit = 0;
@@ -3024,7 +3027,7 @@ return;
         'X-Parse-REST-API-Key': 'rest'
       },
     })).then((res) => {
-      expect(res.emailVerified).toBe(false);
+      expect(!!res.emailVerified).toBe(false);
       expect(res._email_verify_token).toBeUndefined();
       done()
     }).then(() => rp({
@@ -3036,7 +3039,7 @@ return;
         'X-Parse-REST-API-Key': 'rest'
       },
     })).then((res) => {
-      expect(res.emailVerified).toBe(false);
+      expect(!!res.emailVerified).toBe(false);
       expect(res._email_verify_token).toBeUndefined();
       done()
     }).catch((err) => {
