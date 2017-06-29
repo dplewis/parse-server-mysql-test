@@ -1,0 +1,4138 @@
+> parse-server@2.5.0 test /Users/Squad/Github/parse-server-mysql-test
+> cross-env MONGODB_VERSION=${MONGODB_VERSION:=3.2.6} MONGODB_STORAGE_ENGINE=mmapv1 TESTING=1 $COVERAGE_OPTION PARSE_SERVER_TEST_DB=mysql jasmine
+
+Jasmine started
+
+
+
+
+  Account Lockout Policy:
+    ✓ account should not be locked even after failed login attempts if account lockout policy is not set
+    ✓ throw error if duration is set to an invalid number
+
+
+
+    ✓ throw error if threshold is set to an invalid number
+
+
+
+    ✓ throw error if threshold is < 1
+
+
+
+    ✓ throw error if threshold is > 999
+
+
+
+    ✓ throw error if duration is <= 0
+
+
+
+    ✓ throw error if duration is > 99999
+
+
+
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ lock account if failed login attempts are above threshold
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ lock account for accountPolicy.duration minutes if failed login attempts are above threshold
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ allow login for locked account after accountPolicy.duration minutes
+
+  AdaptableController
+    ✓ should use the provided adapter
+    ✓ should throw when creating a new mock controller
+    ✓ should fail setting the wrong adapter to the controller
+    ✓ should fail to instantiate a controller with wrong adapter
+    ✓ should fail to instantiate a controller without an adapter
+    ✓ should accept an object adapter
+    ✓ should accept an object adapter
+
+  AdapterLoader
+    ✓ should instantiate an adapter from string in object
+    ✓ should instantiate an adapter from string
+    ✓ should instantiate an adapter from string that is module
+    ✓ should instantiate an adapter from npm module
+    ✓ should instantiate an adapter from function/Class
+    ✓ should instantiate the default adapter from Class
+    ✓ should use the default adapter
+    ✓ should use the provided adapter
+    ✓ should fail loading an improperly configured adapter
+    ✓ should load push adapter from options
+
+
+
+    ✓ should load custom push adapter from string (#3544)
+    ✓ should load S3Adapter from direct passing
+
+
+
+
+  AnalyticsController
+    ✓ should track a simple event
+
+
+
+    ✓ should track a app opened event
+
+  AudiencesRouter
+    ✓ uses find condition from request.body
+    ✓ uses find condition from request.query
+    ✓ query installations with limit = 0
+    ✓ query installations with count = 1
+    ✓ query installations with limit = 0 and count = 1
+undefined
+    ✓ should create, read, update and delete audiences throw api
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should only create with master key
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should only find with master key
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should only get with master key
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should only update with master key
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should only delete with master key
+
+  Auth
+
+    getUserRoles
+      ✓ should get user roles from the cache
+      ✓ should only query the roles once
+      ✓ should not have any roles with no user
+      ✓ should not have any user roles with master
+      ✓ should properly handle bcrypt upgrade
+
+  AuthenticationProviers
+    ✓ Should validate structure of facebook
+    ✓ Should validate structure of github
+    ✓ Should validate structure of instagram
+    ✓ Should validate structure of google
+    ✓ Should validate structure of linkedin
+    ✓ Should validate structure of meetup
+    ✓ Should validate structure of twitter
+    ✓ Should validate structure of janrainengage
+    ✓ Should validate structure of janraincapture
+    ✓ Should validate structure of vkontakte
+    ✓ should create user with REST API
+undefined
+    ✓ should only create a single user with REST API
+undefined
+undefined
+    ✓ unlink and link with custom provider
+    ✓ properly loads custom adapter
+    ✓ properly loads custom adapter module object
+    ✓ properly loads custom adapter module object
+    ✓ properly loads a default adapter with options
+    ✓ properly loads a custom adapter with options
+
+  batch
+    ✓ should return the proper url
+    ✓ should return the proper url same public/local endpoint
+    ✓ should return the proper url with different public/local mount
+    ✓ should return the proper url with naked public
+    ✓ should return the proper url with naked local
+
+  CacheController
+    ✓ should expose role and user caches
+    ✓ should prefix role cache
+    ✓ should prefix user cache
+    ✓ should clear the entire cache
+    ✓ should handle cache rejections
+
+  commander additions
+    ✓ should load properly definitions from args
+    ✓ should load properly definitions from env
+    ✓ should load properly use args over env
+    ✓ should fail in action as port is invalid
+Configuration loaded from /Users/Squad/Github/parse-server-mysql-test/spec/configs/CLIConfig.json
+    ✓ should not override config.json
+    ✓ should fail with invalid values in JSON
+    ✓ should fail when too many apps are set
+Configuration loaded from /Users/Squad/Github/parse-server-mysql-test/spec/configs/CLIConfigApps.json
+    ✓ should load config from apps
+    ✓ should fail when passing an invalid arguement
+
+  definitions
+    ✓ should have valid types
+
+  LiveQuery definitions
+    ✓ should have valid types
+
+  Client
+    ✓ can be initialized
+    ✓ can push response
+    ✓ can push error
+    ✓ can add subscription information
+    ✓ can get subscription information
+    ✓ can delete subscription information
+    ✓ can generate ParseObject JSON with null selected field
+    ✓ can generate ParseObject JSON with undefined selected field
+    ✓ can generate ParseObject JSON with selected fields
+    ✓ can generate ParseObject JSON with nonexistent selected fields
+    ✓ can push connect response
+    ✓ can push subscribe response
+    ✓ can push unsubscribe response
+    ✓ can push create response
+    ✓ can push enter response
+    ✓ can push update response
+    ✓ can push leave response
+
+  ClientSDK
+    ✓ should properly parse the SDK versions
+    ✓ should properly sastisfy
+
+
+
+
+  Cloud Code
+    ✓ can load absolute cloud code file
+
+
+
+    ✓ can load relative cloud code file
+    ✓ can create functions
+    ✓ is cleared cleared after the previous test
+    ✓ basic beforeSave rejection
+ReferenceError: foo is not defined
+    at /Users/Squad/Github/parse-server-mysql-test/spec/CloudCode.spec.js:64:7
+    at /Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:163:9
+    at handleCloudFunction (/Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:125:14)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:152:7
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:281:22
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:354:14)
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:365:14)
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:410:3)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:174:3)
+    at router (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:317:13)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at handleParseHeaders (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:141:5)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+ReferenceError: foo is not defined
+    at /Users/Squad/Github/parse-server-mysql-test/spec/CloudCode.spec.js:64:7
+    at /Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:163:9
+    at handleCloudFunction (/Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:125:14)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:152:7
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:281:22
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:354:14)
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:365:14)
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:410:3)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:174:3)
+    at router (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:317:13)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at handleParseHeaders (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:141:5)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+ReferenceError: foo is not defined
+    at /Users/Squad/Github/parse-server-mysql-test/spec/CloudCode.spec.js:64:7
+    at /Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:163:9
+    at handleCloudFunction (/Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:125:14)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:152:7
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:281:22
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:354:14)
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:365:14)
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:410:3)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:174:3)
+    at router (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:317:13)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at handleParseHeaders (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:141:5)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+ReferenceError: foo is not defined
+    at /Users/Squad/Github/parse-server-mysql-test/spec/CloudCode.spec.js:64:7
+    at /Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:163:9
+    at handleCloudFunction (/Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:125:14)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:152:7
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:281:22
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:354:14)
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:365:14)
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:410:3)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:174:3)
+    at router (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:317:13)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at handleParseHeaders (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:141:5)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+ReferenceError: foo is not defined
+    at /Users/Squad/Github/parse-server-mysql-test/spec/CloudCode.spec.js:64:7
+    at /Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:163:9
+    at handleCloudFunction (/Users/Squad/Github/parse-server-mysql-test/src/Routers/FunctionsRouter.js:125:14)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:152:7
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:281:22
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:354:14)
+    at param (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:365:14)
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:410:3)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:174:3)
+    at router (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:317:13)
+    at /Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:284:7
+    at Function.process_params (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:335:12)
+    at next (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/index.js:275:10)
+    at handleParseHeaders (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:141:5)
+    at Layer.handle [as handle_request] (/Users/Squad/Github/parse-server-mysql-test/node_modules/express/lib/router/layer.js:95:5)
+    ✓ returns an error
+    ✓ beforeSave rejection with custom error code
+    ✓ basic beforeSave rejection via promise
+    ✓ test beforeSave changed object success
+undefined
+    ✓ test beforeSave returns value on create and update
+    ✓ test afterSave ran and created an object
+undefined
+    ✓ test afterSave ran on created object and returned a promise
+    ✓ test afterSave rejecting promise
+    ✓ test afterDelete returning promise, object is deleted when destroy resolves
+    ✓ test afterDelete ignoring promise, object is not yet deleted
+undefined
+    ✓ test beforeSave happens on update
+    ✓ test beforeDelete failure
+    ✓ basic beforeDelete rejection via promise
+    ✓ test afterDelete ran and created an object
+    ✓ test cloud function return types
+    ✓ test cloud function request params types
+    ✓ test cloud function should echo keys
+    ✓ should properly create an object in before save
+undefined
+    ✓ dirtyKeys are set on update
+    ✓ test beforeSave unchanged success
+    ✓ test beforeDelete success
+    ✓ test save triggers get user
+    ✓ beforeSave change propagates through the save response
+    ✓ beforeSave change propagates through the afterSave #1931
+    ✓ test cloud function parameter validation success
+undefined
+undefined
+    ✓ doesnt receive stale user in cloud code functions after user has been updated with master key (regression test for #1836)
+
+
+
+undefined
+    ✓ clears out the user cache for all sessions when the user is changed
+    ✓ trivial beforeSave should not affect fetched pointers (regression test for #1238)
+    ✓ beforeSave should not affect fetched pointers
+undefined
+undefined
+    ✓ should fully delete objects when using `unset` with beforeSave (regression test for #1840)
+slient but deadly
+{ Error: Unknown column 'remove' in 'field list'
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1252:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Unknown column \'remove\' in \'field list\'',
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sqlState: '#42S22' }
+    ✗ should fully delete objects when using `unset` with beforeSave (regression test for #1840)
+      - Failed: {"code":101,"message":"Object not found."}
+    ✓ should not include relation op (regression test for #1606)
+here
+here
+Error: Incorrect datetime value: 'null' for column 'updatedAt' at row 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+
+    cloud jobs
+      ✗ should define a job
+        - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+      ✓ should not run without master key
+here
+here
+Error: Incorrect datetime value: 'null' for column 'updatedAt' at row 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+      ✗ should run with master key
+        - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+here
+here
+Error: Incorrect datetime value: 'null' for column 'updatedAt' at row 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+      ✗ should run with master key basic auth
+        - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+here
+here
+Error: Incorrect datetime value: 'null' for column 'updatedAt' at row 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+      ✗ should set the message / success on the job
+        - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+here
+here
+Error: Incorrect datetime value: 'null' for column 'updatedAt' at row 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+      ✗ should set the failure on the job
+        - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+
+  beforeFind hooks
+    ✓ should add beforeFind trigger
+    ✗ should use modify
+      - Expected 1 to be true.
+    ✓ should use the modified the query
+    ✓ should reject queries
+    ✓ should handle empty where
+    ✓ should add beforeFind trigger using get API
+
+  afterFind hooks
+    ✓ should add afterFind trigger using get
+    ✓ should add afterFind trigger using find
+    ✓ should filter out results
+    ✓ should handle failures
+    ✓ should also work with promise
+    ✗ should alter select
+      - Expected 1 to be true.
+    ✗ should not alter select
+      - Expected 1 to be true.
+      - Expected 1 to be true.
+    ✓ should set count to true on beforeFind hooks if query is count
+    ✓ should set count to false on beforeFind hooks if query is not count
+
+
+
+
+  Cloud Code Logger
+    ✓ should expose log to functions
+
+
+
+    ✓ trigger should obfuscate password
+
+
+
+    ✓ should expose log to trigger
+
+
+
+    ✓ should truncate really long lines when asked to
+
+
+
+    ✓ should truncate input and result of long lines
+
+
+
+    ✓ should log an afterSave
+
+
+
+    ✓ should log a denied beforeSave
+
+
+
+    ✓ should log cloud function success
+
+
+
+    ✓ should log cloud function failure
+
+
+
+    ✓ cloud function should obfuscate password
+
+  randomString
+    ✓ returns a string
+    ✓ returns result of the given length
+    ✓ throws if requested length is zero
+    ✓ returns unique results
+
+  randomHexString
+    ✓ returns a string
+    ✓ returns result of the given length
+    ✓ throws if requested length is zero
+    ✓ throws if requested length is not even
+    ✓ returns unique results
+
+  newObjectId
+    ✓ returns a string
+    ✓ returns result with at least 10 characters
+    ✓ returns unique results
+
+  newToken
+    ✓ returns a string
+    ✓ returns result with at least 32 characters
+    ✓ returns unique results
+
+  DatabaseController
+
+    validateQuery
+      ✓ should restructure simple cases of SERVER-13732
+      ✓ should not restructure SERVER-13732 queries with $nears
+      ✓ should push refactored keys down a tree for SERVER-13732
+      ✓ should reject invalid queries
+      ✓ should accept valid queries
+
+
+
+
+undefined
+  Email Verification Token Expiration:
+    ✓ show the invalid verification link page, if the user clicks on the verify email link after the email verify token expires
+
+
+
+undefined
+    ✗ emailVerified should set to false, if the user does not verify their email before the email verify token expires
+      - Expected 0 to equal false.
+
+
+
+undefined
+    ✓ if user clicks on the email verify link before email verification token expiration then show the verify email success page
+
+
+
+undefined
+    ✗ if user clicks on the email verify link before email verification token expiration then emailVerified should be true
+      - Expected 1 to equal true.
+
+
+
+undefined
+    ✗ if user clicks on the email verify link before email verification token expiration then user should be able to login
+      - Expected 1 to be true.
+
+
+
+    ✗ sets the _email_verify_token_expires_at and _email_verify_token fields after user SignUp
+      - Expected 0 to equal false.
+
+
+
+undefined
+    ✗ unsets the _email_verify_token_expires_at and _email_verify_token fields in the User class if email verification is successful
+      - Expected 1 to equal true.
+
+
+
+undefined
+
+
+
+    ✗ clicking on the email verify link by an email VERIFIED user that was setup before enabling the expire email verify token should show email verify email success
+      - Expected 1 to equal true.
+
+
+
+
+
+
+undefined
+    ✗ clicking on the email verify link by an email UNVERIFIED user that was setup before enabling the expire email verify token should show invalid verficiation link page
+      - Expected 0 to equal false.
+
+
+
+undefined
+    ✓ setting the email on the user should set a new email verification token and new expiration date for the token when expire email verify token flag is set
+
+
+
+    ✓ should send a new verification email when a resend is requested and the user is UNVERIFIED
+
+
+
+undefined
+    ✓ should not send a new verification email when a resend is requested and the user is VERIFIED
+
+
+
+    ✓ should not send a new verification email if this user does not exist
+
+
+
+    ✓ should fail if no email is supplied
+
+
+
+    ✓ should fail if email is not a string
+
+
+
+    ✗ client should not see the _email_verify_token_expires_at field
+      - Expected 0 to equal false.
+
+
+
+
+  Enable single schema cache
+    ✓ can perform multiple create and query operations
+
+  EventEmitterPubSub
+    ✓ can publish and subscribe
+    ✓ can unsubscribe
+    ✓ can unsubscribe not subscribing channel
+
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+  features
+    ✓ requires the master key to get features
+
+  FilesController
+    ✓ should properly expand objects
+
+
+
+    ✓ should create a server log on failure
+
+  httpRequest
+    ✓ should do /hello
+    ✓ should do /hello with callback and promises
+    ✓ should do not follow redirects by default
+    ✓ should follow redirects when set
+    ✓ should fail on 404
+    ✓ should fail on 404
+    ✓ should post on echo
+    ✓ should encode a query string body by default
+    ✓ should encode a JSON body
+    ✓ should encode a www-form body
+    ✓ should not encode a wrong content type
+    ✓ should fail gracefully
+    ✓ should params object to query string
+    ✓ should params string to query string
+    ✓ should not crash with undefined body
+    ✓ serialized httpResponse correctly with body string
+    ✓ serialized httpResponse correctly with body object
+    ✓ serialized httpResponse correctly with body buffer string
+    ✓ serialized httpResponse correctly with body buffer JSON Object
+    ✓ serialized httpResponse with Parse._encode should be allright
+
+  server
+    ✓ requires a master key and app id
+
+
+
+
+
+
+    ✓ support http basic authentication with masterkey
+
+
+
+    ✓ support http basic authentication with javascriptKey
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 36): MongoError: failed to connect to server [localhost:43605] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:43605]
+MongoError: failed to connect to server [localhost:43605] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:43605]
+    at Pool.<anonymous> (/Users/Squad/Github/parse-server-mysql-test/node_modules/mongodb-core/lib/topologies/server.js:329:35)
+    at emitOne (events.js:96:13)
+    at Pool.emit (events.js:188:7)
+    at Connection.<anonymous> (/Users/Squad/Github/parse-server-mysql-test/node_modules/mongodb-core/lib/connection/pool.js:280:12)
+    at Connection.g (events.js:291:16)
+    at emitTwo (events.js:106:13)
+    at Connection.emit (events.js:191:7)
+    at Socket.<anonymous> (/Users/Squad/Github/parse-server-mysql-test/node_modules/mongodb-core/lib/connection/connection.js:187:49)
+    at Socket.g (events.js:291:16)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at emitErrorNT (net.js:1281:8)
+    at _combinedTickCallback (internal/process/next_tick.js:80:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:128:9)
+
+
+
+    ✓ fails if database is unreachable
+
+
+
+    ✓ can load email adapter via object
+
+
+
+    ✓ can load email adapter via class
+
+
+
+    ✓ can load email adapter via module name
+    ✓ can load email adapter via only module name
+
+
+
+    ✓ throws if you initialize email adapter incorrecly
+
+
+
+    ✓ can report the server version
+    ✓ can properly sets the push support
+
+
+
+    ✓ can properly sets the push support when not configured
+
+
+
+    ✓ can properly sets the push support
+
+
+
+    ✓ can properly sets the push schedule support
+    ✓ can respond 200 on path health
+
+
+
+    ✓ can create a parse-server v1
+
+
+
+    ✓ can create a parse-server v2
+    ✓ has createLiveQueryServer
+    ✓ exposes correct adapters
+
+
+
+    ✓ properly gives publicServerURL when set
+
+
+
+    ✓ properly removes trailing slash in mount
+    ✓ should throw when getting invalid mount
+
+
+
+    ✓ fails if the session length is not a number
+
+
+
+    ✓ fails if the session length is less than or equal to 0
+
+
+
+
+
+
+
+
+
+
+
+
+    ✓ ignores the session length when expireInactiveSessions set to false
+    ✓ fails if you try to set revokeSessionOnPasswordReset to non-boolean
+
+
+
+
+  InMemoryCache
+    ✓ should destroy a expire items in the cache
+    ✓ should delete items
+    ✓ should clear all items
+    ✓ should deafult TTL to 5 seconds
+
+  InMemoryCacheAdapter
+    ✓ should expose promisifyed methods
+    ✓ should get/set/clear
+    ✓ should expire after ttl
+
+  InstallationsRouter
+    ✓ uses find condition from request.body
+    ✓ uses find condition from request.query
+    ✓ query installations with limit = 0
+    ✓ query installations with count = 1
+    ✓ query installations with limit = 0 and count = 1
+
+  JobSchedule
+    ✓ should create _JobSchedule with masterKey
+    ✓ should fail creating _JobSchedule without masterKey
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    ✓ should reject access when not using masterKey (/jobs)
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    ✓ should reject access when not using masterKey (/jobs/data)
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    ✓ should reject access when not using masterKey (PUT /jobs/id)
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    ✓ should reject access when not using masterKey (PUT /jobs/id)
+    ✓ should allow access when using masterKey (/jobs)
+    ✓ should create a job schedule
+    ✓ should fail creating a job with an invalid name
+undefined
+    ✓ should update a job
+    ✓ should fail updating a job with an invalid name
+    ✓ should destroy a job
+    ✓ should properly return job data
+
+  Logger
+    ✓ should add transport
+
+
+
+    ✓ should have files transports
+
+
+
+    ✓ should disable files logs
+
+
+
+    ✓ should enable JSON logs
+
+  LoggerController
+    ✓ can check process a query without throwing
+    ✓ properly validates dateTimes
+    ✓ can set the proper default values
+    ✓ can process a query without throwing
+    ✓ can check process a query without throwing
+    ✓ should throw without an adapter
+
+  LogsRouter
+    ✓ can check valid master key of request
+    ✓ can check invalid construction of controller
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    ✓ can check invalid master key of request
+
+  middlewares
+    ✓ should use _ContentType if provided
+    ✓ should give invalid response when keys are configured but no key supplied
+    ✓ should give invalid response when keys are configured but supplied key is incorrect
+    ✓ should give invalid response when keys are configured but different key is supplied
+    ✓ should succeed when any one of the configured keys supplied
+    ✓ should succeed when client key supplied but empty
+    ✓ should succeed when no keys are configured and none supplied
+    ✓ it should pull _ClientVersion into req.info
+    ✓ it should pull _InstallationId into req.info
+    ✓ it should pull _SessionToken into req.info
+    ✓ it should pull _MasterKey into req.info
+    ✓ it should pull _JavaScriptKey into req.info
+
+  MongoSchemaCollection
+    ✓ can transform legacy _client_permissions keys to parse format
+
+  parseObjectToMongoObjectForCreate
+    ✓ a basic number
+    ✓ an object with null values
+    ✓ built-in timestamps
+    ✓ array of pointers
+    ✓ Doesnt allow ACL, as Parse Server should tranform ACL to _wperm + _rperm
+    ✓ plain
+    ✓ in array
+    ✓ in sub-object
+    ✓ objectId
+    ✓ objectId in a list
+    ✓ built-in timestamps
+    ✓ pointer
+    ✓ null pointer
+    ✓ file
+    ✓ geopoint
+    ✓ bytes
+    ✓ nested array
+    ✓ untransforms objects containing nested special keys
+    ✓ changes new pointer key
+    ✓ changes existing pointer keys
+    ✓ writes the old ACL format in addition to rperm and wperm on create
+    ✓ removes Relation types
+    ✓ writes the old ACL format in addition to rperm and wperm on update
+    ✓ untransforms from _rperm and _wperm to ACL
+    ✓ untransforms mongodb number types
+    ✓ Date object where iso attribute is of type Date
+    ✓ Date object where iso attribute is of type String
+
+  transformUpdate
+    ✓ removes Relation types
+
+  NullCacheAdapter
+    ✓ should expose promisifyed methods
+    ✓ should get/set/clear
+
+  OAuth
+    ✓ Nonce should have right length
+    ✓ Should properly build parameter string
+    ✓ Should properly build empty parameter string
+    ✓ Should properly build signature string
+    ✓ Should properly generate request signature
+    ✓ Should properly build request
+    ✓ Should fail a GET request
+    ✓ Should fail a POST request
+    ✓ Should fail a request
+    ✓ Should fail with missing options
+
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+  Parse.Push
+    ✓ should properly send push
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ should properly send push with lowercaseIncrement
+
+
+
+undefined
+undefined
+    ✓ should not allow clients to query _PushStatus
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ should allow master key to query _PushStatus
+
+
+
+    ✓ should throw error if missing push configuration
+
+  Parse.ACL
+    ✓ acl must be valid
+    ✓ refresh object with acl
+    ✓ acl an object owned by one user and public get
+    ✓ acl an object owned by one user and public find
+undefined
+    ✓ acl an object owned by one user and public update
+    ✓ acl an object owned by one user and public delete
+    ✓ acl an object owned by one user and logged in get
+    ✓ acl an object owned by one user and logged in find
+undefined
+    ✓ acl an object owned by one user and logged in update
+    ✓ acl an object owned by one user and logged in delete
+undefined
+    ✓ acl making an object publicly readable and public get
+undefined
+    ✓ acl making an object publicly readable and public find
+undefined
+undefined
+    ✓ acl making an object publicly readable and public update
+undefined
+    ✓ acl making an object publicly readable and public delete
+undefined
+    ✓ acl making an object publicly writable and public get
+undefined
+    ✓ acl making an object publicly writable and public find
+undefined
+undefined
+    ✓ acl making an object publicly writable and public update
+undefined
+    ✓ acl making an object publicly writable and public delete
+    ✓ acl making an object privately writable (#3194)
+    ✓ acl sharing with another user and get
+    ✓ acl sharing with another user and find
+undefined
+    ✓ acl sharing with another user and update
+    ✓ acl sharing with another user and delete
+    ✓ acl sharing with another user and public get
+    ✓ acl sharing with another user and public find
+undefined
+    ✓ acl sharing with another user and public update
+    ✓ acl sharing with another user and public delete
+undefined
+undefined
+    ✓ acl saveAll with permissions
+    ✓ empty acl works
+    ✓ query for included object with ACL works
+    ✓ restricted ACL does not have public access
+IN AFTER SAVE!
+undefined
+    ✓ regression test #701
+
+  miscellaneous
+    ✓ create a GameScore object
+    ✓ get a TestObject
+    ✓ create a valid parse user
+    ✗ fail to create a duplicate username
+      - Expected 2 to equal 1.
+      - Failed: one of the users should not have been created
+    ✗ ensure that email is uniquely indexed
+      - Expected 2 to equal 1.
+      - Failed: one of the users should not have been created
+
+    ✓ ensure that if people already have duplicate users, they can still sign up new users
+
+    ✓ ensure that if people already have duplicate emails, they can still sign up new users
+
+    ✓ ensure that if you try to sign up a user with a unique username and email, but duplicates in some other field that has a uniqueness constraint, you get a regular duplicate value error
+    ✓ succeed in logging in
+undefined
+undefined
+    ✓ increment with a user object
+    ✓ save various data types
+    ✓ query with limit
+    ✓ query without limit get default 100 records
+    ✓ basic saveAll
+    ✓ test beforeSave set object acl success
+undefined
+    ✓ object is set on create and update
+    ✓ works when object is passed to success
+undefined
+    ✓ original object is set on update
+undefined
+    ✓ pointer mutation properly saves object
+undefined
+    ✓ pointer reassign is working properly (#1288)
+undefined
+    ✓ test afterSave get full object on create and update
+undefined
+    ✓ test afterSave get original object on update
+undefined
+    ✓ test afterSave get full original object even req auth can not query it
+undefined
+    ✓ beforeSave receives ACL
+undefined
+    ✓ afterSave receives ACL
+    ✓ test cloud function error handling
+    ✓ test cloud function error handling with custom error code
+    ✓ test cloud function error handling with standard error code
+    ✓ test beforeSave/afterSave get installationId
+    ✓ test beforeDelete/afterDelete get installationId
+    ✓ test cloud function query parameters
+    ✓ test cloud function parameter validation
+    ✓ can handle null params in cloud functions (regression test for #1742)
+    ✓ can handle date params in cloud functions (#2214)
+    ✓ fails on invalid client key
+    ✓ fails on invalid windows key
+    ✓ fails on invalid javascript key
+    ✓ fails on invalid rest api key
+    ✓ fails on invalid function
+undefined
+    ✓ dedupes an installation properly and returns updatedAt
+    ✓ android login providing empty authData block works
+undefined
+    ✓ gets relation fields
+checking headers
+{ results:
+   [ { objectId: 'VUsNZHyfaa',
+       createdAt: '2017-06-29T11:15:36.000Z',
+       updatedAt: '2017-06-29T11:15:36.000Z',
+       a: 'b' } ] }
+    ✓ ignores _RevocableSession "header" send by JS SDK
+    ✓ doesnt convert interior keys of objects that use special names
+    ✓ bans interior keys containing . or $
+    ✓ does not change inner object keys named _auth_data_something
+    ✓ does not change inner object key names _p_somethign
+    ✓ does not change inner object key names _rperm, _wperm
+    ✓ does not change inner objects if the key has the same name as a geopoint field on the class, and the value is an array of length 2, or if the key has the same name as a file field on the class, and the value is a string
+    ✓ purge all objects in class
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ fail on purge all objects in class without master key
+    ✓ purge all objects in _Role also purge cache
+    ✓ should not update schema beforeSave #2672
+
+  ParseCloudCodePublisher
+    ✓ can initialize
+    ✓ can handle cloud code afterSave request
+    ✓ can handle cloud code afterDelete request
+    ✓ can handle cloud code request
+
+  Parse.File testing
+
+    creating files
+      ✓ works with Content-Type
+      ✓ works with _ContentType
+      ✓ works without Content-Type
+
+    ✓ supports REST end-to-end file create, read, delete, read
+    ✓ blocks file deletions with missing or incorrect master-key header
+    ✓ handles other filetypes
+    ✓ save file
+    ✓ save file in object
+    ✓ save file in object with escaped characters in filename
+    ✓ autosave file in object
+    ✓ autosave file in object in object
+    ✓ saving an already saved file
+    ✓ two saves at the same time
+    ✓ file toJSON testing
+    ✓ content-type used with no extension
+    ✓ filename is url encoded
+    ✓ supports array of files
+    ✓ validates filename characters
+    ✓ validates filename length
+    ✓ supports a dictionary with file
+    ✓ creates correct url for old files hosted on files.parsetfss.com
+    ✓ creates correct url for old files hosted on files.parse.com
+    ✓ supports files in objects without urls
+
+
+
+    ✓ return with publicServerURL when provided
+
+  Parse.GeoPoint testing
+    ✓ geo point roundtrip
+undefined
+    ✓ update geopoint
+    ✓ has the correct __type field in the json response
+    ✓ geo point exception two fields
+    ✓ geo line
+    ✓ geo max distance large
+    ✓ geo max distance in miles everywhere
+    ✓ returns nearest location
+    ✓ works with geobox queries
+    ✓ supports a sub-object with a geo point
+    ✓ supports array of geo points
+    ✓ equalTo geopoint
+    ✓ supports withinPolygon open path
+    ✓ supports withinPolygon closed path
+    ✓ invalid input withinPolygon
+    ✓ invalid geoPoint withinPolygon
+TypeError: GeoPoint latitude out of bounds: 181 > 90.0.
+    at Function.value (/Users/Squad/Github/parse-server-mysql-test/node_modules/parse/lib/node/ParseGeoPoint.js:192:15)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:458:26
+    at Array.map (native)
+    at _loop (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:454:30)
+    at buildWhereClause (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:193:34)
+    at MySQLStorageAdapter.find (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1284:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Controllers/DatabaseController.js:846:39
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ invalid latitude withinPolygon
+TypeError: GeoPoint longitude out of bounds: 181 > 180.0.
+    at Function.value (/Users/Squad/Github/parse-server-mysql-test/node_modules/parse/lib/node/ParseGeoPoint.js:198:15)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:458:26
+    at Array.map (native)
+    at _loop (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:454:30)
+    at buildWhereClause (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:193:34)
+    at MySQLStorageAdapter.find (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1284:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Controllers/DatabaseController.js:846:39
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ invalid longitude withinPolygon
+    ✓ minimum 3 points withinPolygon
+
+  a GlobalConfig
+    ✓ can be retrieved
+    ✓ can be updated when a master key exists
+{ result: true }
+ParseConfig {
+  attributes: { companies: [ 'US', 'DK' ] },
+  _escapedAttributes: {} }
+    ✗ can add and retrive files
+      - TypeError: Cannot read property 'name' of undefined
+    ✗ can add and retrive Geopoints
+      - TypeError: Cannot read property 'latitude' of undefined
+    ✗ properly handles delete op
+      - Expected [ 'US', 'DK' ] to be undefined.
+      - Expected undefined to be 'bar'.
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ fail to update if master key is missing
+    ✓ failed getting config when it is missing
+
+  Hooks
+    ✓ should have no hooks registered
+    ✓ should have no triggers registered
+    ✓ should CRUD a function registration
+    ✓ should CRUD a trigger registration
+    ✓ should fail to register hooks without Master Key
+    ✓ should fail trying to create two times the same function
+    ✓ should fail trying to create two times the same trigger
+    ✓ should fail trying to update a function that don't exist
+    ✓ should fail trying to update a trigger that don't exist
+    ✓ should fail trying to create a malformed function
+    ✓ should fail trying to create a malformed function (REST)
+    ✓ should create hooks and properly preload them
+    ✓ should run the function on the test server
+    ✓ should run the function on the test server
+    ✓ should provide X-Parse-Webhook-Key when defined
+
+
+
+    ✓ should not pass X-Parse-Webhook-Key if not provided
+    ✓ should run the beforeSave hook on the test server
+undefined
+    ✓ beforeSave hooks should correctly handle responses containing entire object
+    ✓ should run the afterSave hook on the test server
+
+  Installations
+    ✓ creates an android installation with ids
+    ✓ creates an ios installation with ids
+    ✓ creates an embedded installation with ids
+    ✓ creates an android installation with all fields
+    ✓ creates an ios installation with all fields
+    ✓ should properly fail queying installations
+    ✓ should properly queying installations with masterKey
+    ✓ fails with missing ids
+    ✓ fails for android with missing type
+    ✓ creates an object with custom fields
+undefined
+    ✓ merging when installationId already exists
+undefined
+    ✓ merging when two objects both only have one id
+undefined
+    ✓ updating with new channels
+    ✓ update android fails with new installation id
+    ✓ update ios fails with new deviceToken and no installationId
+undefined
+    ✓ update ios updates device token
+    ✓ update fails to change deviceType
+undefined
+    ✓ update android with custom field
+undefined
+    ✓ update android device token with duplicate device token
+undefined
+    ✓ update ios device token with duplicate device token
+undefined
+    ✓ update ios token and channels
+undefined
+    ✓ update ios linking two existing objects
+undefined
+    ✓ update is linking two existing objects w/ increment
+undefined
+    ✓ update is linking two existing with installation id
+undefined
+    ✓ update is linking two existing with installation id w/ op
+undefined
+    ✓ ios merge existing same token no installation id
+    ✓ allows you to get your own installation (regression test for #1718)
+undefined
+    ✓ allows you to update installation from header (#2090)
+undefined
+    ✓ allows you to update installation with masterKey
+undefined
+    ✓ should properly handle installation save #2780
+    ✓ should properly reject updating installationId
+
+  ParseLiveQueryServer
+    ✓ can be initialized
+    ✓ can handle connect command
+    ✓ can handle subscribe command without clientId
+    ✓ can handle subscribe command with new query
+    ✓ can handle subscribe command with existing query
+    ✓ can handle unsubscribe command without clientId
+    ✓ can handle unsubscribe command without not existed client
+    ✓ can handle unsubscribe command without not existed query
+    ✓ can handle unsubscribe command
+    ✓ can set connect command message handler for a parseWebSocket
+    ✓ can set subscribe command message handler for a parseWebSocket
+    ✓ can set unsubscribe command message handler for a parseWebSocket
+    ✓ can set update command message handler for a parseWebSocket
+    ✓ can set unknown command message handler for a parseWebSocket
+    ✓ can set disconnect command message handler for a parseWebSocket which has not registered to the server
+    ✓ has no subscription and can handle object delete command
+    ✓ can handle object delete command which does not match any subscription
+    ✓ can handle object delete command which matches some subscriptions
+    ✓ has no subscription and can handle object save command
+    ✓ can handle object save command which does not match any subscription
+    ✓ can handle object enter command which matches some subscriptions
+    ✓ can handle object update command which matches some subscriptions
+    ✓ can handle object leave command which matches some subscriptions
+    ✓ can handle object create command which matches some subscriptions
+    ✓ can match subscription for null or undefined parse object
+    ✓ can match subscription
+    ✓ can inflate parse object
+    ✓ can match undefined ACL
+    ✓ can match ACL with none exist requestId
+    ✓ can match ACL with public read access
+    ✓ can match ACL with valid subscription sessionToken
+    ✓ can match ACL with valid client sessionToken
+    ✓ can match ACL with invalid subscription and client sessionToken
+    ✓ can match ACL with subscription sessionToken checking error
+    ✓ can match ACL with client sessionToken checking error
+    ✓ won't match ACL that doesn't have public read or any roles
+    ✓ won't match non-public ACL with role when there is no user
+    ✓ won't match ACL with role based read access set to false
+    ✓ will match ACL with role based read access set to true
+    ✓ can validate key when valid key is provided
+    ✓ can validate key when invalid key is provided
+    ✓ can validate key when key is not provided
+    ✓ can validate key when validKerPairs is empty
+
+  Parse.Object testing
+    ✓ create
+undefined
+    ✓ update
+    ✓ save without null
+undefined
+    ✓ save cycle
+    ✓ get
+    ✓ delete
+    ✓ find
+    ✓ relational fields
+    ✓ save adds no data keys (other than createdAt and updatedAt)
+    ✓ recursive save
+undefined
+    ✓ fetch
+    ✗ createdAt doesn't change
+      - Expected 1498716996657 to equal 1498734996000.
+    ✓ createdAt and updatedAt exposed
+undefined
+    ✓ updatedAt gets updated
+    ✓ createdAt is reasonable
+    ✓ can set null
+    ✓ can set boolean
+    ✓ cannot set invalid date
+    ✓ invalid class name
+    ✓ invalid key name
+    ✓ invalid __type
+undefined
+    ✓ simple field deletion
+    ✓ field deletion before first save
+undefined
+    ✓ relation deletion
+undefined
+    ✓ deleted keys get cleared
+undefined
+    ✓ setting after deleting
+undefined
+    ✗ increment
+      - Expected 1 to equal 6.
+2
+4
+undefined
+    ✓ addUnique
+{ hello: 'world' }
+{ bar: 'baz' }
+slient but deadly
+{ Error: Invalid JSON text in argument 2 to function json_contains: "Invalid value." at position 1.
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1252:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Invalid JSON text in argument 2 to function json_contains: "Invalid value." at position 1.',
+  code: undefined,
+  errno: 3141,
+  sqlState: '#22032' }
+    ✗ addUnique with object
+      - Failed: {"code":101,"message":"Object not found."}
+{ hello: 'world' }
+slient but deadly
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[object Object]),'"','')),`updatedAt` = '2017-06-29 06:16:42' WHERE `objectId` =' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1252:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'[object Object]),\'"\',\'\')),`updatedAt` = \'2017-06-29 06:16:42\' WHERE `objectId` =\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    ✗ removes with object
+      - Failed: {"code":101,"message":"Object not found."}
+    ✓ dirty attributes
+undefined
+    ✓ dirty keys
+    ✓ length attribute
+undefined
+    ✓ old attribute unset then unset
+    ✓ new attribute unset then unset
+    ✓ unknown attribute unset then unset
+undefined
+    ✓ old attribute unset then clear
+    ✓ new attribute unset then clear
+    ✓ unknown attribute unset then clear
+undefined
+    ✓ old attribute clear then unset
+    ✓ new attribute clear then unset
+    ✓ unknown attribute clear then unset
+undefined
+    ✓ old attribute clear then clear
+    ✓ new attribute clear then clear
+    ✓ unknown attribute clear then clear
+    ✓ saving children in an array
+undefined
+    ✓ two saves at the same time
+    ✓ many saves after a failure
+    ✓ is not dirty after save
+    ✓ add with an object
+    ✓ toJSON saved object
+    ✓ remove object from array
+    ✓ async methods
+    ✓ fail validation with promise
+    ✓ beforeSave doesn't make object dirty with new field
+    ✓ beforeSave doesn't make object dirty with existing field
+here
+here
+Error: Invalid JSON text: "Invalid value." at position 1 in value for column 'TestObject.bytes'.
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Invalid JSON text: "Invalid value." at position 1 in value for column 'TestObject.bytes'.
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Invalid JSON text: "Invalid value." at position 1 in value for column 'TestObject.bytes'.
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Invalid JSON text: "Invalid value." at position 1 in value for column 'TestObject.bytes'.
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Invalid JSON text: "Invalid value." at position 1 in value for column 'TestObject.bytes'.
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ bytes work
+      - Expected false to be truthy '{"code":1}'.
+    ✓ destroyAll no objects
+    ✓ destroyAll new objects only
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ fetchAll
+    ✓ fetchAll no objects
+undefined
+    ✗ fetchAll updates dates
+      - Expected 1498735017000 to equal 1498717017602.
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ fetchAll backbone-style callbacks
+    ✓ fetchAll error on multiple classes
+    ✓ fetchAll error on unsaved object
+    ✓ fetchAll error on deleted object
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ fetchAllIfNeeded
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ fetchAllIfNeeded backbone-style callbacks
+    ✓ fetchAllIfNeeded no objects
+    ✓ fetchAllIfNeeded unsaved object
+    ✓ fetchAllIfNeeded error on multiple classes
+    ✓ Objects with className User
+    ✓ create without data
+    ✓ remove from new field creates array key
+    ✓ increment with type conflict fails
+    ✓ increment with empty field solidifies type
+    ✓ increment update with type conflict fails
+    ✓ dictionary fetched pointers do not lose data on fetch
+    ✓ should create nested keys with _
+undefined
+    ✓ should have undefined includes when object is missing
+undefined
+undefined
+    ✓ should have undefined includes when object is missing on deeper path
+undefined
+    ✓ should handle includes on null arrays #2752
+    ✓ should handle select and include #2786
+
+  ParsePubSub
+    ✓ can create redis publisher
+    ✓ can create event emitter publisher
+    ✓ can create redis subscriber
+    ✓ can create event emitter subscriber
+    ✓ can create publisher/sub with custom adapter
+    ✓ can create publisher/sub with custom function adapter
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 58): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  Parse.Query Full Text Search testing
+    ✗ fullTextSearch: $search
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 61): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+    ✗ fullTextSearch: $search, sort
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 64): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+    ✗ fullTextSearch: $language
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 67): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+    ✗ fullTextSearch: $diacriticSensitive
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 70): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 71): TypeError: Cannot read property 'code' of undefined
+    ✗ fullTextSearch: $search, invalid input
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 74): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 75): TypeError: Cannot read property 'code' of undefined
+    ✗ fullTextSearch: $language, invalid input
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 78): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 79): TypeError: Cannot read property 'code' of undefined
+    ✗ fullTextSearch: $caseSensitive, invalid input
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+
+
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 82): MongoError: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 83): TypeError: Cannot read property 'code' of undefined
+    ✗ fullTextSearch: $diacriticSensitive, invalid input
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+
+
+
+  Parse.Query testing
+    ✗ basic query
+      - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+undefined
+    ✓ searching for null
+undefined
+    ✓ searching for not null
+    ✓ notEqualTo with Relation is working
+    ✓ query with limit
+    ✓ containedIn object array queries
+    ✓ containsAll number array queries
+    ✓ containsAll string array queries
+    ✓ containsAll date array queries
+    ✓ containsAll object array queries
+    ✓ equalTo queries
+    ✓ equalTo undefined
+    ✓ lessThan queries
+    ✓ lessThanOrEqualTo queries
+    ✓ greaterThan queries
+    ✓ greaterThanOrEqualTo queries
+    ✓ lessThanOrEqualTo greaterThanOrEqualTo queries
+    ✓ lessThan greaterThan queries
+    ✓ notEqualTo queries
+    ✓ containedIn queries
+    ✓ notContainedIn queries
+    ✓ objectId containedIn queries
+    ✓ objectId equalTo queries
+    ✓ find no elements
+    ✓ find with error
+    ✓ get
+    ✓ get undefined
+    ✓ get error
+    ✓ first
+    ✓ first no result
+    ✓ first with two results
+    ✓ first with error
+    ✓ notEqualTo object
+    ✓ skip
+    ✓ skip doesn't affect count
+    ✓ count
+    ✓ order by ascending number
+    ✓ order by descending number
+    ✓ order by ascending number then descending string
+    ✓ order by descending number then ascending string
+    ✓ order by descending number and string
+    ✓ order by descending number and string, with space
+    ✓ order by descending number and string, with array arg
+    ✓ order by descending number and string, with multiple args
+    ✓ can't order by password
+    ✓ time equality
+    ✓ time lessThan
+    ✓ time createdAt
+    ✓ matches string
+    ✓ matches regex
+    ✓ case insensitive regex success
+    ✓ regexes with invalid options fail
+    ✓ Use a regex that requires all modifiers
+    ✓ Regular expression constructor includes modifiers inline
+    ✓ exists
+    ✓ doesNotExist
+    ✓ exists relation
+    ✓ doesNotExist relation
+    ✓ don't include by default
+    ✓ include relation
+    ✓ include relation array
+    ✓ nested include
+    ✓ include doesn't make dirty wrong
+    ✓ properly includes array
+    ✓ properly includes array of mixed objects
+    ✓ properly nested array of mixed objects with bad ids
+undefined
+    ✓ properly fetches nested pointers
+    ✓ result object creation uses current extension
+    ✓ matches query
+    ✓ select query
+    ✓ $select inside $or
+    ✓ dontSelect query
+    ✓ dontSelect query without conditions
+    ✓ equalTo on same column as $dontSelect should not break $dontSelect functionality (#3678)
+    ✓ multiple dontSelect query
+    ✓ object with length
+    ✓ include user
+    ✓ or queries
+    ✓ or complex queries
+what the hek
+Attempted to add a field that already exists
+what the hek
+Attempted to add a field that already exists
+what the hek
+Attempted to add a field that already exists
+    ✓ async methods
+    ✓ query.each
+    ✓ query.each async
+    ✓ query.each fails with order
+    ✓ query.each fails with skip
+    ✓ query.each fails with limit
+    ✓ select keys query
+    ✓ select keys with each query
+    ✓ notEqual with array of pointers
+    ✓ query within dictionary
+    ✓ supports include on the wrong key type (#2262)
+    ✓ query match on array with single object
+    ✓ query match on array with multiple objects
+    ✓ query should not match on array when searching for null
+    ✓ should properly interpret a query v1
+    ✓ should properly interpret a query v2
+    ✓ should match a key in an array (#3195)
+    ✓ query with two OR subqueries (regression test #1259)
+    ✓ objectId containedIn with multiple large array
+    ✓ include for specific object
+    ✓ select keys for specific object
+    ✓ select nested keys (issue #1567)
+    ✓ select nested keys 2 level (issue #1567)
+    ✓ select nested keys 2 level without include (issue #3185)
+    ✓ properly handles nested ors
+undefined
+undefined
+    ✓ should not depend on parameter order #3169
+
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Z0fQ4fcfZV' AND `owningId` = 'mIdEflxC9' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Z0fQ4fcfZV' AND `owningId` = 'mIdEflxC9' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Z0fQ4fcfZV' AND `owningId` = 'mIdEflxC9' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Z0fQ4fcfZV' AND `owningId` = 'mIdEflxC9' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Z0fQ4fcfZV' AND `owningId` = 'mIdEflxC9' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  Parse.Relation testing
+    ✗ simple add and remove relation
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+    ✓ query relation without schema
+    ✓ relations are constructed right from query
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Sg2jfhbMwg' AND `owningId` = 'SkFzG4Gg6' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Sg2jfhbMwg' AND `owningId` = '34UTSSRLR' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Sg2jfhbMwg' AND `owningId` = 'YmGxZN41r' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Sg2jfhbMwg' AND `owningId` = '3KEyt2FOm' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':child:ParentObject WHERE `relatedId` = 'Sg2jfhbMwg' AND `owningId` = 'JNMjdMEmT' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ compound add and remove relation
+      - Expected false to be truthy undefined.
+    ✓ queries with relations
+    ✓ queries on relation fields
+    ✓ queries on relation fields with multiple containedIn (regression test for #1271)
+    ✓ query on pointer and relation fields with equal
+    ✓ query on pointer and relation fields with equal bis
+    ✓ or queries on pointer and relation fields
+    ✓ Get query on relation using un-fetched parent object
+    ✓ Find query on relation using un-fetched parent object
+    ✓ Find objects with a related object using equalTo
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✗ should properly get related objects with unfetched queries
+      - Expected 1 to be true.
+      - Expected 1 to be true.
+      - Expected 1 to be true.
+      - Expected 1 to be true.
+      - Expected 1 to be true.
+      - Expected 0 to be false.
+      - Expected 0 to be false.
+      - Expected 0 to be false.
+      - Expected 0 to be false.
+      - Expected 0 to be false.
+undefined
+    ✓ select query
+undefined
+    ✓ dontSelect query
+undefined
+    ✓ relations are not bidirectional (regression test for #871)
+    ✓ can query roles in Cloud Code (regession test #1489)
+undefined
+undefined
+    ✓ can be saved without error
+
+undefined
+undefined
+  Parse Role testing
+    ✓ Do a bunch of basic role testing
+undefined
+undefined
+undefined
+undefined
+    ✓ should not recursively load the same role multiple times
+    ✓ should recursively load roles
+    ✓ _Role object should not save without name.
+    ✗ Different _Role objects cannot have the same name.
+      - Failed: _Role cannot have the same name as another role
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ Should properly resolve roles
+    ✓ can create role and query empty users
+undefined
+undefined
+undefined
+    ✓ should properly handle role permissions on objects
+undefined
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':users:_Role WHERE `relatedId` = 'KLZee267Lx' AND `owningId` = 'Aqy4RLNEBs'' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':users:_Role WHERE `relatedId` = 'KLZee267Lx' AND `owningId` = 'Aqy4RLNEBs'' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':users:_Role WHERE `relatedId` = 'KLZee267Lx' AND `owningId` = 'Aqy4RLNEBs'' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':users:_Role WHERE `relatedId` = 'KLZee267Lx' AND `owningId` = 'Aqy4RLNEBs'' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':users:_Role WHERE `relatedId` = 'KLZee267Lx' AND `owningId` = 'Aqy4RLNEBs'' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1061:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ should add multiple users to a role and remove users
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+undefined
+    ✓ should be secure (#3835)
+    ✓ should match when matching in users relation
+    ✓ should not match any entry when not matching in users relation
+    ✓ should not match any entry when searching for null in users relation
+
+  parsers
+    ✓ parses correctly with numberParser
+    ✓ parses correctly with numberOrBoolParser
+    ✓ parses correctly with booleanParser
+
+  ParseServerRESTController
+    ✓ should handle a get request
+    ✓ should handle a get request with full serverURL mount path
+    ✓ should handle a POST batch
+    ✓ should handle a POST request
+    ✓ ensures sessionTokens are properly handled
+    ✓ ensures masterKey is properly handled
+    ✓ ensures no user is created when passing an empty username
+    ✓ ensures no user is created when passing an empty password
+    ✓ ensures no session token is created on creating users
+    ✓ ensures a session token is created when passing installationId != cloud
+
+  Parse.User testing
+    ✓ user sign up class method
+    ✓ user sign up instance method
+    ✓ user login wrong username
+    ✓ user login wrong password
+    ✓ user login with non-string username with REST API
+    ✓ user login with non-string username with REST API
+    ✓ user login
+undefined
+    ✓ should respect ACL without locking user out
+    ✓ user login with files
+    ✓ become sends token back
+    ✓ become
+    ✓ cannot save non-authed user
+    ✓ cannot delete non-authed user
+undefined
+    ✓ cannot saveAll with non-authed user
+    ✓ current user
+    ✓ user.isCurrent
+    ✓ user associations
+    ✓ user queries
+    ✓ contained in user array queries
+    ✓ saving a user signs them up but doesn't log them in
+undefined
+    ✓ user updates
+    ✓ count users
+    ✓ user sign up with container class
+    ✓ user modified while saving
+    ✓ user modified while saving with unsaved child
+    ✓ user loaded from localStorage from signup
+    ✓ user loaded from localStorage from login
+undefined
+    ✓ saving user after browser refresh
+    ✓ user with missing username
+    ✓ user with missing password
+    ✓ user stupid subclassing
+    ✓ user signup class method uses subclassing
+undefined
+    ✓ user on disk gets updated after save
+    ✓ current user isn't dirty
+    ✓ log in with provider
+    ✓ user authData should be available in cloudcode (#2342)
+undefined
+    ✓ log in with provider and update token
+    ✓ returns authData when authed and logged in with provider (regression test for #1498)
+    ✓ log in with provider with files
+    ✓ log in with provider twice
+    ✓ log in with provider failed
+    ✓ log in with provider cancelled
+    ✓ login with provider should not call beforeSave trigger
+undefined
+    ✓ link with provider
+undefined
+there
+    ✓ link with provider for already linked user
+    ✓ link with provider failed
+    ✓ link with provider cancelled
+undefined
+    ✓ unlink with provider
+undefined
+undefined
+    ✓ unlink and link
+undefined
+    ✓ link multiple providers
+undefined
+undefined
+    ✓ link multiple providers and updates token
+undefined
+undefined
+    ✓ link multiple providers and update token
+    ✓ should fail linking with existing
+    ✓ should fail linking with existing
+    ✓ should allow login with old authData token
+undefined
+    ✓ should allow PUT request with stale auth Data
+undefined
+    ✓ should properly error when password is missing
+    ✓ should have authData in beforeSave and afterSave
+undefined
+    ✓ set password then change password
+    ✓ authenticated check
+    ✓ log in with explicit facebook auth data
+    ✓ log in async with explicit facebook auth data
+undefined
+    ✓ link with explicit facebook auth data
+undefined
+    ✓ link async with explicit facebook auth data
+    ✓ async methods
+    ✓ querying for users doesn't get session tokens
+    ✓ querying for users only gets the expected fields
+    ✓ retrieve user data from fetch, make sure the session token hasn't changed
+    ✓ user save should fail with invalid email
+    ✓ user signup should error if email taken
+    ✓ user cannot update email to existing user
+undefined
+    ✓ unset user email
+    ✓ create session from user
+    ✓ user get session from token on signup
+    ✓ user get session from token on login
+undefined
+    ✓ user update session with other field
+    ✓ cannot update session if invalid or no session token
+    ✓ get session only for current user
+    ✓ delete session by object
+    ✓ cannot delete session if no sessionToken
+    ✓ password format matches hosted parse
+undefined
+    ✓ changing password clears sessions
+undefined
+    ✓ test parse user become
+    ✓ ensure logout works
+    ✓ support user/password signup with empty authData block
+    ✓ session expiresAt correct format
+    ✓ invalid session tokens are rejected
+undefined
+    ✓ should cleanup null authData keys ParseUser update (regression test for #1198, #2252)
+
+
+
+undefined
+    ✓ should send email when upgrading from anon
+
+
+
+    ✓ should not send email when email is not a string
+undefined
+    ✓ should aftersave with full object
+undefined
+    ✓ changes to a user should update the cache
+undefined
+    ✓ should fail to become user with expired token
+    ✓ should not create extraneous session tokens
+undefined
+undefined
+    ✓ should not overwrite username when unlinking facebook user (regression test for #1532)
+undefined
+    ✓ should revoke sessions when converting anonymous user to "normal" user
+
+
+
+undefined
+    ✓ should not revoke session tokens if the server is configures to not revoke session tokens
+    ✓ should not fail querying non existing relations
+
+
+
+    ✓ should not allow updates to emailVerified
+
+
+
+    ✓ should not retrieve hidden fields
+
+
+
+    ✓ should not allow updates to hidden fields
+undefined
+    ✓ should revoke sessions when setting paswword with masterKey (#3289)
+
+
+
+undefined
+    ✓ should not send a verification email if the user signed up using oauth
+
+  ParseWebSocket
+    ✓ can be initialized
+    ✓ can handle events defined in typeMap
+    ✓ can handle events which are not defined in typeMap
+    ✓ can send a message
+
+  ParseWebSocketServer
+    ✓ can handle connect event when ws is open
+
+
+
+
+undefined
+  Password Policy:
+    ✓ should show the invalid link page if the user clicks on the password reset link after the token expires
+
+
+
+undefined
+    ✗ should show the reset password page if the user clicks on the password reset link before the token expires
+      - Expected null not to be null.
+    ✓ should fail if passwordPolicy.resetTokenValidityDuration is not a number
+
+
+
+    ✓ should fail if passwordPolicy.resetTokenValidityDuration is zero or a negative number
+
+
+
+    ✓ should fail if passwordPolicy.validatorPattern setting is invalid type
+
+
+
+    ✓ should fail if passwordPolicy.validatorCallback setting is invalid type
+
+
+
+
+
+
+    ✓ signup should fail if password does not conform to the policy enforced using validatorPattern
+
+
+
+    ✓ signup should fail if password does not conform to the policy enforced using validatorPattern string
+
+
+
+    ✓ signup should fail if password is empty
+
+
+
+    ✓ signup should succeed if password conforms to the policy enforced using validatorPattern
+
+
+
+    ✓ signup should succeed if password conforms to the policy enforced using validatorPattern string
+
+
+
+    ✓ signup should fail if password does not conform to the policy enforced using validatorCallback
+
+
+
+    ✓ signup should succeed if password conforms to the policy enforced using validatorCallback
+
+
+
+    ✓ signup should fail if password does not match validatorPattern but succeeds validatorCallback
+
+
+
+    ✓ signup should fail if password matches validatorPattern but fails validatorCallback
+
+
+
+    ✓ signup should succeed if password conforms to both validatorPattern and validatorCallback
+
+
+
+undefined
+    ✗ should reset password if new password conforms to password policy
+      - Failed: should have a token
+
+
+
+undefined
+    ✗ should fail to reset password if the new password does not conform to password policy
+      - Failed: should have a token
+    ✓ should fail if passwordPolicy.doNotAllowUsername is not a boolean value
+
+
+
+
+
+
+    ✓ signup should fail if password contains the username and is not allowed by policy
+
+
+
+    ✓ signup should succeed if password does not contain the username and is not allowed by policy
+
+
+
+    ✓ signup should succeed if password contains the username and it is allowed by policy
+
+
+
+undefined
+    ✗ should fail to reset password if the new password contains username and not allowed by password policy
+      - Failed: should have a token
+
+
+
+undefined
+    ✗ should reset password even if the new password contains user name while the policy allows
+      - Failed: should have a token
+    ✓ should fail if passwordPolicy.maxPasswordAge is not a number
+
+
+
+    ✓ should fail if passwordPolicy.maxPasswordAge is a negative number
+
+
+
+
+
+
+    ✓ should succeed if logged in before password expires
+
+
+
+    ✗ should fail if logged in after password expires
+      - Failed: logIn should have failed
+
+
+
+
+
+
+undefined
+    ✗ should apply password expiry policy to existing user upon first login after policy is enabled
+      - Failed: logIn should have failed
+
+
+
+    ✗ should reset password timestamp when password is reset
+      - Failed: logIn should have failed
+    ✓ should fail if passwordPolicy.maxPasswordHistory is not a number
+
+
+
+    ✓ should fail if passwordPolicy.maxPasswordHistory is a negative number
+
+
+
+    ✓ should fail if passwordPolicy.maxPasswordHistory is greater than 20
+
+
+
+
+
+
+undefined
+    ✗ should fail to reset if the new password is same as the last password
+      - Failed: should have a token
+      - Failed: "Invalid password link"
+      - Failed: Repeat password test failed
+
+
+
+    ✓ should fail if the new password is same as the previous one
+
+
+
+undefined
+undefined
+undefined
+undefined
+    ✓ should fail if the new password is same as the 5th oldest one and policy does not allow the previous 5
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ should succeed if the new password is same as the 6th oldest one and policy does not allow only previous 5
+
+  Pointer Permissions
+    ✗ should work with find
+      - Failed: {"message":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\"_SCHEMA\" SET schema = json_object_set_key(schema, classLevelPermissions, {\"read' at line 1","code":"ER_PARSE_ERROR","errno":1064,"sqlState":"#42000"}
+undefined
+    ✗ should work with write
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✗ should let a proper user find
+      - Expected 'ER_PARSE_ERROR' to be 101.
+      - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1' to be 'Object not found.'.
+      - Expected 2 to be 1.
+    ✓ should not allow creating objects
+    ✗ should handle multiple writeUserFields
+      - Failed: should not fail
+    ✓ should prevent creating pointer permission on missing field
+    ✓ should prevent creating pointer permission on bad field
+    ✓ should prevent creating pointer permission on bad field
+    ✗ tests CLP / Pointer Perms / ACL write (PP Locked)
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✗ tests CLP / Pointer Perms / ACL write (ACL Locked)
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✗ tests CLP / Pointer Perms / ACL write (ACL/PP OK)
+      - Failed: Should not fail saving
+    ✗ tests CLP / Pointer Perms / ACL read (PP locked)
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✗ tests CLP / Pointer Perms / ACL read (PP/ACL OK)
+      - Failed: Should not fail fetching
+    ✗ tests CLP / Pointer Perms / ACL read (ACL locked)
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✗ should let master key find objects
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✗ should let master key get objects
+      - Expected 'ER_PARSE_ERROR' to be 101.
+undefined
+    ✗ should let master key update objects
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✗ should let master key delete objects
+      - Expected 'ER_PARSE_ERROR' to be 101.
+    ✓ should fail with invalid pointer perms
+    ✓ should fail with invalid pointer perms
+
+  PostgresConfigParser.parseQueryParams
+    ✓ creates a map from a query string
+
+  PostgresConfigParser.getDatabaseOptionsFromURI
+    ✓ creates a db options map from a query string
+    ✓ sets the poolSize to 10 if the it is not a number
+
+  PromiseRouter
+    ✓ should properly handle rejects
+
+  public API
+    ✓ should get invalid_link.html
+
+
+
+    ✓ should get choose_password
+    ✓ should get verify_email_success.html
+    ✓ should get password_reset_success.html
+
+
+
+
+  public API without publicServerURL
+    ✓ should get 404 on verify_email
+
+
+
+    ✓ should get 404 choose_password
+
+
+
+    ✓ should get 404 on request_password_reset
+
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  test validate_receipt endpoint
+    ✗ should bypass appstore validation
+      - Expected undefined to equal 'File'.
+      - Expected undefined to equal 'download_file'.
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should fail for missing receipt
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should fail for missing product identifier
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should bypass appstore validation and not find product
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should fail at appstore validation
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ should not create a _Product
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ should be able to update a _Product
+      - Failed: {}
+we messed up
+join error
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order double precision,title text,subtitle text,_rperm json,_wperm json)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:723:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'order double precision,title text,subtitle text,_rperm json,_wperm json)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+here
+here
+Error: Table 'parse_server_mysql_adapter_test_database._product' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ should not be able to remove a require key in a _Product
+      - Expected undefined to equal 111.
+      - Expected 'Product should be found' to equal 'title is required.'.
+
+  PushController
+    ✓ can validate device type when no device type is set
+    ✓ can validate device type when single valid device type is set
+    ✓ can validate device type when multiple valid device types are set
+    ✓ can throw on validateDeviceType when single invalid device type is set
+    ✓ can throw on validateDeviceType when single invalid device type is set
+    ✓ can get expiration time in string format
+    ✓ can get expiration time in number format
+    ✓ can throw on getExpirationTime in invalid format
+    ✓ can get push time in string format
+    ✓ can get push time in number format
+    ✓ can throw on getPushTime in invalid format
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ properly increment badges
+
+
+
+undefined
+undefined
+undefined
+    ✓ properly set badges to 1
+
+
+
+undefined
+undefined
+undefined
+    ✓ properly set badges to 1 with complex query #2903 #3022
+
+
+
+undefined
+undefined
+undefined
+    ✗ properly creates _PushStatus
+      - Expected 'running' to equal 'succeeded'.
+
+
+
+slient but deadly
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 't support this query type yet {\"$ins\":[\"Giants\",\"Mets\"]}"}',`status` = 'fa' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1252:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'t support this query type yet {\\"$ins\\":[\\"Giants\\",\\"Mets\\"]}"}\',`status` = \'fa\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    ✗ should properly report failures in _PushStatus
+      - Expected 'pending' to be 'failed'.
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+    ✓ should support full RESTQuery for increment
+
+
+
+undefined
+undefined
+    ✓ should support object type for alert
+    ✓ should flatten
+    ✓ properly transforms push time
+
+
+
+undefined
+undefined
+    ✓ should not schedule push when not configured
+
+
+
+    ✓ should schedule push when configured
+
+
+
+undefined
+undefined
+    ✗ should not enqueue push when device token is not set
+      - Expected 'running' to be 'succeeded'.
+
+  PushRouter
+    ✓ can get query condition when channels is set
+    ✓ can get query condition when where is set
+    ✓ can get query condition when nothing is set
+    ✓ can throw on getQueryCondition when channels and where are set
+undefined
+    ✓ sends a push through REST
+
+
+
+
+undefined
+undefined
+undefined
+undefined
+undefined
+  PushWorker
+    ✓ should run with small batch
+
+  queryHash
+    ✓ should always hash a query to the same string
+    ✓ should return equivalent hashes for equivalent queries
+    ✓ should not let fields of different types appear similar
+
+  matchesQuery
+    ✓ matches blanket queries
+    ✓ matches existence queries
+    ✓ matches queries with doesNotExist constraint
+    ✓ matches on equality queries
+    ✓ matches on inequalities
+    ✓ matches an $or query
+    ✓ matches $regex queries
+    ✓ matches $nearSphere queries
+    ✓ matches $within queries
+    ✓ matches on subobjects with dot notation
+
+  RedisPubSub
+    ✓ can create publisher
+    ✓ can create subscriber
+
+  rest create
+    ✓ handles _id
+    ✗ handles array, object, date
+      - Expected 1498735256000 to be 1498717256717.
+slient but deadly
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '),`updatedAt` = '2017-06-29 06:20:57' WHERE `objectId` = 'nRmzvLWPWi' AND (`_wpe' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1252:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'),`updatedAt` = \'2017-06-29 06:20:57\' WHERE `objectId` = \'nRmzvLWPWi\' AND (`_wpe\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+ParseError { code: 101, message: 'Object not found.' }
+    ✗ handles object and subdocument
+      - Failed
+    ✓ handles create on non-existent class when disabled client class creation
+    ✓ handles create on existent class when disabled client class creation
+    ✓ handles user signup
+    ✓ handles anonymous user signup
+undefined
+    ✓ handles anonymous user signup and upgrade to new user
+    ✓ handles no anonymous users config
+    ✓ test facebook signup and login
+    ✓ stores pointers
+    ✓ cannot set objectId
+    ✓ test default session length
+    ✗ test specified session length
+      - Expected 7 to equal 2.
+here
+here
+{ Error: Incorrect datetime value: 'null' for column 'expiresAt' at row 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1022:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Incorrect datetime value: \'null\' for column \'expiresAt\' at row 1',
+  code: 'ER_TRUNCATED_WRONG_VALUE',
+  errno: 1292,
+  sqlState: '#22007' }
+    ✗ can create a session with no expiration
+      - Failed: Incorrect datetime value: 'null' for column 'expiresAt' at row 1
+    ✓ can create object in volatileClasses if masterKey
+    ✓ cannot create object in volatileClasses if not masterKey
+
+undefined
+  rest update
+    ✓ ignores createdAt
+
+  rest query
+    ✓ basic query
+    ✓ query with limit
+here
+here
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 117): Error: Column count doesn't match value count at row 1
+    ✗ query for user w/ legacy credentials without masterKey has them stripped from results
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+here
+here
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 118): Error: Column count doesn't match value count at row 1
+    ✗ query for user w/ legacy credentials with masterKey has them stripped from results
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+    ✓ query with include
+    ✓ query non-existent class when disabled client class creation
+    ✓ query existent class when disabled client class creation
+    ✓ query with wrongly encoded parameter
+    ✓ query with limit = 0
+    ✓ query with limit = 0 and count = 1
+    ✓ makes sure null pointers are handed correctly #2189
+
+  SchemaController
+    ✓ can validate one object
+    ✓ can validate one object with dot notation
+    ✓ can validate two objects in a row
+    ✓ can validate Relation object
+    ✓ rejects inconsistent types
+    ✓ updates when new fields are added
+    ✓ class-level permissions test find
+    ✗ class-level permissions test user
+      - Failed: Class permissions should have allowed this query.
+    ✗ class-level permissions test get
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+    ✗ class-level permissions test count
+      - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea' at line 1' to equal 'Permission denied for action count on class Stuff.'.
+    ✓ can add classes without needing an object
+Trace: { Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    at /Users/Squad/Github/parse-server-mysql-test/spec/Schema.spec.js:313:21
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ can update classes without needing an object
+      - Failed: Error creating class: {"message":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\"_SCHEMA\" SET schema = json_object_set_key(schema, classLevelPermissions, {\"find' at line 1","code":"ER_PARSE_ERROR","errno":1064,"sqlState":"#42000"}
+    ✓ will fail to create a class if that class was already created by an object
+    ✗ will resolve class creation races appropriately
+      - Expected undefined to equal 103.
+      - Expected 'Cannot read property 'includes' of undefined' to equal 'Class NewClass already exists.'.
+    ✓ refuses to create classes with invalid names
+    ✓ refuses to add fields with invalid names
+    ✓ refuses to explicitly create the default fields for custom classes
+    ✓ refuses to explicitly create the default fields for non-custom classes
+    ✓ refuses to add fields with invalid types
+    ✓ refuses to add fields with invalid pointer types
+    ✓ refuses to add fields with invalid pointer target
+    ✓ refuses to add fields with invalid Relation type
+    ✓ refuses to add fields with invalid relation target
+    ✓ refuses to add fields with uncreatable pointer target class
+    ✓ refuses to add fields with uncreatable relation target class
+    ✓ refuses to add fields with unknown types
+    ✓ will create classes
+    ✓ creates the default fields for non-custom classes
+    ✓ creates non-custom classes which include relation field
+    ✓ creates non-custom classes which include pointer field
+    ✓ refuses to create two geopoints
+    ✓ can check if a class exists
+    ✓ refuses to delete fields from invalid class names
+    ✓ refuses to delete invalid fields
+    ✓ refuses to delete the default fields
+    ✓ refuses to delete fields from nonexistant classes
+    ✓ refuses to delete fields that dont exist
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+    ✗ drops related collection when deleting relation field
+      - Failed: Relation collection should exist after save.
+      - Failed: {}
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+(node:91015) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 132): TypeError: Cannot read property 'tx' of undefined
+    ✗ can delete relation field when related _Join collection not exist
+      - Expected undefined to equal false.
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+    ✗ can delete string fields and resave as number field
+      - Failed: {}
+undefined
+    ✗ can delete pointer fields and resave as string
+      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+    ✓ can merge schemas
+    ✓ can merge deletions
+    ✓ ignore default field when merge with system class
+undefined
+    ✓ yields a proper schema mismatch error (#2661)
+undefined
+    ✓ yields a proper schema mismatch error bis (#2661)
+undefined
+    ✓ yields a proper schema mismatch error ter (#2661)
+    ✓ properly handles volatile _Schemas
+
+  Class Level Permissions for requiredAuth
+    ✗ required auth test find
+      - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    ✗ required auth test find authenticated
+      - Failed: Should not have failed
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    ✗ required auth should allow create authenticated
+      - Failed: Should not have failed
+    ✗ required auth should reject create when not authenticated
+      - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    ✗ required auth test create/get/update/delete authenticated
+      - Failed: Should not have failed
+    ✗ required auth test create/get/update/delete not authenitcated
+      - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"get"' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+    ✗ required auth test create/get/update/delete not authenitcated
+      - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    ✗ required auth test create/get/update/delete with roles (#3753)
+      - Failed: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1
+
+  SchemaCache
+    ✓ can retrieve a single schema after all schemas stored
+    ✓ does not return all schemas after a single schema is stored
+    ✓ doesn't persist cached data by default
+    ✓ can persist cached data
+
+  schemas
+    ✓ requires the master key to get all schemas
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    ✓ requires the master key to get one schema
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    ✓ asks for the master key if you use the rest key
+    ✓ creates _User schema when server starts
+    ✓ responds with a list of schemas after creating objects
+    ✓ responds with a single schema
+    ✗ treats class names case sensitively
+      - Expected 200 to equal 400.
+      - Expected object to have properties
+          code: 103
+          error: 'Class HASALLPOD does not exist.'
+      Expected object not to have properties
+          className: 'HasAllPOD'
+          fields: Object({ objectId: Object({ type: 'String' }), createdAt: Object({ type: 'Date' }), updatedAt: Object({ type: 'Date' }), ACL: Object({ type: 'ACL' }), aBool: Object({ type: 'Boolean' }), aDate: Object({ type: 'Date' }), aFile: Object({ type: 'File' }), aArray: Object({ type: 'Array' }), aNumber: Object({ type: 'Number' }), aObject: Object({ type: 'Object' }), aString: Object({ type: 'String' }), aGeoPoint: Object({ type: 'GeoPoint' }) })
+          classLevelPermissions: Object({ find: Object({ *: true }), get: Object({ *: true }), create: Object({ *: true }), update: Object({ *: true }), delete: Object({ *: true }), addField: Object({ *: true }) })
+    ✓ requires the master key to create a schema
+Error: unauthorized: master key is required
+    at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
+    at /Users/Squad/Github/parse-server-mysql-test/src/PromiseRouter.js:73:20
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ asks for the master key if you use the rest key
+    ✓ sends an error if you use mismatching class names
+    ✓ sends an error if you use no class name
+    ✓ sends an error if you try to create the same class twice
+    ✓ responds with all fields when you create a class
+    ✓ responds with all fields when getting incomplete schema
+    ✓ lets you specify class name in both places
+    ✓ requires the master key to modify schemas
+    ✓ rejects class name mis-matches in put
+    ✓ refuses to add fields to non-existent classes
+    ✓ refuses to put to existing fields, even if it would not be a change
+    ✓ refuses to delete non-existent fields
+    ✓ refuses to add a geopoint to a class that already has one
+    ✓ refuses to add two geopoints
+TypeError: Cannot read property 'tx' of undefined
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:866:16
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ allows you to delete and add a geopoint in the same request
+      - Expected [ DiffDeleted({ kind: 'D', path: [ 'code' ], lhs: 1 }), DiffDeleted({ kind: 'D', path: [ 'message' ], lhs: 'Internal server error.' }), DiffNew({ kind: 'N', path: [ 'className' ], rhs: 'NewClass' }), DiffNew({ kind: 'N', path: [ 'fields' ], rhs: Object({ ACL: Object({ type: 'ACL' }), createdAt: Object({ type: 'Date' }), objectId: Object({ type: 'String' }), updatedAt: Object({ type: 'Date' }), geo2: Object({ type: 'GeoPoint' }) }) }), DiffNew({ kind: 'N', path: [ 'classLevelPermissions' ], rhs: Object({ find: Object({ *: true }), create: Object({ *: true }), get: Object({ *: true }), update: Object({ *: true }), addField: Object({ *: true }), delete: Object({ *: true }) }) }) ] to equal undefined.
+    ✓ put with no modifications returns all fields
+    ✓ lets you add fields
+    ✓ lets you add fields to system schema
+TypeError: Cannot read property 'tx' of undefined
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:866:16
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ lets you delete multiple fields and check schema
+      - Expected object to have properties
+          className: 'SimpleOne'
+          fields: Object({ ACL: Object({ type: 'ACL' }), createdAt: Object({ type: 'Date' }), updatedAt: Object({ type: 'Date' }), objectId: Object({ type: 'String' }), aBool: Object({ type: 'Boolean' }) })
+          classLevelPermissions: Object({ find: Object({ *: true }), create: Object({ *: true }), get: Object({ *: true }), update: Object({ *: true }), addField: Object({ *: true }), delete: Object({ *: true }) })
+      Expected object not to have properties
+          code: 1
+          message: 'Internal server error.'
+TypeError: Cannot read property 'tx' of undefined
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:866:16
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ lets you delete multiple fields and add fields
+      - Expected object to have properties
+          className: 'HasAllPOD'
+          fields: Object({ ACL: Object({ type: 'ACL' }), createdAt: Object({ type: 'Date' }), updatedAt: Object({ type: 'Date' }), objectId: Object({ type: 'String' }), aBool: Object({ type: 'Boolean' }), aDate: Object({ type: 'Date' }), aObject: Object({ type: 'Object' }), aArray: Object({ type: 'Array' }), aGeoPoint: Object({ type: 'GeoPoint' }), aFile: Object({ type: 'File' }), aNewNumber: Object({ type: 'Number' }), aNewString: Object({ type: 'String' }), aNewPointer: Object({ type: 'Pointer', targetClass: 'HasAllPOD' }), aNewRelation: Object({ type: 'Relation', targetClass: 'HasAllPOD' }) })
+          classLevelPermissions: Object({ find: Object({ *: true }), create: Object({ *: true }), get: Object({ *: true }), update: Object({ *: true }), addField: Object({ *: true }), delete: Object({ *: true }) })
+      Expected object not to have properties
+          code: 1
+          message: 'Internal server error.'
+    ✓ will not delete any fields if the additions are invalid
+    ✓ requires the master key to delete schemas
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+    ✓ refuses to delete non-empty collection
+    ✓ fails when deleting collections with invalid class names
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+Error: Table 'parse_server_mysql_adapter_test_database.missing' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1443:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ does not fail when deleting nonexistant collections
+      - Expected 500 to equal 200.
+      - Expected object not to have properties
+          code: 1
+          message: 'Internal server error.'
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`className" = MyOtherClass' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:791:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+    ✗ deletes collections including join tables
+      - Expected 500 to equal 200.
+      - Expected object not to have properties
+          code: 1
+          message: 'Internal server error.'
+      - Expected 200 to equal 400.
+      - Expected undefined to equal 103.
+      - Expected undefined to equal 'Class MyOtherClass does not exist.'.
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`className" = NewClassForDelete' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:791:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ deletes schema when actual collection does not exist
+      - Expected 500 to equal 200.
+      - Expected object not to have properties
+          code: 1
+          message: 'Internal server error.'
+      - Expected true to equal false.
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`className" = NewClassForDelete' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:791:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ deletes schema when actual collection exists
+      - Expected 500 to equal 200.
+      - Expected object not to have properties
+          code: 1
+          message: 'Internal server error.'
+      - Expected true to equal false.
+    ✓ should set/get schema permissions
+    ✓ should fail setting schema permissions with invalid key
+    ✓ should not be able to add a field
+    ✓ should be able to add a field
+    ✓ should throw with invalid userId (>10 chars)
+    ✓ should throw with invalid userId (<10 chars)
+    ✓ should throw with invalid userId (invalid char)
+    ✓ should throw with invalid * (spaces)
+    ✓ should throw with invalid * (spaces)
+    ✓ should throw with invalid value
+    ✓ should throw with invalid value
+undefined
+    ✓ validate CLP 1
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ validate CLP 2
+      - Failed: User should be able to find!
+      - Failed
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, null) ' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ validate CLP 3
+      - Failed: User should be able to find!
+      - Failed
+undefined
+    ✓ validate CLP 4
+undefined
+    ✓ validate CLP 5
+    ✓ can query with include and CLP (issue #2005)
+    ✓ can add field as master (issue #1257)
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ can login when addFields is false (issue #1355)
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+{ Error: Table 'parse_server_mysql_adapter_test_database.information_schema.tables' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:633:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.information_schema.tables\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`className" = MyClass' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:791:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✗ gives correct response when deleting a schema with CLPs (regression test #1919)
+      - Expected 500 to equal 200.
+      - Expected object not to have properties
+          code: 1
+          message: 'Internal server error.'
+undefined
+    ✓ regression test for #1991
+undefined
+Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"read' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:643:28
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+    ✓ regression test for #2246
+
+  SessionTokenCache
+    ✓ can get undefined userId
+    ✓ can get existing userId
+    ✓ can get new userId
+
+  Subscription
+    ✓ can be initialized
+    ✓ can check it has subscribing clients
+    ✓ can check it does not have subscribing clients
+    ✓ can add one request for one client
+    ✓ can add requests for one client
+    ✓ can add requests for clients
+    ✓ can delete requests for nonexistent client
+    ✓ can delete nonexistent request for one client
+    ✓ can delete some requests for one client
+    ✓ can delete all requests for one client
+    ✓ can delete requests for multiple clients
+
+  Twitter Auth
+    ✓ should use the proper configuration
+    ✓ Should fail with missing options
+
+
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1413:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'unique)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+  Uniqueness
+    ✗ fail when create duplicate value in unique field
+      - Expected 'ER_PARSE_ERROR' to equal 137.
+undefined
+    ✗ unique indexing works on pointer fields
+      - Failed: save should have failed due to duplicate value
+
+{ Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key)' at line 1
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1413:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'key)\' at line 1',
+  code: 'ER_PARSE_ERROR',
+  errno: 1064,
+  sqlState: '#42000' }
+    ✗ fails when attempting to ensure uniqueness of fields that are not currently unique
+      - Expected 'ER_PARSE_ERROR' to equal 137.
+
+{ Error: Table 'parse_server_mysql_adapter_test_database.compoundunique' doesn't exist
+    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1413:33
+    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
+  message: 'Table \'parse_server_mysql_adapter_test_database.compoundunique\' doesn\'t exist',
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sqlState: '#42S02' }
+    ✗ can do compound uniqueness
+      - Expected 'ER_NO_SUCH_TABLE' to equal 137.
+
+  UserController
+
+    sendVerificationEmail
+
+      parseFrameURL not provided
+        ✓ uses publicServerURL
+
+
+
+
+      parseFrameURL provided
+        ✓ uses parseFrameURL and includes the destination in the link parameter
+
+
+
+
+undefined
+  Personally Identifiable Information
+    ✓ should be able to get own PII via API with object
+undefined
+    ✓ should not be able to get PII via API with object
+undefined
+    ✓ should be able to get PII via API with object using master key
+undefined
+    ✓ should be able to get own PII via API with Find
+undefined
+    ✓ should not get PII via API with Find
+undefined
+    ✓ should get PII via API with Find using master key
+undefined
+    ✓ should be able to get own PII via API with Get
+undefined
+    ✓ should not get PII via API with Get
+undefined
+    ✓ should get PII via API with Get using master key
+undefined
+    ✓ should not get PII via REST
+undefined
+    ✓ should get PII via REST with self credentials
+undefined
+    ✓ should get PII via REST using master key
+undefined
+    ✓ should not get PII via REST by ID
+undefined
+    ✓ should get PII via REST by ID  with self credentials
+undefined
+    ✓ should get PII via REST by ID  with master key
+undefined
+
+
+
+
+    with configured sensitive fields
+      ✓ should be able to get own PII via API with object
+undefined
+
+
+
+      ✓ should not be able to get PII via API with object
+undefined
+
+
+
+      ✓ should be able to get PII via API with object using master key
+undefined
+
+
+
+      ✓ should be able to get own PII via API with Find
+undefined
+
+
+
+      ✓ should not get PII via API with Find
+undefined
+
+
+
+      ✓ should get PII via API with Find using master key
+undefined
+
+
+
+      ✓ should be able to get own PII via API with Get
+undefined
+
+
+
+      ✓ should not get PII via API with Get
+undefined
+
+
+
+      ✓ should get PII via API with Get using master key
+undefined
+
+
+
+      ✓ should not get PII via REST
+undefined
+
+
+
+      ✓ should get PII via REST with self credentials
+undefined
+
+
+
+      ✓ should get PII via REST using master key
+undefined
+
+
+
+      ✓ should not get PII via REST by ID
+undefined
+
+
+
+      ✓ should get PII via REST by ID  with self credentials
+undefined
+
+
+
+      ✓ should get PII via REST by ID  with master key
+
+
+
+
+  Custom Pages, Email Verification, Password Reset
+    ✓ should set the custom pages
+
+
+
+    ✗ sends verification email if email verification is enabled
+      - Expected 0 to equal false.
+
+
+
+    ✓ does not send verification email when verification is enabled and email is not set
+
+
+
+undefined
+    ✗ does send a validation email when updating the email
+      - Expected 0 to equal false.
+
+
+
+undefined
+    ✗ does send a validation email with valid verification link when updating the email
+      - Expected 0 to equal false.
+
+
+
+undefined
+undefined
+    ✗ does send with a simple adapter
+      - Expected undefined to be 'testSendSimpleAdapter@parse.com'.
+
+
+
+    ✓ prevents user from login if email is not verified but preventLoginWithUnverifiedEmail is set to true
+
+
+
+undefined
+    ✗ allows user to login only after user clicks on the link to confirm email address if preventLoginWithUnverifiedEmail is set to true
+      - Expected 1 to equal true.
+      - Expected 1 to be true.
+
+
+
+    ✗ allows user to login if email is not verified but preventLoginWithUnverifiedEmail is set to false
+      - Expected 0 to be false.
+
+
+
+    ✓ fails if you include an emailAdapter, set a publicServerURL, but have no appName and send a password reset email
+
+
+
+    ✓ fails if you include an emailAdapter, have an appName, but have no publicServerURL and send a password reset email
+
+
+
+    ✓ fails if you set a publicServerURL, have an appName, but no emailAdapter and send a password reset email
+
+
+
+undefined
+    ✓ succeeds sending a password reset email if appName, publicServerURL, and email adapter are prodvided
+
+
+
+undefined
+    ✗ succeeds sending a password reset username if appName, publicServerURL, and email adapter are prodvided
+      - Expected undefined to equal 'testValidConfig@parse.com'.
+
+
+
+    ✓ does not send verification email if email verification is disabled
+
+
+
+    ✓ receives the app name and user in the adapter
+
+
+
+undefined
+    ✗ when you click the link in the email it sets emailVerified to true and redirects you
+      - Expected 1 to equal true.
+
+
+
+    ✓ redirects you to invalid link if you try to verify email incorrecly
+
+
+
+undefined
+    ✓ redirects you to invalid verification link page if you try to validate a nonexistant users email
+
+
+
+    ✓ redirects you to link send fail page if you try to resend a link for a nonexistant user
+
+
+
+undefined
+    ✗ does not update email verified if you use an invalid token
+      - Expected 0 to equal false.
+
+
+
+undefined
+    ✗ should send a password reset link
+      - Expected null not to be null.
+
+
+
+    ✓ redirects you to invalid link if you try to request password for a nonexistant users email
+
+
+
+undefined
+    ✗ should programatically reset password
+      - Failed: should have a token
+
+  info logs
+    ✓ Verify INFO logs
+
+  error logs
+    ✓ Verify ERROR logs
+
+
+
+
+  verbose logs
+    ✓ mask sensitive information in _User class
+
+**************************************************
+*                    Failures                    *
+**************************************************
+
+1) Cloud Code should fully delete objects when using `unset` with beforeSave (regression test for #1840)
+  - Failed: {"code":101,"message":"Object not found."}
+
+2) Cloud Code cloud jobs should define a job
+  - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+
+3) Cloud Code cloud jobs should run with master key
+  - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+
+4) Cloud Code cloud jobs should run with master key basic auth
+  - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+
+5) Cloud Code cloud jobs should set the message / success on the job
+  - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+
+6) Cloud Code cloud jobs should set the failure on the job
+  - Failed: 500 - "{\"code\":1,\"message\":\"Internal server error.\"}"
+
+7) beforeFind hooks should use modify
+  - Expected 1 to be true.
+
+8) afterFind hooks should alter select
+  - Expected 1 to be true.
+
+9) afterFind hooks should not alter select
+  - Expected 1 to be true.
+  - Expected 1 to be true.
+
+10) Email Verification Token Expiration:  emailVerified should set to false, if the user does not verify their email before the email verify token expires
+  - Expected 0 to equal false.
+
+11) Email Verification Token Expiration:  if user clicks on the email verify link before email verification token expiration then emailVerified should be true
+  - Expected 1 to equal true.
+
+12) Email Verification Token Expiration:  if user clicks on the email verify link before email verification token expiration then user should be able to login
+  - Expected 1 to be true.
+
+13) Email Verification Token Expiration:  sets the _email_verify_token_expires_at and _email_verify_token fields after user SignUp
+  - Expected 0 to equal false.
+
+14) Email Verification Token Expiration:  unsets the _email_verify_token_expires_at and _email_verify_token fields in the User class if email verification is successful
+  - Expected 1 to equal true.
+
+15) Email Verification Token Expiration:  clicking on the email verify link by an email VERIFIED user that was setup before enabling the expire email verify token should show email verify email success
+  - Expected 1 to equal true.
+
+16) Email Verification Token Expiration:  clicking on the email verify link by an email UNVERIFIED user that was setup before enabling the expire email verify token should show invalid verficiation link page
+  - Expected 0 to equal false.
+
+17) Email Verification Token Expiration:  client should not see the _email_verify_token_expires_at field
+  - Expected 0 to equal false.
+
+18) miscellaneous fail to create a duplicate username
+  - Expected 2 to equal 1.
+  - Failed: one of the users should not have been created
+
+19) miscellaneous ensure that email is uniquely indexed
+  - Expected 2 to equal 1.
+  - Failed: one of the users should not have been created
+
+20) a GlobalConfig can add and retrive files
+  - TypeError: Cannot read property 'name' of undefined
+
+21) a GlobalConfig can add and retrive Geopoints
+  - TypeError: Cannot read property 'latitude' of undefined
+
+22) a GlobalConfig properly handles delete op
+  - Expected [ 'US', 'DK' ] to be undefined.
+  - Expected undefined to be 'bar'.
+
+23) Parse.Object testing createdAt doesn't change
+  - Expected 1498716996657 to equal 1498734996000.
+
+24) Parse.Object testing increment
+  - Expected 1 to equal 6.
+
+25) Parse.Object testing addUnique with object
+  - Failed: {"code":101,"message":"Object not found."}
+
+26) Parse.Object testing removes with object
+  - Failed: {"code":101,"message":"Object not found."}
+
+27) Parse.Object testing bytes work
+  - Expected false to be truthy '{"code":1}'.
+
+28) Parse.Object testing fetchAll updates dates
+  - Expected 1498735017000 to equal 1498717017602.
+
+29) Parse.Query Full Text Search testing fullTextSearch: $search
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+30) Parse.Query Full Text Search testing fullTextSearch: $search, sort
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+31) Parse.Query Full Text Search testing fullTextSearch: $language
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+32) Parse.Query Full Text Search testing fullTextSearch: $diacriticSensitive
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+33) Parse.Query Full Text Search testing fullTextSearch: $search, invalid input
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+34) Parse.Query Full Text Search testing fullTextSearch: $language, invalid input
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+35) Parse.Query Full Text Search testing fullTextSearch: $caseSensitive, invalid input
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+36) Parse.Query Full Text Search testing fullTextSearch: $diacriticSensitive, invalid input
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+37) Parse.Query testing basic query
+  - Failed: failed to connect to server [localhost:27017] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:27017]
+
+38) Parse.Relation testing simple add and remove relation
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+39) Parse.Relation testing compound add and remove relation
+  - Expected false to be truthy undefined.
+
+40) Parse.Relation testing should properly get related objects with unfetched queries
+  - Expected 1 to be true.
+  - Expected 1 to be true.
+  - Expected 1 to be true.
+  - Expected 1 to be true.
+  - Expected 1 to be true.
+  - Expected 0 to be false.
+  - Expected 0 to be false.
+  - Expected 0 to be false.
+  - Expected 0 to be false.
+  - Expected 0 to be false.
+
+41) Parse Role testing Different _Role objects cannot have the same name.
+  - Failed: _Role cannot have the same name as another role
+
+42) Parse Role testing should add multiple users to a role and remove users
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+43) Password Policy:  should show the reset password page if the user clicks on the password reset link before the token expires
+  - Expected null not to be null.
+
+44) Password Policy:  should reset password if new password conforms to password policy
+  - Failed: should have a token
+
+45) Password Policy:  should fail to reset password if the new password does not conform to password policy
+  - Failed: should have a token
+
+46) Password Policy:  should fail to reset password if the new password contains username and not allowed by password policy
+  - Failed: should have a token
+
+47) Password Policy:  should reset password even if the new password contains user name while the policy allows
+  - Failed: should have a token
+
+48) Password Policy:  should fail if logged in after password expires
+  - Failed: logIn should have failed
+
+49) Password Policy:  should apply password expiry policy to existing user upon first login after policy is enabled
+  - Failed: logIn should have failed
+
+50) Password Policy:  should reset password timestamp when password is reset
+  - Failed: logIn should have failed
+
+51) Password Policy:  should fail to reset if the new password is same as the last password
+  - Failed: should have a token
+  - Failed: "Invalid password link"
+  - Failed: Repeat password test failed
+
+52) Pointer Permissions should work with find
+  - Failed: {"message":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\"_SCHEMA\" SET schema = json_object_set_key(schema, classLevelPermissions, {\"read' at line 1","code":"ER_PARSE_ERROR","errno":1064,"sqlState":"#42000"}
+
+53) Pointer Permissions should work with write
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+54) Pointer Permissions should let a proper user find
+  - Expected 'ER_PARSE_ERROR' to be 101.
+  - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1' to be 'Object not found.'.
+  - Expected 2 to be 1.
+
+55) Pointer Permissions should handle multiple writeUserFields
+  - Failed: should not fail
+
+56) Pointer Permissions tests CLP / Pointer Perms / ACL write (PP Locked)
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+57) Pointer Permissions tests CLP / Pointer Perms / ACL write (ACL Locked)
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+58) Pointer Permissions tests CLP / Pointer Perms / ACL write (ACL/PP OK)
+  - Failed: Should not fail saving
+
+59) Pointer Permissions tests CLP / Pointer Perms / ACL read (PP locked)
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+60) Pointer Permissions tests CLP / Pointer Perms / ACL read (PP/ACL OK)
+  - Failed: Should not fail fetching
+
+61) Pointer Permissions tests CLP / Pointer Perms / ACL read (ACL locked)
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+62) Pointer Permissions should let master key find objects
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+63) Pointer Permissions should let master key get objects
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+64) Pointer Permissions should let master key update objects
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+65) Pointer Permissions should let master key delete objects
+  - Expected 'ER_PARSE_ERROR' to be 101.
+
+66) test validate_receipt endpoint should bypass appstore validation
+  - Expected undefined to equal 'File'.
+  - Expected undefined to equal 'download_file'.
+
+67) test validate_receipt endpoint should be able to update a _Product
+  - Failed: {}
+
+68) test validate_receipt endpoint should not be able to remove a require key in a _Product
+  - Expected undefined to equal 111.
+  - Expected 'Product should be found' to equal 'title is required.'.
+
+69) PushController properly creates _PushStatus
+  - Expected 'running' to equal 'succeeded'.
+
+70) PushController should properly report failures in _PushStatus
+  - Expected 'pending' to be 'failed'.
+
+71) PushController should not enqueue push when device token is not set
+  - Expected 'running' to be 'succeeded'.
+
+72) rest create handles array, object, date
+  - Expected 1498735256000 to be 1498717256717.
+
+73) rest create handles object and subdocument
+  - Failed
+
+74) rest create test specified session length
+  - Expected 7 to equal 2.
+
+75) rest create can create a session with no expiration
+  - Failed: Incorrect datetime value: 'null' for column 'expiresAt' at row 1
+
+76) rest query query for user w/ legacy credentials without masterKey has them stripped from results
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+77) rest query query for user w/ legacy credentials with masterKey has them stripped from results
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+78) SchemaController class-level permissions test user
+  - Failed: Class permissions should have allowed this query.
+
+79) SchemaController class-level permissions test get
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+80) SchemaController class-level permissions test count
+  - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea' at line 1' to equal 'Permission denied for action count on class Stuff.'.
+
+81) SchemaController can update classes without needing an object
+  - Failed: Error creating class: {"message":"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\"_SCHEMA\" SET schema = json_object_set_key(schema, classLevelPermissions, {\"find' at line 1","code":"ER_PARSE_ERROR","errno":1064,"sqlState":"#42000"}
+
+82) SchemaController will resolve class creation races appropriately
+  - Expected undefined to equal 103.
+  - Expected 'Cannot read property 'includes' of undefined' to equal 'Class NewClass already exists.'.
+
+83) SchemaController drops related collection when deleting relation field
+  - Failed: Relation collection should exist after save.
+  - Failed: {}
+
+84) SchemaController can delete relation field when related _Join collection not exist
+  - Expected undefined to equal false.
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+85) SchemaController can delete string fields and resave as number field
+  - Failed: {}
+
+86) SchemaController can delete pointer fields and resave as string
+  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+
+87) Class Level Permissions for requiredAuth required auth test find
+  - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+
+88) Class Level Permissions for requiredAuth required auth test find authenticated
+  - Failed: Should not have failed
+
+89) Class Level Permissions for requiredAuth required auth should allow create authenticated
+  - Failed: Should not have failed
+
+90) Class Level Permissions for requiredAuth required auth should reject create when not authenticated
+  - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"crea' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+
+91) Class Level Permissions for requiredAuth required auth test create/get/update/delete authenticated
+  - Failed: Should not have failed
+
+92) Class Level Permissions for requiredAuth required auth test create/get/update/delete not authenitcated
+  - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"get"' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+
+93) Class Level Permissions for requiredAuth required auth test create/get/update/delete not authenitcated
+  - Expected 'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1' to equal 'Permission denied, user needs to be authenticated.'.
+
+94) Class Level Permissions for requiredAuth required auth test create/get/update/delete with roles (#3753)
+  - Failed: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"_SCHEMA" SET schema = json_object_set_key(schema, classLevelPermissions, {"find' at line 1
+
+95) schemas treats class names case sensitively
+  - Expected 200 to equal 400.
+  - Expected object to have properties
+      code: 103
+      error: 'Class HASALLPOD does not exist.'
+  Expected object not to have properties
+      className: 'HasAllPOD'
+      fields: Object({ objectId: Object({ type: 'String' }), createdAt: Object({ type: 'Date' }), updatedAt: Object({ type: 'Date' }), ACL: Object({ type: 'ACL' }), aBool: Object({ type: 'Boolean' }), aDate: Object({ type: 'Date' }), aFile: Object({ type: 'File' }), aArray: Object({ type: 'Array' }), aNumber: Object({ type: 'Number' }), aObject: Object({ type: 'Object' }), aString: Object({ type: 'String' }), aGeoPoint: Object({ type: 'GeoPoint' }) })
+      classLevelPermissions: Object({ find: Object({ *: true }), get: Object({ *: true }), create: Object({ *: true }), update: Object({ *: true }), delete: Object({ *: true }), addField: Object({ *: true }) })
+
+96) schemas allows you to delete and add a geopoint in the same request
+  - Expected [ DiffDeleted({ kind: 'D', path: [ 'code' ], lhs: 1 }), DiffDeleted({ kind: 'D', path: [ 'message' ], lhs: 'Internal server error.' }), DiffNew({ kind: 'N', path: [ 'className' ], rhs: 'NewClass' }), DiffNew({ kind: 'N', path: [ 'fields' ], rhs: Object({ ACL: Object({ type: 'ACL' }), createdAt: Object({ type: 'Date' }), objectId: Object({ type: 'String' }), updatedAt: Object({ type: 'Date' }), geo2: Object({ type: 'GeoPoint' }) }) }), DiffNew({ kind: 'N', path: [ 'classLevelPermissions' ], rhs: Object({ find: Object({ *: true }), create: Object({ *: true }), get: Object({ *: true }), update: Object({ *: true }), addField: Object({ *: true }), delete: Object({ *: true }) }) }) ] to equal undefined.
+
+97) schemas lets you delete multiple fields and check schema
+  - Expected object to have properties
+      className: 'SimpleOne'
+      fields: Object({ ACL: Object({ type: 'ACL' }), createdAt: Object({ type: 'Date' }), updatedAt: Object({ type: 'Date' }), objectId: Object({ type: 'String' }), aBool: Object({ type: 'Boolean' }) })
+      classLevelPermissions: Object({ find: Object({ *: true }), create: Object({ *: true }), get: Object({ *: true }), update: Object({ *: true }), addField: Object({ *: true }), delete: Object({ *: true }) })
+  Expected object not to have properties
+      code: 1
+      message: 'Internal server error.'
+
+98) schemas lets you delete multiple fields and add fields
+  - Expected object to have properties
+      className: 'HasAllPOD'
+      fields: Object({ ACL: Object({ type: 'ACL' }), createdAt: Object({ type: 'Date' }), updatedAt: Object({ type: 'Date' }), objectId: Object({ type: 'String' }), aBool: Object({ type: 'Boolean' }), aDate: Object({ type: 'Date' }), aObject: Object({ type: 'Object' }), aArray: Object({ type: 'Array' }), aGeoPoint: Object({ type: 'GeoPoint' }), aFile: Object({ type: 'File' }), aNewNumber: Object({ type: 'Number' }), aNewString: Object({ type: 'String' }), aNewPointer: Object({ type: 'Pointer', targetClass: 'HasAllPOD' }), aNewRelation: Object({ type: 'Relation', targetClass: 'HasAllPOD' }) })
+      classLevelPermissions: Object({ find: Object({ *: true }), create: Object({ *: true }), get: Object({ *: true }), update: Object({ *: true }), addField: Object({ *: true }), delete: Object({ *: true }) })
+  Expected object not to have properties
+      code: 1
+      message: 'Internal server error.'
+
+99) schemas does not fail when deleting nonexistant collections
+  - Expected 500 to equal 200.
+  - Expected object not to have properties
+      code: 1
+      message: 'Internal server error.'
+
+100) schemas deletes collections including join tables
+  - Expected 500 to equal 200.
+  - Expected object not to have properties
+      code: 1
+      message: 'Internal server error.'
+  - Expected 200 to equal 400.
+  - Expected undefined to equal 103.
+  - Expected undefined to equal 'Class MyOtherClass does not exist.'.
+
+101) schemas deletes schema when actual collection does not exist
+  - Expected 500 to equal 200.
+  - Expected object not to have properties
+      code: 1
+      message: 'Internal server error.'
+  - Expected true to equal false.
+
+102) schemas deletes schema when actual collection exists
+  - Expected 500 to equal 200.
+  - Expected object not to have properties
+      code: 1
+      message: 'Internal server error.'
+  - Expected true to equal false.
+
+103) schemas validate CLP 2
+  - Failed: User should be able to find!
+  - Failed
+
+104) schemas validate CLP 3
+  - Failed: User should be able to find!
+  - Failed
+
+105) schemas gives correct response when deleting a schema with CLPs (regression test #1919)
+  - Expected 500 to equal 200.
+  - Expected object not to have properties
+      code: 1
+      message: 'Internal server error.'
+
+106) Uniqueness fail when create duplicate value in unique field
+  - Expected 'ER_PARSE_ERROR' to equal 137.
+
+107) Uniqueness unique indexing works on pointer fields
+  - Failed: save should have failed due to duplicate value
+
+108) Uniqueness fails when attempting to ensure uniqueness of fields that are not currently unique
+  - Expected 'ER_PARSE_ERROR' to equal 137.
+
+109) Uniqueness can do compound uniqueness
+  - Expected 'ER_NO_SUCH_TABLE' to equal 137.
+
+110) Custom Pages, Email Verification, Password Reset sends verification email if email verification is enabled
+  - Expected 0 to equal false.
+
+111) Custom Pages, Email Verification, Password Reset does send a validation email when updating the email
+  - Expected 0 to equal false.
+
+112) Custom Pages, Email Verification, Password Reset does send a validation email with valid verification link when updating the email
+  - Expected 0 to equal false.
+
+113) Custom Pages, Email Verification, Password Reset does send with a simple adapter
+  - Expected undefined to be 'testSendSimpleAdapter@parse.com'.
+
+114) Custom Pages, Email Verification, Password Reset allows user to login only after user clicks on the link to confirm email address if preventLoginWithUnverifiedEmail is set to true
+  - Expected 1 to equal true.
+  - Expected 1 to be true.
+
+115) Custom Pages, Email Verification, Password Reset allows user to login if email is not verified but preventLoginWithUnverifiedEmail is set to false
+  - Expected 0 to be false.
+
+116) Custom Pages, Email Verification, Password Reset succeeds sending a password reset username if appName, publicServerURL, and email adapter are prodvided
+  - Expected undefined to equal 'testValidConfig@parse.com'.
+
+117) Custom Pages, Email Verification, Password Reset when you click the link in the email it sets emailVerified to true and redirects you
+  - Expected 1 to equal true.
+
+118) Custom Pages, Email Verification, Password Reset does not update email verified if you use an invalid token
+  - Expected 0 to equal false.
+
+119) Custom Pages, Email Verification, Password Reset should send a password reset link
+  - Expected null not to be null.
+
+120) Custom Pages, Email Verification, Password Reset should programatically reset password
+  - Failed: should have a token
+
+**************************************************
+*                    Pending                     *
+**************************************************
+
+1) Cloud Code test afterSave ignoring promise, object not found
+  Temporarily disabled with xit
+
+2) Cloud Code Logger should log a changed beforeSave indicating a change
+  needs more work.....
+
+3) parseObjectToMongoObjectForCreate a delete op
+  Temporarily disabled with xit
+
+4) miscellaneous afterSave flattens custom operations
+  Temporarily disabled with xit
+
+5) miscellaneous should return the updated fields on PUT
+  Temporarily disabled with xit
+
+6) miscellaneous properly returns incremented values (#1554)
+  Temporarily disabled with xit
+
+7) Parse.GeoPoint testing geo max distance medium
+  Temporarily disabled with xit
+
+8) Parse.GeoPoint testing geo max distance small
+  Temporarily disabled with xit
+
+9) Parse.GeoPoint testing geo max distance in km everywhere
+  Temporarily disabled with xit
+
+10) Parse.GeoPoint testing geo max distance in km california
+  Temporarily disabled with xit
+
+11) Parse.GeoPoint testing geo max distance in km bay area
+  Temporarily disabled with xit
+
+12) Parse.GeoPoint testing geo max distance in km mid peninsula
+  Temporarily disabled with xit
+
+13) Parse.GeoPoint testing geo max distance in miles california
+  Temporarily disabled with xit
+
+14) Parse.GeoPoint testing geo max distance in miles bay area
+  Temporarily disabled with xit
+
+15) Parse.GeoPoint testing geo max distance in miles mid peninsula
+  Temporarily disabled with xit
+
+16) Installations creating multiple devices with same device token works
+  Temporarily disabled with xit
+
+17) Installations update ios device token with duplicate token different app
+  Temporarily disabled with xit
+
+18) Parse.Object testing fetchAll User attributes get merged
+  Temporarily disabled with xit
+
+19) Parse.Query testing order by _created_at
+  Temporarily disabled with xit
+
+20) Parse.Query testing order by createdAt
+  Temporarily disabled with xit
+
+21) Parse.Query testing order by _updated_at
+  Temporarily disabled with xit
+
+22) Parse.Query testing order by updatedAt
+  Temporarily disabled with xit
+
+23) Parse.Query testing contains
+  Temporarily disabled with xit
+
+24) Parse.Query testing startsWith
+  Temporarily disabled with xit
+
+25) Parse.Query testing endsWith
+  Temporarily disabled with xit
+
+26) Parse.Query testing querying for null value
+  Temporarily disabled with xit
+
+27) Parse.Query testing should find objects with array of pointers
+  Temporarily disabled with xit
+
+28) Parse.User testing should cleanup null authData keys (regression test for #935)
+  Temporarily disabled with xit
+
+29) Parse.User testing should not serve null authData keys
+  Temporarily disabled with xit
+
+Executed 1291 of 1323 specs (120 FAILED) (29 PENDING) (3 SKIPPED) in 10 mins 35 secs.
+npm ERR! Test failed.  See above for more details.
+Squads-MacBook-Pro:parse-server-mysql-test Squad$

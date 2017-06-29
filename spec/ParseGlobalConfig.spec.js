@@ -66,9 +66,11 @@ describe('a GlobalConfig', () => {
         'X-Parse-Master-Key'    : 'test'
       }
     }, (error, response, body) => {
+      console.log(body);
       expect(response.statusCode).toEqual(200);
       expect(body.result).toEqual(true);
       Parse.Config.get().then((res) => {
+        console.log(res);
         const file = res.get('file');
         expect(file.name()).toBe('name');
         expect(file.url()).toBe('http://url');

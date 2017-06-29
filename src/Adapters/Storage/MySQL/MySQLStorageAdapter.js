@@ -1024,12 +1024,15 @@ export class MySQLStorageAdapter {
         if (error.code === MySQLDataTruncatedWarn) {
           //Ignore Warning
           return;
+        } else if(error.code === MySQLDuplicateObjectError) {
+          return;
         } else {
           throw error;
         }
       })
       .then(() => ({ ops: [object] }))
       .catch((error) => {
+        console.log('here');
         console.log('here');
         if (error.code === PostgresUniqueIndexViolationError) {
           throw new Parse.Error(Parse.Error.DUPLICATE_VALUE, 'A duplicate value for a field with unique values was provided');
