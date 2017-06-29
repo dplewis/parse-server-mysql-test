@@ -135,6 +135,7 @@ export function pushStatusHandler(config, objectId = newObjectId()) {
     const object = {
       objectId,
       createdAt: now,
+      updatedAt: now,
       pushTime: pushTime.toISOString(),
       query: JSON.stringify(where),
       payload: payloadString,

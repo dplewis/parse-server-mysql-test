@@ -10,7 +10,9 @@ const PostgresDuplicateRelationError = '42P07';
 const MySQLDuplicateColumnError = 'ER_DUP_FIELDNAME';
 const PostgresDuplicateObjectError = '42710';
 const MySQLDuplicateObjectError = 'ER_DUP_ENTRY';
+const MySQLDataTruncatedWarn = 'WARN_DATA_TRUNCATED';
 const MySQLUniqueIndexViolationError = 'ER_DUP_KEYNAME';
+const MySQLBlobKeyWithoutLengthError = 'ER_BLOB_KEY_WITHOUT_LENGTH';
 const PostgresUniqueIndexViolationError = '23505';
 const PostgresTransactionAbortedError = '25P02';
 const logger = require('../../../logger');
@@ -56,6 +58,9 @@ const ParseToPosgresComparator = {
 const toPostgresValue = value => {
   if (typeof value === 'object') {
     if (value.__type === 'Date') {
+      if (!value.iso) {
+        return null;
+      }
       return new Date(value.iso).toISOString().slice(0, 19).replace('T', ' ')
     }
     if (value.__type === 'File') {
@@ -224,15 +229,15 @@ const buildWhereClause = ({ schema, query, index }) => {
       index += 1;
       continue;
     } else if (typeof fieldValue === 'string') {
-      patterns.push(`$${index}:name = '$${index + 1}:name'`);
+      patterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
       values.push(fieldName, fieldValue);
       index += 2;
     } else if (typeof fieldValue === 'boolean') {
-      patterns.push(`$${index}:name = $${index + 1}:name`);
+      patterns.push(`\`$${index}:name\` = $${index + 1}:name`);
       values.push(fieldName, fieldValue);
       index += 2;
     } else if (typeof fieldValue === 'number') {
-      patterns.push(`$${index}:name = $${index + 1}:name`);
+      patterns.push(`\`$${index}:name\` = $${index + 1}:name`);
       values.push(fieldName, fieldValue);
       index += 2;
     } else if (fieldName === '$or' || fieldName === '$and') {
@@ -290,14 +295,14 @@ const buildWhereClause = ({ schema, query, index }) => {
           allowNull = true;
         } else {
           values.push(listElem);
-          inPatterns.push(`$${index + 1 + listIndex - (allowNull ? 1 : 0)}`);
+          inPatterns.push(`JSON_CONTAINS(\`$${index}:name\`, JSON_ARRAY('$${index + 1 + listIndex - (allowNull ? 1 : 0)}:name')) = 1`);
         }
       });
-      const tempInPattern = inPatterns.join(',');
+      const tempInPattern = inPatterns.join(' OR ');
       if (allowNull) {
-        patterns.push(`($${index}:name IS NULL OR $${index}:name IS NOT NULL && JSON_ARRAY('${JSON.stringify(tempInPattern)}') <> JSON_ARRAY(''))`);
+        patterns.push(`(\`$${index}:name\` IS NULL OR ${tempInPattern})`);
       } else {
-        patterns.push(`$${index}:name && '${JSON.stringify(tempInPattern)}'`);
+        patterns.push(`\`$${index}:name\` && ${tempInPattern}`);
       }
       index = index + 1 + inPatterns.length;
     } else if (isInOrNin) {
@@ -401,12 +406,19 @@ const buildWhereClause = ({ schema, query, index }) => {
 
     if (fieldValue.$nearSphere) {
       const point = fieldValue.$nearSphere;
-      const distance = fieldValue.$maxDistance;
-      const distanceInKM = distance * 6371 * 1000;
-      patterns.push(`ST_distance_sphere($${index}:name::geometry, POINT($${index + 1}, $${index + 2})::geometry) <= $${index + 3}:name`);
-      sorts.push(`ST_distance_sphere($${index}:name::geometry, POINT($${index + 1}, $${index + 2})::geometry) ASC`)
-      values.push(fieldName, point.longitude, point.latitude, distanceInKM);
-      index += 4;
+      sorts.push(`ST_Distance_Sphere(\`$${index}:name\`, ST_GeomFromText('POINT($${index + 1}:name $${index + 2}:name)')) ASC`);
+
+      if (fieldValue.$maxDistance) {
+        const distance = fieldValue.$maxDistance;
+        const distanceInKM = distance * 6371 * 1000;
+        patterns.push(`ST_Distance_Sphere(\`$${index}:name\`, ST_GeomFromText('POINT($${index + 1}:name $${index + 2}:name)'), $${index + 3}:name)`);
+        values.push(fieldName, point.longitude, point.latitude, distanceInKM);
+        index += 4;
+      } else {
+        patterns.push(`ST_Distance_Sphere(\`$${index}:name\`, ST_GeomFromText('POINT($${index + 1}:name $${index + 2}:name)'))`);
+        values.push(fieldName, point.longitude, point.latitude);
+        index += 3;
+      }
     }
 
     if (fieldValue.$within && fieldValue.$within.$box) {
@@ -416,8 +428,8 @@ const buildWhereClause = ({ schema, query, index }) => {
       const right = box[1].longitude;
       const top = box[1].latitude;
 
-      patterns.push(`$${index}:name::point <@ $${index + 1}::box`);
-      values.push(fieldName, `((${left}, ${bottom}), (${right}, ${top}))`);
+      patterns.push(`MBRCovers(ST_GeomFromText('Polygon($${index}:name)'), \`$${index + 1}:name\`)`);
+      values.push(`(${left} ${bottom}, ${left} ${top}, ${top} ${right}, ${right} ${bottom}, ${left} ${bottom})`, fieldName);
       index += 2;
     }
 
@@ -435,17 +447,21 @@ const buildWhereClause = ({ schema, query, index }) => {
           'bad $geoWithin value; $polygon should contain at least 3 GeoPoints'
         );
       }
+      if (polygon[0].latitude !== polygon[polygon.length - 1].latitude ||
+        polygon[0].longitude !== polygon[polygon.length - 1].longitude) {
+        polygon.push(polygon[0]);
+      }
       const points = polygon.map((point) => {
         if (typeof point !== 'object' || point.__type !== 'GeoPoint') {
           throw new Parse.Error(Parse.Error.INVALID_JSON, 'bad $geoWithin value');
         } else {
           Parse.GeoPoint._validate(point.latitude, point.longitude);
         }
-        return `(${point.longitude}, ${point.latitude})`;
+        return `${point.longitude} ${point.latitude}`;
       }).join(', ');
 
-      patterns.push(`$${index}:name::point <@ $${index + 1}::polygon`);
-      values.push(fieldName, `(${points})`);
+      patterns.push(`MBRCovers(ST_GeomFromText('Polygon($${index}:name)'), \`$${index + 1}:name\`)`);
+      values.push(`(${points})`, fieldName);
       index += 2;
     }
 
@@ -488,7 +504,7 @@ const buildWhereClause = ({ schema, query, index }) => {
     }
 
     if (fieldValue.__type === 'GeoPoint') {
-      patterns.push('$' + index + ':name ~= POINT($' + (index + 1) + ', $' + (index + 2) + ')');
+      patterns.push(`\`$${index}:name\` = ST_GeomFromText('POINT($${index + 1}:name $${index + 2}:name)')`);
       values.push(fieldName, fieldValue.longitude, fieldValue.latitude);
       index += 3;
     }
@@ -778,7 +794,6 @@ export class MySQLStorageAdapter {
 
   // Delete all data known to this adapter. Used for testing.
   deleteAllClasses() {
-    //return;
     const now = new Date().getTime();
     debug('deleteAllClasses');
     return this.connect()
@@ -963,6 +978,10 @@ export class MySQLStorageAdapter {
       case 'Bytes':
       case 'String':
       case 'Number':
+        if (!object[fieldName]) {
+          valuesArray.push(0);
+          break;
+        }
       case 'Boolean':
         valuesArray.push(object[fieldName]);
         break;
@@ -1001,13 +1020,23 @@ export class MySQLStorageAdapter {
     debug(qs, values);
     return this.connect()
       .then(() => this.database.query(qs, values))
+      .catch((error) => {
+        if (error.code === MySQLDataTruncatedWarn) {
+          //Ignore Warning
+          return;
+        } else {
+          throw error;
+        }
+      })
       .then(() => ({ ops: [object] }))
-      .catch(error => {
+      .catch((error) => {
+        console.log('here');
         if (error.code === PostgresUniqueIndexViolationError) {
           throw new Parse.Error(Parse.Error.DUPLICATE_VALUE, 'A duplicate value for a field with unique values was provided');
         } else {
           throw error;
         }
+        return;
       })
   }
 
@@ -1096,11 +1125,11 @@ export class MySQLStorageAdapter {
         }, lastKey);
         updatePatterns.push(`$${fieldNameIndex}:name = ${update}`);
       } else if (fieldValue.__op === 'Increment') {
-        updatePatterns.push(`\`$${index}:name\` = COALESCE($${index}:name, 0) + $${index + 1}`);
+        updatePatterns.push(`\`$${index}:name\` = COALESCE(\`$${index}:name\`, 0) + $${index + 1}:name`);
         values.push(fieldName, fieldValue.amount);
         index += 2;
       } else if (fieldValue.__op === 'Add') {
-        updatePatterns.push(`\`$${index}:name\`= array_add(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`);
+        updatePatterns.push(`\`$${index}:name\`= JSON_ARRAY_INSERT(COALESCE(\`$${index}:name\`, '[]'), CONCAT('$[',JSON_LENGTH(\`$${index}:name\`),']'), '$${index + 1}:name')`);
         values.push(fieldName, JSON.stringify(fieldValue.objects));
         index += 2;
       } else if (fieldValue.__op === 'Delete') {
@@ -1108,13 +1137,25 @@ export class MySQLStorageAdapter {
         values.push(fieldName, null);
         index += 2;
       } else if (fieldValue.__op === 'Remove') {
-        updatePatterns.push(`\`$${index}:name\` = array_remove(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`)
-        values.push(fieldName, JSON.stringify(fieldValue.objects));
-        index += 2;
+        fieldValue.objects.map((obj) => {
+          console.log(obj);
+          updatePatterns.push(`\`$${index}:name\` = JSON_REMOVE(\`$${index}:name\`, REPLACE(JSON_SEARCH(COALESCE(\`$${index}:name\`,'[]'), 'one', $${index + 1}:name),'"',''))`)
+          values.push(fieldName, obj);
+          index += 2;
+        });
+        // updatePatterns.push(`\`$${index}:name\` = array_remove(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`)
+        // values.push(fieldName, JSON.stringify(fieldValue.objects));
+        // index += 2;
       } else if (fieldValue.__op === 'AddUnique') {
-        updatePatterns.push(`\`$${index}:name\` = array_add_unique(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`);
-        values.push(fieldName, JSON.stringify(fieldValue.objects));
-        index += 2;
+        fieldValue.objects.map((obj) => {
+          console.log(obj);
+          updatePatterns.push(`\`$${index}:name\` = if (JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') = 0, JSON_MERGE(\`$${index}:name\`,'$${index + 1}:name'),\`$${index}:name\`)`);
+          values.push(fieldName, obj);
+          index += 2;
+        });
+        // updatePatterns.push(`\`$${index}:name\` = array_add_unique(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`);
+        // values.push(fieldName, JSON.stringify(fieldValue.objects));
+        // index += 2;
       } else if (fieldName === 'updatedAt') { //TODO: stop special casing this. It should check for __type === 'Date' and use .iso
         updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`)
         values.push(fieldName, new Date(fieldValue).toISOString().slice(0, 19).replace('T', ' '));
@@ -1164,9 +1205,9 @@ export class MySQLStorageAdapter {
 
         let incrementPatterns = '';
         if (keysToIncrement.length > 0) {
-          incrementPatterns = ' || ' + keysToIncrement.map((c) => {
+          incrementPatterns = keysToIncrement.map((c) => {
             const amount = fieldValue[c].amount;
-            return `CONCAT('{"${c}":', COALESCE($${index}:name->>'${c}','0')::int + ${amount}, '}'):name`;
+            return `'$.${c}', COALESCE(\`$${index}:name\`->>'$.${c}','0') + ${amount}`;
           }).join(' || ');
           // Strip the keys
           keysToIncrement.forEach((key) => {
@@ -1183,7 +1224,7 @@ export class MySQLStorageAdapter {
           return p + ` - '$${index + 1 + i}:value'`;
         }, '');
 
-        updatePatterns.push(`$${index}:name = ( COALESCE($${index}:name, '{}':name) ${deletePatterns} ${incrementPatterns} || $${index + 1 + keysToDelete.length}:name )`);
+        updatePatterns.push(`\`$${index}:name\` = JSON_SET(COALESCE(\`$${index}:name\`, '{}'), ${deletePatterns} ${incrementPatterns})`);
 
         values.push(fieldName, ...keysToDelete, JSON.stringify(fieldValue));
         index += 2 + keysToDelete.length;
@@ -1206,7 +1247,8 @@ export class MySQLStorageAdapter {
     debug('update: ', qs, values);
     return this.connect()
       .then(() => this.database.query(qs, values))
-      .then(([results]) => {
+      .then(([results, fields]) => {
+        console.log(fields);
         if (results.affectedRows > 0) {
           return results;
         }
@@ -1370,12 +1412,16 @@ export class MySQLStorageAdapter {
         return res;
       })
       .catch(error => {
-        if (error.code === MySQLUniqueIndexViolationError && error.message.includes(constraintName)) {
-        // Index already exists. Ignore error.
-        } else if (error.code === MySQLDuplicateColumnError && error.message.includes(constraintName)) {
-        // Cast the error into the proper parse error
+        console.log('uniqueness error');
+        if (error.code === MySQLDuplicateColumnError ||
+            error.code === MySQLDuplicateObjectError ||
+            error.code === MySQLBlobKeyWithoutLengthError) {
+          // Cast the error into the proper parse error
           throw new Parse.Error(Parse.Error.DUPLICATE_VALUE, 'A duplicate value for a field with unique values was provided');
+        } else if (error.code === MySQLUniqueIndexViolationError) {
+        // Index already exists. Ignore error.
         } else {
+          console.log(error);
           throw error;
         }
       });

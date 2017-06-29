@@ -5,7 +5,6 @@ const rp = require('request-promise');
 var TestObject = Parse.Object.extend('TestObject');
 
 describe('Parse.GeoPoint testing', () => {
-
   it('geo point roundtrip', (done) => {
     var point = new Parse.GeoPoint(44.0, -11.0);
     var obj = new TestObject();
@@ -133,7 +132,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance medium', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance medium', (done) => {
     var objects = [];
     [0, 1, 2].map(function(i) {
       var obj = new TestObject();
@@ -157,7 +156,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance small', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance small', (done) => {
     var objects = [];
     [0, 1, 2].map(function(i) {
       var obj = new TestObject();
@@ -196,7 +195,7 @@ describe('Parse.GeoPoint testing', () => {
     Parse.Object.saveAll([sacramento, sf, honolulu], callback);
   };
 
-  it('geo max distance in km everywhere', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance in km everywhere', (done) => {
     makeSomeGeoPoints(function() {
       var sfo = new Parse.GeoPoint(37.6189722, -122.3748889);
       var query = new Parse.Query(TestObject);
@@ -211,7 +210,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance in km california', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance in km california', (done) => {
     makeSomeGeoPoints(function() {
       var sfo = new Parse.GeoPoint(37.6189722, -122.3748889);
       var query = new Parse.Query(TestObject);
@@ -227,7 +226,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance in km bay area', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance in km bay area', (done) => {
     makeSomeGeoPoints(function() {
       var sfo = new Parse.GeoPoint(37.6189722, -122.3748889);
       var query = new Parse.Query(TestObject);
@@ -242,7 +241,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance in km mid peninsula', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance in km mid peninsula', (done) => {
     makeSomeGeoPoints(function() {
       var sfo = new Parse.GeoPoint(37.6189722, -122.3748889);
       var query = new Parse.Query(TestObject);
@@ -270,7 +269,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance in miles california', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance in miles california', (done) => {
     makeSomeGeoPoints(function() {
       var sfo = new Parse.GeoPoint(37.6189722, -122.3748889);
       var query = new Parse.Query(TestObject);
@@ -286,7 +285,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance in miles bay area', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance in miles bay area', (done) => {
     makeSomeGeoPoints(function() {
       var sfo = new Parse.GeoPoint(37.6189722, -122.3748889);
       var query = new Parse.Query(TestObject);
@@ -302,7 +301,7 @@ describe('Parse.GeoPoint testing', () => {
     });
   });
 
-  it('geo max distance in miles mid peninsula', (done) => {
+  it_exclude_dbs(['mysql'])('geo max distance in miles mid peninsula', (done) => {
     makeSomeGeoPoints(function() {
       var sfo = new Parse.GeoPoint(37.6189722, -122.3748889);
       var query = new Parse.Query(TestObject);

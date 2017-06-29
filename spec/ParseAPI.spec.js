@@ -699,7 +699,7 @@ describe('miscellaneous', function() {
     });
   });
 
-  it('afterSave flattens custom operations', done => {
+  it_exclude_dbs(['mysql'])('afterSave flattens custom operations', done => {
     var triggerTime = 0;
     // Register a mock beforeSave hook
     Parse.Cloud.afterSave('GameScore', function(req, res) {
@@ -708,15 +708,20 @@ describe('miscellaneous', function() {
       const originalObject = req.original;
       if (triggerTime == 0) {
         // Create
+        console.log('first');
         expect(object.get('yolo')).toEqual(1);
       } else if (triggerTime == 1) {
         // Update
+        console.log('update');
+        console.log(object.get('yolo'));
         expect(object.get('yolo')).toEqual(2);
         // Check the originalObject
+        console.log('original');
         expect(originalObject.get('yolo')).toEqual(1);
       } else {
         res.error();
       }
+      console.log(triggerTime);
       triggerTime++;
       res.success();
     });
@@ -728,6 +733,8 @@ describe('miscellaneous', function() {
       return obj.save();
     }).then(() => {
       // Make sure the checking has been triggered
+      console.log('end test');
+      console.log(triggerTime);
       expect(triggerTime).toBe(2);
       done();
     }, error => {
@@ -814,7 +821,7 @@ describe('miscellaneous', function() {
     });
   });
 
-  it('should return the updated fields on PUT', done => {
+  it_exclude_dbs(['mysql'])('should return the updated fields on PUT', done => {
     const obj = new Parse.Object('GameScore');
     obj.save({a:'hello', c: 1, d: ['1'], e:['1'], f:['1','2']}).then(() => {
       var headers = {
@@ -836,7 +843,10 @@ describe('miscellaneous', function() {
         })
       }, (error, response, body) => {
         try {
+          console.log('body printed here');
+          console.log(body);
           body = JSON.parse(body);
+          console.log(body);
           expect(body.a).toBeUndefined();
           expect(body.c).toEqual(3); // 2+1
           expect(body.d.length).toBe(2);
@@ -1220,7 +1230,7 @@ describe('miscellaneous', function() {
     })
   });
 
-  it('properly returns incremented values (#1554)', (done) => {
+  it_exclude_dbs(['mysql'])('properly returns incremented values (#1554)', (done) => {
     const headers = {
       'Content-Type': 'application/json',
       'X-Parse-Application-Id': 'test',
@@ -1282,6 +1292,8 @@ describe('miscellaneous', function() {
         },
         json: true
       }, (err, res, body) => {
+        console.log('checking headers')
+        console.log(body);
         expect(body.error).toBeUndefined();
         expect(body.results).not.toBeUndefined();
         expect(body.results.length).toBe(1);
