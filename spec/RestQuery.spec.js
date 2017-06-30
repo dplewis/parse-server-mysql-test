@@ -48,7 +48,7 @@ describe('rest query', () => {
     sessionToken: 'abc123',
   }
 
-  it_exclude_dbs(['postgres'])('query for user w/ legacy credentials without masterKey has them stripped from results', done => {
+  it_exclude_dbs(['postgres','mysql'])('query for user w/ legacy credentials without masterKey has them stripped from results', done => {
     database.create('_User', data).then(() => {
       return rest.find(config, nobody, '_User')
     }).then((result) => {
@@ -60,7 +60,7 @@ describe('rest query', () => {
     });
   });
 
-  it_exclude_dbs(['postgres'])('query for user w/ legacy credentials with masterKey has them stripped from results', done => {
+  it_exclude_dbs(['postgres','mysql'])('query for user w/ legacy credentials with masterKey has them stripped from results', done => {
     database.create('_User', data).then(() => {
       return rest.find(config, {isMaster: true}, '_User')
     }).then((result) => {

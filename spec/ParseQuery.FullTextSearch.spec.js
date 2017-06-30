@@ -5,7 +5,7 @@ const mongoURI = 'mongodb://localhost:27017/parseServerMongoAdapterTestDatabase'
 const PostgresStorageAdapter = require('../src/Adapters/Storage/Postgres/PostgresStorageAdapter');
 const postgresURI = 'postgres://localhost:5432/parse_server_postgres_adapter_test_database';
 const MySQLStorageAdapter = require('../src/Adapters/Storage/MySQL/MySQLStorageAdapter');
-const mysqlURI = 'postgres://root:pass@localhost:3306/parse_server_mysql_adapter_test_database';
+const mysqlURI = 'mysql://root@localhost:3306/parse_server_mysql_adapter_test_database';
 const Parse = require('parse/node');
 const rp = require('request-promise');
 let databaseAdapter;
