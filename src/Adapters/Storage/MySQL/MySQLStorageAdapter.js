@@ -1202,7 +1202,22 @@ export class MySQLStorageAdapter {
       } else if (typeof fieldValue === 'object'
                     && schema.fields[fieldName]
                     && schema.fields[fieldName].type === 'Object') {
+        console.log('object found here');
+        console.log(originalUpdate);
+        console.log(fieldValue);
+        console.log(fieldName);
+        const keysToSet = Object.keys(originalUpdate).filter(k => {
+          // choose top level fields that dont have operation or . (dot) field
+          return !originalUpdate[k].__op && k.indexOf('.') === -1 && k !== 'updatedAt';
+        });
+        console.log(keysToSet);
 
+        let setPattern = '';
+        if (keysToSet.length > 0) {
+          setPattern = keysToSet.map(() => {
+            return `CAST('${JSON.stringify(fieldValue)}' AS JSON)`;
+          });
+        }
         const keysToReplace = Object.keys(originalUpdate).filter(k => {
           // choose top level fields that dont have operation
           return !originalUpdate[k].__op && k.split('.').length === 2 && k.split(".")[0] === fieldName;
@@ -1257,6 +1272,9 @@ export class MySQLStorageAdapter {
         }
         if (keysToReplace.length > 0) {
           updatePatterns.push(`\`$${index}:name\` = JSON_SET(COALESCE(\`$${index}:name\`, '{}'), ${replacePattern})`);
+        }
+        if (keysToSet.length > 0) {
+          updatePatterns.push(`\`$${index}:name\` = ${setPattern}`);
         }
 
         values.push(fieldName, ...keysToDelete, JSON.stringify(fieldValue));

@@ -4,7 +4,6 @@ node_js:
 - '6.10'
 - '7.10'
 services:
-  - mongod
   - mysql
   - redis-server
   - docker
@@ -16,7 +15,6 @@ branches:
 cache:
   directories:
   - node_modules
-  - "$HOME/.mongodb/versions"
 
 # Test stage
 stage: test
@@ -24,15 +22,12 @@ env:
   global:
   - COVERAGE_OPTION='./node_modules/.bin/nyc'
   matrix:
-  - MONGODB_VERSION=3.2.13
-  - MONGODB_VERSION=3.4.4
   - PARSE_SERVER_TEST_DB=mysql
   - PARSE_SERVER_TEST_CACHE=redis
 before_install:
 - mysql -e 'CREATE DATABASE parse_server_mysql_adapter_test_database;'
 before_script:
 - node -e 'require("./lib/index.js")'
-- silent=1 mongodb-runner --start
 after_script:
 - bash <(curl -s https://codecov.io/bash)
 
