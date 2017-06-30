@@ -1,60 +1,34 @@
 language: node_js
 dist: trusty
-
+node_js:
+- '6.10'
+- '7.10'
 services:
   - redis-server
   - docker
-
 branches:
   only:
   - master
   - /^[0-9]+.[0-9]+.[0-9]+(-.*)?$/
   - /^greenkeeper/.*$/
-
 cache:
   directories:
   - node_modules
 
-
-global:
-- COVERAGE_OPTION='./node_modules/.bin/nyc'
-
-matrix:
-  include:
-    - node_js: 6.10
-      env:
-        - DB=mariadb
-        - PARSE_SERVER_TEST_DB=mysql
-      addons:
-        mariadb: 10.2
-    - node_js: 6.10
-      env:
-        - DB=mysql
-        - PARSE_SERVER_TEST_DB=mysql
-    - node_js: 6.10
-      env: PARSE_SERVER_TEST_CACHE=redis
-
-    - node_js: 7.10
-      env:
-        - DB=mariadb
-        - PARSE_SERVER_TEST_DB=mysql
-      addons:
-        mariadb: 10.2
-    - node_js: 7.10
-      env:
-        - DB=mysql
-        - PARSE_SERVER_TEST_DB=mysql
-    - node_js: 7.10
-      env: PARSE_SERVER_TEST_CACHE=redis
-
+# Test stage
+stage: test
+env:
+  global:
+  - COVERAGE_OPTION='./node_modules/.bin/nyc'
+  matrix:
+  - PARSE_SERVER_TEST_DB=mysql
+  - PARSE_SERVER_TEST_CACHE=redis
 before_install:
-- if [[ $DB == "mysql" ]]; then chmod +x ./resources/*; fi
-- if [[ $DB == "mysql" ]]; then ./resources/travis_mysql_5.7.sh; fi
-- if [[ $DB == "mysql" ]]; then ./resources/mysql-reset-root-password.sh; fi
+-  chmod +x ./resources/*
+- ./resources/travis_mysql_5.7.sh
+- ./resources/mysql-reset-root-password.sh
 - mysql -e 'CREATE DATABASE parse_server_mysql_adapter_test_database;'
-
 before_script:
 - node -e 'require("./lib/index.js")'
-
 after_script:
 - bash <(curl -s https://codecov.io/bash)
