@@ -62,8 +62,6 @@ const toMySQLValue = value => {
 const formatDateToMySQL = value => {
   const encoded = Parse._encode(new Date(value));
   encoded.iso = encoded.iso.replace('T', ' ').replace('Z', '');
-  /* eslint-disable */
-  console.log(encoded.iso);
   if (!value.iso) {
     return encoded.iso;
   }
@@ -763,8 +761,6 @@ export class MySQLStorageAdapter {
 
   // Delete all data known to this adapter. Used for testing.
   deleteAllClasses() {
-    /* eslint-disable */
-    return;
     const now = new Date().getTime();
     debug('deleteAllClasses');
     return this.connect()
