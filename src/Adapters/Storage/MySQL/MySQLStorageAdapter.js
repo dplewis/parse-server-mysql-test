@@ -4,25 +4,22 @@ import _                from 'lodash';
 const parser = require('./MySQLConfigParser');
 const mysql = require('mysql2/promise');
 const MySQLRelationDoesNotExistError = 'ER_NO_SUCH_TABLE';
-const PostgresDuplicateRelationError = '42P07';
 const MySQLDuplicateColumnError = 'ER_DUP_FIELDNAME';
-const PostgresDuplicateObjectError = '42710';
 const MySQLDuplicateObjectError = 'ER_DUP_ENTRY';
 const MySQLDataTruncatedWarn = 'WARN_DATA_TRUNCATED';
 const MySQLWrongValueError = 'ER_TRUNCATED_WRONG_VALUE';
 const MySQLUniqueIndexViolationError = 'ER_DUP_KEYNAME';
 const MySQLBlobKeyWithoutLengthError = 'ER_BLOB_KEY_WITHOUT_LENGTH';
-const PostgresUniqueIndexViolationError = '23505';
 const logger = require('../../../logger');
 
 const debug = function(){
   let args = [...arguments];
-  args = ['PG: ' + arguments[0]].concat(args.slice(1, args.length));
+  args = ['MYSQL: ' + arguments[0]].concat(args.slice(1, args.length));
   const log = logger.getLogger();
   log.debug.apply(log, args);
 }
 
-const parseTypeToPostgresType = type => {
+const parseTypeToMySQLType = type => {
   switch (type.type) {
   case 'String': return 'text';
   case 'Date': return 'timestamp(6)';
@@ -33,27 +30,21 @@ const parseTypeToPostgresType = type => {
   case 'Number': return 'double precision';
   case 'GeoPoint': return 'point';
   case 'Bytes': return 'json';
-  case 'Array':
-    if (type.contents && type.contents.type === 'String') {
-      //return 'text[]';
-      return 'json';
-    } else {
-      return 'json';
-    }
+  case 'Array': return 'json';
   default: throw `no type for ${JSON.stringify(type)} yet`;
   }
 };
 
 const defaultUniqueKeyLength = 'varchar(120)';
 
-const ParseToPosgresComparator = {
+const ParseToMySQLComparator = {
   '$gt': '>',
   '$lt': '<',
   '$gte': '>=',
   '$lte': '<='
 }
 
-const toPostgresValue = value => {
+const toMySQLValue = value => {
   if (typeof value === 'object') {
     if (value.__type === 'Date') {
       if (!value.iso) {
@@ -124,7 +115,7 @@ const toParseSchema = (schema) => {
   };
 }
 
-const toPostgresSchema = (schema) => {
+const toMySQLSchema = (schema) => {
   if (!schema) {
     return schema;
   }
@@ -197,7 +188,7 @@ const buildWhereClause = ({ schema, query, index }) => {
   let values = [];
   const sorts = [];
 
-  schema = toPostgresSchema(schema);
+  schema = toMySQLSchema(schema);
   for (const fieldName in query) {
     const isArrayField = schema.fields
           && schema.fields[fieldName]
@@ -406,7 +397,7 @@ const buildWhereClause = ({ schema, query, index }) => {
       } else if (search.$diacriticSensitive === false) {
         throw new Parse.Error(
           Parse.Error.INVALID_JSON,
-          `bad $text: $diacriticSensitive - false not supported, install Postgres Unaccent Extension`
+          `bad $text: $diacriticSensitive - false not supported, install MySQL Unaccent Extension`
         );
       }
       patterns.push(`MATCH (\`$${index}:name\`) AGAINST ('$${index + 1}:name')`);
@@ -509,7 +500,7 @@ const buildWhereClause = ({ schema, query, index }) => {
 
     if (fieldValue.__type === 'Date') {
       patterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-      values.push(fieldName, toPostgresValue(fieldValue));
+      values.push(fieldName, toMySQLValue(fieldValue));
       index += 2;
     }
 
@@ -519,11 +510,11 @@ const buildWhereClause = ({ schema, query, index }) => {
       index += 3;
     }
 
-    Object.keys(ParseToPosgresComparator).forEach(cmp => {
+    Object.keys(ParseToMySQLComparator).forEach(cmp => {
       if (fieldValue[cmp]) {
-        const pgComparator = ParseToPosgresComparator[cmp];
-        patterns.push(`\`$${index}:name\` ${pgComparator} '$${index + 1}:name'`);
-        values.push(fieldName, toPostgresValue(fieldValue[cmp]));
+        const mysqlComparator = ParseToMySQLComparator[cmp];
+        patterns.push(`\`$${index}:name\` ${mysqlComparator} '$${index + 1}:name'`);
+        values.push(fieldName, toMySQLValue(fieldValue[cmp]));
         index += 2;
       }
     });
@@ -622,17 +613,7 @@ export class MySQLStorageAdapter {
   _ensureSchemaCollectionExists() {
     debug('_ensureSchemaCollectionExists');
     return this.connect()
-      .then(() => this.database.query('CREATE TABLE IF NOT EXISTS `_SCHEMA` (`className` VARCHAR(120), `schema` JSON, `isParseClass` BOOL, PRIMARY KEY (`className`));'))
-      .catch(error => {
-        if (error.code === PostgresDuplicateRelationError
-          || error.code === PostgresUniqueIndexViolationError
-          || error.code === PostgresDuplicateObjectError) {
-        // Table already exists, must have been created by a different request. Ignore error.
-          return;
-        } else {
-          throw error;
-        }
-      });
+      .then(() => this.database.query('CREATE TABLE IF NOT EXISTS `_SCHEMA` (`className` VARCHAR(120), `schema` JSON, `isParseClass` BOOL, PRIMARY KEY (`className`));'));
   }
 
   classExists(name) {
@@ -698,7 +679,7 @@ export class MySQLStorageAdapter {
       }
       valuesArray.push(fieldName);
       if (parseType.type === 'Date') {
-        valuesArray.push(parseTypeToPostgresType(parseType));
+        valuesArray.push(parseTypeToMySQLType(parseType));
         if (fieldName === 'createdAt') {
           patternsArray.push(`\`$${index}:name\` $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP(6)`);
         } else if (fieldName === 'updatedAt') {
@@ -716,7 +697,7 @@ export class MySQLStorageAdapter {
       } else if (fieldName === 'email' || fieldName === 'username' || fieldName === 'name') {
         valuesArray.push(defaultUniqueKeyLength);
       } else {
-        valuesArray.push(parseTypeToPostgresType(parseType));
+        valuesArray.push(parseTypeToMySQLType(parseType));
       }
       index = index + 2;
     });
@@ -725,13 +706,7 @@ export class MySQLStorageAdapter {
     return this.connect()
       .then(() => this._ensureSchemaCollectionExists())
       .then(() => this.database.query(qs, values))
-      .catch(error => {
-        if (error.code === PostgresDuplicateRelationError) {
-        // Table already exists, must have been created by a different request. Ignore error.
-        } else {
-          throw error;
-        }
-      }).then(() => {
+      .then(() => {
       // Create the relation tables
         return Promise.all(relations.map((fieldName) => {
           return this.database.query('CREATE TABLE IF NOT EXISTS `$1:name` (`relatedId` varChar(120), `owningId` varChar(120), PRIMARY KEY(`relatedId`, `owningId`))', [`_Join:${fieldName}:${className}`]);
@@ -746,11 +721,11 @@ export class MySQLStorageAdapter {
       .then(() => {
         let promise = Promise.resolve();
         if (type.type !== 'Relation') {
-          let postgresType = parseTypeToPostgresType(type);
+          let mysqlType = parseTypeToMySQLType(type);
           if (type.type === 'Date') {
-            postgresType = 'timestamp(6) null default null';
+            mysqlType = 'timestamp(6) null default null';
           }
-          promise = this.database.query('ALTER TABLE `$1:name` ADD COLUMN `$2:name` $3:name', [className, fieldName, postgresType])
+          promise = this.database.query('ALTER TABLE `$1:name` ADD COLUMN `$2:name` $3:name', [className, fieldName, mysqlType])
             .catch((error) => {
               if (error.code === MySQLDuplicateColumnError) {
                 // Column already exists, created by other request. Carry on to
@@ -890,7 +865,7 @@ export class MySQLStorageAdapter {
     debug('createObject', className, object);
     let columnsArray = [];
     const valuesArray = [];
-    schema = toPostgresSchema(schema);
+    schema = toMySQLSchema(schema);
     const geoPoints = {};
 
     object = handleDotFields(object);
@@ -924,7 +899,7 @@ export class MySQLStorageAdapter {
             fieldName === '_password_changed_at' ||
             fieldName === '_email_verify_token_expires_at') {
           if (object[fieldName]) {
-            valuesArray.push(toPostgresValue(object[fieldName]));
+            valuesArray.push(toMySQLValue(object[fieldName]));
           } else {
             valuesArray.push(null);
           }
@@ -937,7 +912,7 @@ export class MySQLStorageAdapter {
           if (fieldName === 'updatedAt' && !object[fieldName].iso) {
             object[fieldName].iso = new Date();
           }
-          valuesArray.push(toPostgresValue(object[fieldName]));
+          valuesArray.push(toMySQLValue(object[fieldName]));
         } else {
           valuesArray.push(null);
         }
@@ -1055,7 +1030,7 @@ export class MySQLStorageAdapter {
     const updatePatterns = [];
     const values = [className]
     let index = 2;
-    schema = toPostgresSchema(schema);
+    schema = toMySQLSchema(schema);
 
     const originalUpdate = {...update};
     update = handleDotFields(update);
@@ -1159,7 +1134,7 @@ export class MySQLStorageAdapter {
         index += 2;
       } else if (fieldValue.__type === 'Date') {
         updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-        values.push(fieldName, toPostgresValue(fieldValue));
+        values.push(fieldName, toMySQLValue(fieldValue));
         index += 2;
       } else if (fieldValue instanceof Date) {
         updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
@@ -1167,7 +1142,7 @@ export class MySQLStorageAdapter {
         index += 2;
       } else if (fieldValue.__type === 'File') {
         updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-        values.push(fieldName, toPostgresValue(fieldValue));
+        values.push(fieldName, toMySQLValue(fieldValue));
         index += 2;
       } else if (fieldValue.__type === 'GeoPoint') {
         updatePatterns.push(`\`$${index}:name\` = POINT($${index + 1}, $${index + 2})`);
@@ -1263,7 +1238,7 @@ export class MySQLStorageAdapter {
         index += 2;
       } else {
         debug('Not supported update', fieldName, fieldValue);
-        return Promise.reject(new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, `Postgres doesn't support update ${JSON.stringify(fieldValue)} yet`));
+        return Promise.reject(new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, `MySQL doesn't support update ${JSON.stringify(fieldValue)} yet`));
       }
     }
 
@@ -1388,28 +1363,13 @@ export class MySQLStorageAdapter {
             object[fieldName] = object[fieldName] === 1 ? true : false;
           }
         });
-        //TODO: remove this reliance on the mongo format. DB adapter shouldn't know there is a difference between created at and any other date field.
+
         if (object.createdAt) {
           object.createdAt = formatMySQLDate(object.createdAt).toISOString();
         }
         if (object.updatedAt) {
           object.updatedAt = formatMySQLDate(object.updatedAt).toISOString();
         }
-        // if (object.expiresAt) {
-        //   object.expiresAt = { __type: 'Date', iso: object.expiresAt.toISOString() };
-        // }
-        // if (object._email_verify_token_expires_at) {
-        //   object._email_verify_token_expires_at = { __type: 'Date', iso: object._email_verify_token_expires_at.toISOString() };
-        // }
-        // if (object._account_lockout_expires_at) {
-        //   object._account_lockout_expires_at = { __type: 'Date', iso: object._account_lockout_expires_at.toISOString() };
-        // }
-        // if (object._perishable_token_expires_at) {
-        //   object._perishable_token_expires_at = { __type: 'Date', iso: object._perishable_token_expires_at.toISOString() };
-        // }
-        // if (object._password_changed_at) {
-        //   object._password_changed_at = { __type: 'Date', iso: object._password_changed_at.toISOString() };
-        // }
 
         for (const fieldName in object) {
           if (object[fieldName] === null) {
@@ -1429,7 +1389,7 @@ export class MySQLStorageAdapter {
   // Way of determining if a field is nullable. Undefined doesn't count against uniqueness,
   // which is why we use sparse indexes.
   ensureUniqueness(className, schema, fieldNames) {
-    // Use the same name for every ensureUniqueness attempt, because postgres
+    // Use the same name for every ensureUniqueness attempt, because mysql
     // Will happily create the same index with multiple names.
     const constraintName = `unique_${fieldNames.sort().join('_')}`;
     const constraintPatterns = fieldNames.map((fieldName, index) => `\`$${index + 3}:name\``);
@@ -1480,7 +1440,7 @@ export class MySQLStorageAdapter {
       return this.connect()
         .then(() => this.createTable(schema.className, schema))
         .catch((err) => {
-          if (err.code === PostgresDuplicateRelationError || err.code === Parse.Error.INVALID_CLASS_NAME) {
+          if (err.code === Parse.Error.INVALID_CLASS_NAME) {
             return Promise.resolve();
           }
           throw err;
