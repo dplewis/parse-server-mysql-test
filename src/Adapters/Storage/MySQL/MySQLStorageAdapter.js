@@ -60,13 +60,14 @@ const toMySQLValue = value => {
 }
 
 const formatDateToMySQL = value => {
-  return new Date(value).toISOString().replace('T', ' ').replace('Z', '');
-}
-
-const formatMySQLDate = value => {
-  const date = value;
-  date.setHours(date.getHours() - 5);
-  return date;
+  const encoded = Parse._encode(new Date(value));
+  encoded.iso = encoded.iso.replace('T', ' ').replace('Z', '');
+  /* eslint-disable */
+  console.log(encoded.iso);
+  if (!value.iso) {
+    return encoded.iso;
+  }
+  return encoded;
 }
 
 const transformValue = value => {
@@ -1366,10 +1367,10 @@ export class MySQLStorageAdapter {
         });
 
         if (object.createdAt) {
-          object.createdAt = formatMySQLDate(object.createdAt).toISOString();
+          object.createdAt = object.createdAt.toISOString();
         }
         if (object.updatedAt) {
-          object.updatedAt = formatMySQLDate(object.updatedAt).toISOString();
+          object.updatedAt = object.updatedAt.toISOString();
         }
 
         for (const fieldName in object) {
@@ -1377,7 +1378,7 @@ export class MySQLStorageAdapter {
             delete object[fieldName];
           }
           if (object[fieldName] instanceof Date) {
-            object[fieldName] = { __type: 'Date', iso: formatMySQLDate(object[fieldName]) };
+            object[fieldName] = { __type: 'Date', iso: object[fieldName].toISOString() };
           }
         }
         return object;
