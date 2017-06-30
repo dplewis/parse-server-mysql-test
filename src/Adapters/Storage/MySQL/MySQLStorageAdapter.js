@@ -762,7 +762,8 @@ export class MySQLStorageAdapter {
 
   // Delete all data known to this adapter. Used for testing.
   deleteAllClasses() {
-    //return;
+    /* eslint-disable */
+    return;
     const now = new Date().getTime();
     debug('deleteAllClasses');
     return this.connect()
@@ -1159,7 +1160,7 @@ export class MySQLStorageAdapter {
                     && schema.fields[fieldName].type === 'Object') {
 
         const keysToSet = Object.keys(originalUpdate).filter(k => {
-          // choose top level fields that dont have operation or . (dot) field
+          // choose top level fields that don't have operation or . (dot) field
           return !originalUpdate[k].__op && k.indexOf('.') === -1 && k !== 'updatedAt';
         });
 
@@ -1183,14 +1184,14 @@ export class MySQLStorageAdapter {
               return `'$.${c}', '${fieldValue[c]}'`;
             }
           }).join(' || ');
-          // Strip the keys
+
           keysToReplace.forEach((key) => {
             delete fieldValue[key];
           });
         }
-        // Gather keys to increment
+
         const keysToIncrement = Object.keys(originalUpdate).filter(k => {
-          // choose top level fields that have a delete operation set
+          // choose top level fields that have a increment operation set
           return originalUpdate[k].__op === 'Increment' && k.split('.').length === 2 && k.split(".")[0] === fieldName;
         }).map(k => k.split('.')[1]);
 
@@ -1200,7 +1201,7 @@ export class MySQLStorageAdapter {
             const amount = fieldValue[c].amount;
             return `'$.${c}', COALESCE(\`$${index}:name\`->>'$.${c}','0') + ${amount}`;
           }).join(' || ');
-          // Strip the keys
+
           keysToIncrement.forEach((key) => {
             delete fieldValue[key];
           });

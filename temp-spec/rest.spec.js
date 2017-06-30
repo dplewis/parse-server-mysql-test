@@ -35,7 +35,6 @@ describe('rest create', () => {
       object: {foo: 'bar'},
       date: Parse._encode(now),
     };
-    console.log(obj);
     rest.create(config, auth.nobody(config), 'MyClass', obj)
       .then(() => database.adapter.find('MyClass', { fields: {
         array: { type: 'Array' },
@@ -49,9 +48,6 @@ describe('rest create', () => {
         expect(mob.array instanceof Array).toBe(true);
         expect(typeof mob.object).toBe('object');
         expect(mob.date.__type).toBe('Date');
-        console.log(now);
-        console.log(new Date(mob.date.iso).getTime());
-        console.log(now.getTime());
         expect(new Date(mob.date.iso).getTime()).toBe(now.getTime());
         done();
       });
