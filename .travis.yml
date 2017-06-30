@@ -6,6 +6,8 @@ node_js:
 services:
   - redis-server
   - docker
+addons:
+  mariadb: '10.2'
 branches:
   only:
   - master
@@ -18,6 +20,8 @@ cache:
 # Test stage
 stage: test
 env:
+  - DB=mysql
+  - DB=mariadb
   global:
   - COVERAGE_OPTION='./node_modules/.bin/nyc'
   matrix:
