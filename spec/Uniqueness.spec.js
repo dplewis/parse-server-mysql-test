@@ -67,7 +67,7 @@ describe('Uniqueness', function() {
       });
   });
 
-  it_exclude_dbs(['postgres'])('can do compound uniqueness', done => {
+  it_exclude_dbs(['postgres','mysql'])('can do compound uniqueness', done => {
     const config = new Config('test');
     config.database.adapter.ensureUniqueness('CompoundUnique', { fields: { k1: { __type: 'String' }, k2: { __type: 'String' } } }, ['k1', 'k2'])
       .then(() => {

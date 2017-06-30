@@ -205,7 +205,7 @@ describe('Parse.Object testing', () => {
     });
   });
 
-  it("createdAt doesn't change", function(done) {
+  it_exclude_dbs(['mysql'])("createdAt doesn't change", function(done) {
     var object = new TestObject({ foo: "bar" });
     object.save(null, {
       success: function() {
@@ -647,7 +647,7 @@ describe('Parse.Object testing', () => {
     });
   });
 
-  it("removes with object", function(done) {
+  it_exclude_dbs(['mysql'])("removes with object", function(done) {
     var x1 = new Parse.Object('X');
     x1.set('stuff', [ 1, {'hello': 'world'},  {'foo': 'bar'}]);
     x1.save().then(() => {
@@ -1413,7 +1413,7 @@ describe('Parse.Object testing', () => {
     });
   });
 
-  it("fetchAll updates dates", function(done) {
+  it_exclude_dbs(['mysql'])("fetchAll updates dates", function(done) {
     var updatedObject;
     var object = new TestObject();
     object.set("x", 7);

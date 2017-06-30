@@ -28,7 +28,7 @@ describe('rest create', () => {
       });
   });
 
-  it('handles array, object, date', (done) => {
+  it_exclude_dbs(['mysql'])('handles array, object, date', (done) => {
     const now = new Date();
     var obj = {
       array: [1, 2, 3],
@@ -357,7 +357,7 @@ describe('rest create', () => {
       });
   });
 
-  it("test specified session length", (done) => {
+  it_exclude_dbs(['mysql'])("test specified session length", (done) => {
     var user = {
       username: 'asdf',
       password: 'zxcv',

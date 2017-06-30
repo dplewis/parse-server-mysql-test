@@ -4,7 +4,7 @@ const requestp = require('request-promise');
 
 describe("Password Policy: ", () => {
 
-  it('should show the invalid link page if the user clicks on the password reset link after the token expires', done => {
+  it_exclude_dbs(['mysql'])('should show the invalid link page if the user clicks on the password reset link after the token expires', done => {
     const user = new Parse.User();
     let sendEmailOptions;
     const emailAdapter = {
@@ -912,7 +912,7 @@ describe("Password Policy: ", () => {
     })
   });
 
-  it('should fail if logged in after password expires', (done) => {
+  it_exclude_dbs(['mysql'])('should fail if logged in after password expires', (done) => {
     const user = new Parse.User();
     reconfigureServer({
       appName: 'passwordPolicy',
@@ -944,7 +944,7 @@ describe("Password Policy: ", () => {
     });
   });
 
-  it('should apply password expiry policy to existing user upon first login after policy is enabled', (done) => {
+  it_exclude_dbs(['mysql'])('should apply password expiry policy to existing user upon first login after policy is enabled', (done) => {
     const user = new Parse.User();
     reconfigureServer({
       appName: 'passwordPolicy',
@@ -1000,7 +1000,7 @@ describe("Password Policy: ", () => {
 
   });
 
-  it('should reset password timestamp when password is reset', done => {
+  it_exclude_dbs(['mysql'])('should reset password timestamp when password is reset', done => {
     const user = new Parse.User();
     const emailAdapter = {
       sendVerificationEmail: () => Promise.resolve(),

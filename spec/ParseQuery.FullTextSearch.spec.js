@@ -4,6 +4,8 @@ const MongoStorageAdapter = require('../src/Adapters/Storage/Mongo/MongoStorageA
 const mongoURI = 'mongodb://localhost:27017/parseServerMongoAdapterTestDatabase';
 const PostgresStorageAdapter = require('../src/Adapters/Storage/Postgres/PostgresStorageAdapter');
 const postgresURI = 'postgres://localhost:5432/parse_server_postgres_adapter_test_database';
+const MySQLStorageAdapter = require('../src/Adapters/Storage/MySQL/MySQLStorageAdapter');
+const mysqlURI = 'postgres://root:pass@localhost:3306/parse_server_mysql_adapter_test_database';
 const Parse = require('parse/node');
 const rp = require('request-promise');
 let databaseAdapter;
@@ -12,6 +14,10 @@ const fullTextHelper = () => {
   if (process.env.PARSE_SERVER_TEST_DB === 'postgres') {
     if (!databaseAdapter) {
       databaseAdapter = new PostgresStorageAdapter({ uri: postgresURI });
+    }
+  } else if (process.env.PARSE_SERVER_TEST_DB === 'mysql') {
+    if (!databaseAdapter) {
+      databaseAdapter = new MySQLStorageAdapter({ uri: mysqlURI });
     }
   } else {
     databaseAdapter = new MongoStorageAdapter({ uri: mongoURI });
@@ -43,7 +49,7 @@ const fullTextHelper = () => {
     publicServerURL: 'http://localhost:8378/1',
     databaseAdapter
   }).then(() => {
-    if (process.env.PARSE_SERVER_TEST_DB === 'postgres') {
+    if (process.env.PARSE_SERVER_TEST_DB === 'postgres' || process.env.PARSE_SERVER_TEST_DB === 'mysql') {
       return Parse.Promise.as();
     }
     return databaseAdapter.createIndex('TestObject', {subject: 'text'});
@@ -58,6 +64,11 @@ const fullTextHelper = () => {
         'X-Parse-Application-Id': 'test',
         'X-Parse-REST-API-Key': 'test'
       }
+    }).then(() => {
+      if (process.env.PARSE_SERVER_TEST_DB === 'mysql') {
+        return databaseAdapter.createFullTextIndex('TestObject', 'subject');
+      }
+      return Parse.Promise.as();
     });
   });
 }
@@ -144,7 +155,7 @@ describe('Parse.Query Full Text Search testing', () => {
     }, done.fail);
   });
 
-  it('fullTextSearch: $diacriticSensitive', (done) => {
+  it_exclude_dbs(['mysql'])('fullTextSearch: $diacriticSensitive', (done) => {
     fullTextHelper().then(() => {
       const where = {
         subject: {

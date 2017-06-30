@@ -11,6 +11,7 @@ const MySQLDuplicateColumnError = 'ER_DUP_FIELDNAME';
 const PostgresDuplicateObjectError = '42710';
 const MySQLDuplicateObjectError = 'ER_DUP_ENTRY';
 const MySQLDataTruncatedWarn = 'WARN_DATA_TRUNCATED';
+const MySQLWrongValueError = 'ER_TRUNCATED_WRONG_VALUE';
 const MySQLUniqueIndexViolationError = 'ER_DUP_KEYNAME';
 const MySQLBlobKeyWithoutLengthError = 'ER_BLOB_KEY_WITHOUT_LENGTH';
 const PostgresUniqueIndexViolationError = '23505';
@@ -219,7 +220,7 @@ const buildWhereClause = ({ schema, query, index }) => {
       });
       name += "'";
       if (fieldValue === null) {
-        patterns.push(`${name} IS NULL`);
+        patterns.push(`\`${name}\` IS NULL`);
       } else {
         patterns.push(`${name} = '${fieldValue}'`);
       }
@@ -262,13 +263,13 @@ const buildWhereClause = ({ schema, query, index }) => {
         patterns.push(`JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') != 1`);
       } else {
         if (fieldValue.$ne === null) {
-          patterns.push(`$${index}:name IS NOT NULL`);
+          patterns.push(`\`$${index}:name\` IS NOT NULL`);
           values.push(fieldName);
           index += 1;
           continue;
         } else {
           // if not null, we need to manually exclude null
-          patterns.push(`($${index}:name <> '$${index + 1}:name' OR $${index}:name IS NULL)`);
+          patterns.push(`(\`$${index}:name\` <> '$${index + 1}:name' OR \`$${index}:name\` IS NULL)`);
         }
       }
 
@@ -326,7 +327,7 @@ const buildWhereClause = ({ schema, query, index }) => {
           }
         } else if (!notIn) {
           values.push(fieldName);
-          patterns.push(`$${index}:name IS NULL`);
+          patterns.push(`\`$${index}:name\` IS NULL`);
           index = index + 1;
         }
       }
@@ -348,7 +349,7 @@ const buildWhereClause = ({ schema, query, index }) => {
       if (fieldValue.$exists) {
         patterns.push(`$${index}:name IS NOT NULL`);
       } else {
-        patterns.push(`$${index}:name IS NULL`);
+        patterns.push(`\`$${index}:name\` IS NULL`);
       }
       values.push(fieldName);
       index += 1;
@@ -399,9 +400,9 @@ const buildWhereClause = ({ schema, query, index }) => {
           `bad $text: $diacriticSensitive - false not supported, install Postgres Unaccent Extension`
         );
       }
-      patterns.push(`to_tsvector($${index}:name, $${index + 1}:name) @@ to_tsquery($${index + 2}:name, $${index + 3}:name)`);
-      values.push(language, fieldName, language, search.$term);
-      index += 4;
+      patterns.push(`MATCH (\`$${index}:name\`) AGAINST ('$${index + 1}:name')`);
+      values.push(fieldName, search.$term);
+      index += 2;
     }
 
     if (fieldValue.$nearSphere) {
@@ -519,7 +520,7 @@ const buildWhereClause = ({ schema, query, index }) => {
     });
 
     if (initialPatternsLength === patterns.length) {
-      throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, `Postgres doesn't support this query type yet ${JSON.stringify(fieldValue)}`);
+      throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, `MySQL does not support this query type yet ${fieldValue}`);
     }
   }
   values = values.map(transformValue);
@@ -614,8 +615,6 @@ export class MySQLStorageAdapter {
     return this.connect()
       .then(() => this.database.query('CREATE TABLE IF NOT EXISTS `_SCHEMA` (`className` VARCHAR(120), `schema` JSON, `isParseClass` BOOL, PRIMARY KEY (`className`));'))
       .catch(error => {
-        console.log('what did i do');
-        console.log(error);
         if (error.code === PostgresDuplicateRelationError
           || error.code === PostgresUniqueIndexViolationError
           || error.code === PostgresDuplicateObjectError) {
@@ -628,20 +627,19 @@ export class MySQLStorageAdapter {
   }
 
   classExists(name) {
-    const qs = 'SELECT EXISTS (SELECT 1 FROM `information_schema.tables` WHERE `table_name` = \'$1:name\')';
+    const qs = "SELECT 'exists' from (SELECT 1 FROM `$1:name` LIMIT 1) as classExist";
     return this.connect()
       .then(() => this.database.query(qs, [name]))
-      .then((res) => res.exists)
-      .catch(error => {
-        console.log(error);
-      });
+      .then(([results]) => results[0].exists)
+      .catch(() => Promise.resolve(false));
   }
 
   setClassLevelPermissions(className, CLPs) {
-    return this._ensureSchemaCollectionExists().then(() => {
-      const values = [className, 'schema', 'classLevelPermissions', JSON.stringify(CLPs)]
-      return this.database.query(`UPDATE "_SCHEMA" SET $2:name = json_object_set_key($2:name, $3:name, $4:name) WHERE "className"=$1 `, values);
-    });
+    const qs = "UPDATE `_SCHEMA` SET `$2:name` = JSON_SET(COALESCE(`$2:name`, '{}'), '$.$3:name', CAST('$4:name' AS JSON)) WHERE `className` = '$1:name'";
+    const values = [className, 'schema', 'classLevelPermissions', JSON.stringify(CLPs)];
+    return this.connect()
+      .then(() => this._ensureSchemaCollectionExists())
+      .then(() => this.database.query(qs, values));
   }
 
   createClass(className, schema) {
@@ -652,12 +650,9 @@ export class MySQLStorageAdapter {
       .then(() => this.database.query(qs, [className, JSON.stringify(schema)]))
       .then(() => toParseSchema(schema))
       .catch((error) => {
-        if (error.code === MySQLDuplicateObjectError && error.detail.includes(className)) {
-          //SKIP
-        } else if (error.code === PostgresDuplicateObjectError && error.detail.includes(className)) {
+        if (error.code === MySQLDuplicateObjectError && error.message.includes('PRIMARY')) {
           throw new Parse.Error(Parse.Error.DUPLICATE_VALUE, `Class ${className} already exists.`)
         } else {
-          console.log('error here');
           throw error;
         }
       });
@@ -696,19 +691,19 @@ export class MySQLStorageAdapter {
       if (parseType.type === 'Date') {
         valuesArray.push(parseTypeToPostgresType(parseType));
         if (fieldName === 'createdAt') {
-          patternsArray.push(`$${index}:name $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP`);
+          patternsArray.push(`\`$${index}:name\` $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP`);
         } else if (fieldName === 'updatedAt') {
-          patternsArray.push(`$${index}:name $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`);
+          patternsArray.push(`\`$${index}:name\` $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`);
         } else {
-          patternsArray.push(`$${index}:name $${index + 1}:raw NULL`);
+          patternsArray.push(`\`$${index}:name\` $${index + 1}:raw NULL`);
         }
         index = index + 2;
         return;
       }
-      patternsArray.push(`$${index}:name $${index + 1}:raw`);
+      patternsArray.push(`\`$${index}:name\` $${index + 1}:raw`);
       if (fieldName === 'objectId') {
         valuesArray.push(defaultUniqueKeyLength);
-        patternsArray.push(`PRIMARY KEY ($${index}:name)`)
+        patternsArray.push(`PRIMARY KEY (\`$${index}:name\`)`)
       } else if (fieldName === 'email' || fieldName === 'username' || fieldName === 'name') {
         valuesArray.push(defaultUniqueKeyLength);
       } else {
@@ -722,7 +717,6 @@ export class MySQLStorageAdapter {
       .then(() => this._ensureSchemaCollectionExists())
       .then(() => this.database.query(qs, values))
       .catch(error => {
-        console.log('we messed up');
         if (error.code === PostgresDuplicateRelationError) {
         // Table already exists, must have been created by a different request. Ignore error.
         } else {
@@ -786,7 +780,7 @@ export class MySQLStorageAdapter {
   // Drops a collection. Resolves with true if it was a Parse Schema (eg. _User, Custom, etc.)
   // and resolves with false if it wasn't (eg. a join table). Rejects if deletion was impossible.
   deleteClass(className) {
-    const qs = 'DROP TABLE IF EXISTS `$1:name`; DELETE FROM `_SCHEMA` WHERE `className" = $1:name;';
+    const qs = "DROP TABLE IF EXISTS `$1:name`; DELETE FROM `_SCHEMA` WHERE `className`= '$1:name';";
     return this.connect()
       .then(() => this.database.query(qs, [className]))
       .then(() => className.indexOf('_Join:') != 0); // resolves with false when _Join table
@@ -794,6 +788,7 @@ export class MySQLStorageAdapter {
 
   // Delete all data known to this adapter. Used for testing.
   deleteAllClasses() {
+    //return;
     const now = new Date().getTime();
     debug('deleteAllClasses');
     return this.connect()
@@ -837,35 +832,30 @@ export class MySQLStorageAdapter {
 
   // Returns a Promise.
   deleteFields(className, schema, fieldNames) {
-    debug('deleteFields', className, fieldNames);
-    return Promise.resolve()
+    debug('deleteFields', className, schema, fieldNames);
+    fieldNames = fieldNames.reduce((list, fieldName) => {
+      const field = schema.fields[fieldName]
+      if (field.type !== 'Relation') {
+        list.push(fieldName);
+      }
+      delete schema.fields[fieldName];
+      return list;
+    }, []);
+
+    const values = [className, ...fieldNames];
+    const columns = fieldNames.map((name, idx) => {
+      return `\`$${idx + 2}:name\``;
+    }).join(', DROP COLUMN');
+    return this.connect()
+      .then(() => this.database.query("UPDATE `_SCHEMA` SET `schema` = JSON_SET(COALESCE(`schema`, '{}'), '$.fields', CAST('$1:name' AS JSON)) WHERE `className`='$2:name'", [JSON.stringify(schema.fields), className]))
       .then(() => {
-        fieldNames = fieldNames.reduce((list, fieldName) => {
-          const field = schema.fields[fieldName]
-          if (field.type !== 'Relation') {
-            list.push(fieldName);
-          }
-          delete schema.fields[fieldName];
-          return list;
-        }, []);
-
-        const values = [className, ...fieldNames];
-        const columns = fieldNames.map((name, idx) => {
-          return `$${idx + 2}:name`;
-        }).join(', DROP COLUMN');
-
-        const doBatch = (t) => {
-          const batch = [
-            t.none('UPDATE "_SCHEMA" SET "schema"=$<schema> WHERE "className"=$<className>', {schema, className})
-          ];
-          if (values.length > 1) {
-            batch.push(t.none(`ALTER TABLE $1:name DROP COLUMN ${columns}`, values));
-          }
-          return batch;
+        if (values.length > 1) {
+          return this.database.query(`ALTER TABLE \`$1:name\` DROP COLUMN ${columns}`, [...values]);
         }
-        return this._client.tx((t) => {
-          return t.batch(doBatch(t));
-        });
+        return;
+      })
+      .catch((error) =>{
+        console.log(error);
       });
   }
 
@@ -904,7 +894,7 @@ export class MySQLStorageAdapter {
   getClass(className) {
     debug('getClass', className);
     return this.connect()
-      .then(() => this.database.query('SELECT * FROM `_SCHEMA` WHERE `className`=\'$1:name\'', [className ]))
+      .then(() => this.database.query('SELECT * FROM `_SCHEMA` WHERE `className` COLLATE latin1_general_cs =\'$1:name\'', [className ]))
       .then(([result]) => {
         if (result.length === 1) {
           return result[0].schema;
@@ -963,6 +953,9 @@ export class MySQLStorageAdapter {
       switch (schema.fields[fieldName].type) {
       case 'Date':
         if (object[fieldName]) {
+          if (fieldName === 'updatedAt' && !object[fieldName].iso) {
+            object[fieldName].iso = new Date();
+          }
           valuesArray.push(toPostgresValue(object[fieldName]));
         } else {
           valuesArray.push(null);
@@ -973,9 +966,9 @@ export class MySQLStorageAdapter {
         break;
       case 'Array':
       case 'Object':
+      case 'Bytes':
         valuesArray.push(JSON.stringify(object[fieldName]));
         break;
-      case 'Bytes':
       case 'String':
       case 'Number':
         if (!object[fieldName]) {
@@ -1001,7 +994,7 @@ export class MySQLStorageAdapter {
     columnsArray = columnsArray.concat(Object.keys(geoPoints));
     const initialValues = valuesArray.map((val, index) => {
       const fieldName = columnsArray[index];
-      if (schema.fields[fieldName] && schema.fields[fieldName].type === 'Boolean') {
+      if (schema.fields[fieldName] && schema.fields[fieldName].type === 'Boolean' || val === null) {
         return `$${index + 2 + columnsArray.length}:name`;
       }
       return `'$${index + 2 + columnsArray.length}:name'`;
@@ -1021,10 +1014,15 @@ export class MySQLStorageAdapter {
     return this.connect()
       .then(() => this.database.query(qs, values))
       .catch((error) => {
-        if (error.code === MySQLDataTruncatedWarn) {
+        console.log('error insert');
+        console.log(error);
+        if (error.code === MySQLDuplicateObjectError && className === '_Role' ||
+            error.code === MySQLDuplicateObjectError && error.message.includes('unique_') ||
+            error.code === MySQLDuplicateObjectError && error.message.includes('PRIMARY')) {
+          throw new Parse.Error(Parse.Error.DUPLICATE_VALUE, 'A duplicate value for a field with unique values was provided');
+        } else if(error.code === MySQLDuplicateObjectError ||
+                 error.code === MySQLDataTruncatedWarn) {
           //Ignore Warning
-          return;
-        } else if(error.code === MySQLDuplicateObjectError) {
           return;
         } else {
           throw error;
@@ -1033,14 +1031,12 @@ export class MySQLStorageAdapter {
       .then(() => ({ ops: [object] }))
       .catch((error) => {
         console.log('here');
-        console.log('here');
-        if (error.code === PostgresUniqueIndexViolationError) {
-          throw new Parse.Error(Parse.Error.DUPLICATE_VALUE, 'A duplicate value for a field with unique values was provided');
+        if (error.code === MySQLWrongValueError) {
+          throw new Parse.Error(Parse.Error.INTERNAL_SERVER_ERROR, error);
         } else {
           throw error;
         }
-        return;
-      })
+      });
   }
 
   // Remove all objects that match the given Parse Query.
@@ -1055,7 +1051,7 @@ export class MySQLStorageAdapter {
     if (Object.keys(query).length === 0) {
       where.pattern = 'TRUE';
     }
-    const qs = `DELETE FROM $1:name WHERE ${where.pattern}`;
+    const qs = `DELETE FROM \`$1:name\` WHERE ${where.pattern}`;
     debug(qs, values);
     return this.connect()
       .then(() => this.database.query(qs, values))
@@ -1141,9 +1137,12 @@ export class MySQLStorageAdapter {
         index += 2;
       } else if (fieldValue.__op === 'Remove') {
         fieldValue.objects.map((obj) => {
-          console.log(obj);
-          updatePatterns.push(`\`$${index}:name\` = JSON_REMOVE(\`$${index}:name\`, REPLACE(JSON_SEARCH(COALESCE(\`$${index}:name\`,'[]'), 'one', $${index + 1}:name),'"',''))`)
-          values.push(fieldName, obj);
+          updatePatterns.push(`\`$${index}:name\` = JSON_REMOVE(\`$${index}:name\`, REPLACE(JSON_SEARCH(COALESCE(\`$${index}:name\`,'[]'), 'one', '$${index + 1}:name'),'"',''))`)
+          if (typeof obj === 'object') {
+            values.push(fieldName, JSON.stringify(obj));
+          } else {
+            values.push(fieldName, obj);
+          }
           index += 2;
         });
         // updatePatterns.push(`\`$${index}:name\` = array_remove(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`)
@@ -1151,15 +1150,18 @@ export class MySQLStorageAdapter {
         // index += 2;
       } else if (fieldValue.__op === 'AddUnique') {
         fieldValue.objects.map((obj) => {
-          console.log(obj);
           updatePatterns.push(`\`$${index}:name\` = if (JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') = 0, JSON_MERGE(\`$${index}:name\`,'$${index + 1}:name'),\`$${index}:name\`)`);
-          values.push(fieldName, obj);
+          if (typeof obj === 'object') {
+            values.push(fieldName, JSON.stringify(obj));
+          } else {
+            values.push(fieldName, obj);
+          }
           index += 2;
         });
         // updatePatterns.push(`\`$${index}:name\` = array_add_unique(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`);
         // values.push(fieldName, JSON.stringify(fieldValue.objects));
         // index += 2;
-      } else if (fieldName === 'updatedAt') { //TODO: stop special casing this. It should check for __type === 'Date' and use .iso
+      } else if (fieldName === 'updatedAt' || fieldName === 'finishedAt') { //TODO: stop special casing this. It should check for __type === 'Date' and use .iso
         updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`)
         values.push(fieldName, new Date(fieldValue).toISOString().slice(0, 19).replace('T', ' '));
         index += 2;
@@ -1200,6 +1202,26 @@ export class MySQLStorageAdapter {
       } else if (typeof fieldValue === 'object'
                     && schema.fields[fieldName]
                     && schema.fields[fieldName].type === 'Object') {
+
+        const keysToReplace = Object.keys(originalUpdate).filter(k => {
+          // choose top level fields that dont have operation
+          return !originalUpdate[k].__op && k.split('.').length === 2 && k.split(".")[0] === fieldName;
+        }).map(k => k.split('.')[1]);
+
+        let replacePattern = '';
+        if (keysToReplace.length > 0) {
+          replacePattern = keysToReplace.map((c) => {
+            if (typeof fieldValue[c] === 'object') {
+              return `'$.${c}', CAST('${JSON.stringify(fieldValue[c])}' AS JSON)`;
+            } else {
+              return `'$.${c}', '${fieldValue[c]}'`;
+            }
+          }).join(' || ');
+          // Strip the keys
+          keysToReplace.forEach((key) => {
+            delete fieldValue[key];
+          });
+        }
         // Gather keys to increment
         const keysToIncrement = Object.keys(originalUpdate).filter(k => {
           // choose top level fields that have a delete operation set
@@ -1224,10 +1246,18 @@ export class MySQLStorageAdapter {
         }).map(k => k.split('.')[1]);
 
         const deletePatterns = keysToDelete.reduce((p, c, i) => {
-          return p + ` - '$${index + 1 + i}:value'`;
-        }, '');
+          return `'$.$${index + 1 + i}:name'`;
+        }, ', ');
 
-        updatePatterns.push(`\`$${index}:name\` = JSON_SET(COALESCE(\`$${index}:name\`, '{}'), ${deletePatterns} ${incrementPatterns})`);
+        if (keysToDelete.length > 0) {
+          updatePatterns.push(`\`$${index}:name\` = JSON_REMOVE(\`$${index}:name\`, ${deletePatterns})`);
+        }
+        if (keysToIncrement.length > 0) {
+          updatePatterns.push(`\`$${index}:name\` = JSON_SET(COALESCE(\`$${index}:name\`, '{}'), ${incrementPatterns})`);
+        }
+        if (keysToReplace.length > 0) {
+          updatePatterns.push(`\`$${index}:name\` = JSON_SET(COALESCE(\`$${index}:name\`, '{}'), ${replacePattern})`);
+        }
 
         values.push(fieldName, ...keysToDelete, JSON.stringify(fieldValue));
         index += 2 + keysToDelete.length;
@@ -1250,10 +1280,15 @@ export class MySQLStorageAdapter {
     debug('update: ', qs, values);
     return this.connect()
       .then(() => this.database.query(qs, values))
-      .then(([results, fields]) => {
-        console.log(fields);
+      .then(([results]) => {
         if (results.affectedRows > 0) {
-          return results;
+          return this.find(className, schema, query, {undefined, limit:results.affectedRows})
+            .then((updatedObjects) => {
+              if (updatedObjects.length === 1) {
+                return updatedObjects[0];
+              }
+              return updatedObjects;
+            });
         }
         return null;
       })
@@ -1317,7 +1352,7 @@ export class MySQLStorageAdapter {
       });
       columns = keys.map((key, index) => {
         if (key === '$score') {
-          return `ts_rank_cd(to_tsvector($${2}:name, $${3}:name), to_tsquery($${4}:name, $${5}:name), 32) as score`;
+          return `*, MATCH (\`$2:name\`) AGAINST ('$3:name') as score`;
         }
         return `\`$${index + values.length + 1}:name\``;
       }).join(',');
@@ -1359,6 +1394,9 @@ export class MySQLStorageAdapter {
               name: object[fieldName]
             }
           }
+          if (object[fieldName] != undefined && schema.fields[fieldName].type === 'Boolean') {
+            object[fieldName] = object[fieldName] === 1 ? true : false;
+          }
         });
         //TODO: remove this reliance on the mongo format. DB adapter shouldn't know there is a difference between created at and any other date field.
         if (object.createdAt) {
@@ -1391,8 +1429,6 @@ export class MySQLStorageAdapter {
             object[fieldName] = { __type: 'Date', iso: object[fieldName].toISOString() };
           }
         }
-        // console.log('found');
-        // console.log(object);
         return object;
       }));
   }
@@ -1406,8 +1442,8 @@ export class MySQLStorageAdapter {
     // Use the same name for every ensureUniqueness attempt, because postgres
     // Will happily create the same index with multiple names.
     const constraintName = `unique_${fieldNames.sort().join('_')}`;
-    const constraintPatterns = fieldNames.map((fieldName, index) => `$${index + 3}:name`);
-    const qs = `ALTER TABLE $1:name ADD CONSTRAINT $2:name UNIQUE (${constraintPatterns.join(',')})`;
+    const constraintPatterns = fieldNames.map((fieldName, index) => `\`$${index + 3}:name\``);
+    const qs = `ALTER TABLE \`$1:name\` ADD CONSTRAINT \`$2:name\` UNIQUE (${constraintPatterns.join(',')})`;
     debug('ensureUniqueness', qs, [className, constraintName, ...fieldNames]);
     return this.connect()
       .then(() => this.database.query(qs, [className, constraintName, ...fieldNames]))
@@ -1415,7 +1451,6 @@ export class MySQLStorageAdapter {
         return res;
       })
       .catch(error => {
-        console.log('uniqueness error');
         if (error.code === MySQLDuplicateColumnError ||
             error.code === MySQLDuplicateObjectError ||
             error.code === MySQLBlobKeyWithoutLengthError) {
@@ -1424,7 +1459,6 @@ export class MySQLStorageAdapter {
         } else if (error.code === MySQLUniqueIndexViolationError) {
         // Index already exists. Ignore error.
         } else {
-          console.log(error);
           throw error;
         }
       });
@@ -1438,12 +1472,12 @@ export class MySQLStorageAdapter {
     values.push(...where.values);
 
     const wherePattern = where.pattern.length > 0 ? `WHERE ${where.pattern}` : '';
-    const qs = `SELECT count(*) FROM $1:name ${wherePattern}`;
+    const qs = `SELECT count(*) FROM \`$1:name\` ${wherePattern}`;
     return this.connect()
       .then(() => this.database.query(qs, values))
       .then(([result]) => result[0]['count(*)'])
       .catch((err) => {
-        if (err.code === PostgresRelationDoesNotExistError) {
+        if (err.code === MySQLRelationDoesNotExistError) {
           return 0;
         }
         throw err;
@@ -1470,6 +1504,11 @@ export class MySQLStorageAdapter {
         /* eslint-disable no-console */
         console.error(error);
       });
+  }
+
+  createFullTextIndex(className, field) {
+    return this.connect()
+      .then(() => this.database.query(`ALTER TABLE \`${className}\` ADD FULLTEXT (${field})`));
   }
 }
 
