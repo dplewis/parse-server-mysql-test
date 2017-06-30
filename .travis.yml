@@ -48,9 +48,9 @@ matrix:
       env: PARSE_SERVER_TEST_CACHE=redis
 
 before_install:
-- if [[ $DB == "mysql" ]]; then chmod +x ./resources/*
-- if [[ $DB == "mysql" ]]; then ./resources/travis_mysql_5.7.sh
-- if [[ $DB == "mysql" ]]; then ./resources/mysql-reset-root-password.sh
+- if [[ $DB == "mysql" ]]; then chmod +x ./resources/*; fi
+- if [[ $DB == "mysql" ]]; then ./resources/travis_mysql_5.7.sh; fi
+- if [[ $DB == "mysql" ]]; then ./resources/mysql-reset-root-password.sh; fi
 - mysql -e 'CREATE DATABASE parse_server_mysql_adapter_test_database;'
 
 before_script:
