@@ -1,10 +1,8 @@
 import Parse            from 'parse/node';
 import _                from 'lodash';
-import sql              from './sql';
 
 const parser = require('./MySQLConfigParser');
 const mysql = require('mysql2/promise');
-const PostgresRelationDoesNotExistError = '42P01';
 const MySQLRelationDoesNotExistError = 'ER_NO_SUCH_TABLE';
 const PostgresDuplicateRelationError = '42P07';
 const MySQLDuplicateColumnError = 'ER_DUP_FIELDNAME';
@@ -15,7 +13,6 @@ const MySQLWrongValueError = 'ER_TRUNCATED_WRONG_VALUE';
 const MySQLUniqueIndexViolationError = 'ER_DUP_KEYNAME';
 const MySQLBlobKeyWithoutLengthError = 'ER_BLOB_KEY_WITHOUT_LENGTH';
 const PostgresUniqueIndexViolationError = '23505';
-const PostgresTransactionAbortedError = '25P02';
 const logger = require('../../../logger');
 
 const debug = function(){
@@ -357,7 +354,6 @@ const buildWhereClause = ({ schema, query, index }) => {
 
     if (fieldValue.$text) {
       const search = fieldValue.$text.$search;
-      let language = 'english';
       if (typeof search !== 'object') {
         throw new Parse.Error(
           Parse.Error.INVALID_JSON,
@@ -375,8 +371,6 @@ const buildWhereClause = ({ schema, query, index }) => {
           Parse.Error.INVALID_JSON,
           `bad $text: $language, should be string`
         );
-      } else if (search.$language) {
-        language = search.$language;
       }
       if (search.$caseSensitive && typeof search.$caseSensitive !== 'boolean') {
         throw new Parse.Error(
@@ -727,9 +721,6 @@ export class MySQLStorageAdapter {
         return Promise.all(relations.map((fieldName) => {
           return this.database.query('CREATE TABLE IF NOT EXISTS `$1:name` (`relatedId` varChar(120), `owningId` varChar(120), PRIMARY KEY(`relatedId`, `owningId`))', [`_Join:${fieldName}:${className}`]);
         }));
-      }).catch(error => {
-        console.log('join error');
-        console.log(error);
       });
   }
 
@@ -746,13 +737,10 @@ export class MySQLStorageAdapter {
           }
           promise = this.database.query('ALTER TABLE `$1:name` ADD COLUMN `$2:name` $3:name', [className, fieldName, postgresType])
             .catch((error) => {
-              if (error.code === PostgresRelationDoesNotExistError) {
-
-              } else if (error.code === MySQLDuplicateColumnError) {
+              if (error.code === MySQLDuplicateColumnError) {
                 // Column already exists, created by other request. Carry on to
                 // See if it's the right type.
               } else {
-                console.log('unknown error');
                 throw error;
               }
             })
@@ -770,10 +758,6 @@ export class MySQLStorageAdapter {
           const path = `'$.fields.${fieldName}'`;
           return this.database.query('UPDATE `_SCHEMA` SET `schema`=JSON_SET(`schema`, $1:name, CAST(\'$2:name\' AS JSON)) WHERE `className`=\'$3:name\'', [path, JSON.stringify(type), className]);
         }
-      })
-      .catch((error) => {
-        console.log('what the hek');
-        console.log(error);
       });
   }
 
@@ -853,9 +837,6 @@ export class MySQLStorageAdapter {
           return this.database.query(`ALTER TABLE \`$1:name\` DROP COLUMN ${columns}`, [...values]);
         }
         return;
-      })
-      .catch((error) =>{
-        console.log(error);
       });
   }
 
@@ -866,25 +847,10 @@ export class MySQLStorageAdapter {
     debug('getAllClasses');
     return this._ensureSchemaCollectionExists()
       .then(() => this.database.query('SELECT * FROM `_SCHEMA`'))
-      .catch((error) => {
-        console.log('what is unahdled');
-        console.log(error);
-      })
       .then(([rows]) => {
         return rows.map((row) => {
           return toParseSchema({ className: row.className, ...row.schema });
         });
-      })
-      .catch((error) => {
-        console.log('error yolo');
-        console.log(error);
-        if (error.code === PostgresDuplicateRelationError
-          || error.code === PostgresUniqueIndexViolationError
-          || error.code === PostgresDuplicateObjectError) {
-        // Table already exists, must have been created by a different request. Ignore error.
-        } else {
-          throw error;
-        }
       });
   }
 
@@ -975,6 +941,8 @@ export class MySQLStorageAdapter {
           valuesArray.push(0);
           break;
         }
+        valuesArray.push(object[fieldName]);
+        break;
       case 'Boolean':
         valuesArray.push(object[fieldName]);
         break;
@@ -1014,8 +982,6 @@ export class MySQLStorageAdapter {
     return this.connect()
       .then(() => this.database.query(qs, values))
       .catch((error) => {
-        console.log('error insert');
-        console.log(error);
         if (error.code === MySQLDuplicateObjectError && className === '_Role' ||
             error.code === MySQLDuplicateObjectError && error.message.includes('unique_') ||
             error.code === MySQLDuplicateObjectError && error.message.includes('PRIMARY')) {
@@ -1030,7 +996,6 @@ export class MySQLStorageAdapter {
       })
       .then(() => ({ ops: [object] }))
       .catch((error) => {
-        console.log('here');
         if (error.code === MySQLWrongValueError) {
           throw new Parse.Error(Parse.Error.INTERNAL_SERVER_ERROR, error);
         } else {
@@ -1202,15 +1167,11 @@ export class MySQLStorageAdapter {
       } else if (typeof fieldValue === 'object'
                     && schema.fields[fieldName]
                     && schema.fields[fieldName].type === 'Object') {
-        console.log('object found here');
-        console.log(originalUpdate);
-        console.log(fieldValue);
-        console.log(fieldName);
+
         const keysToSet = Object.keys(originalUpdate).filter(k => {
           // choose top level fields that dont have operation or . (dot) field
           return !originalUpdate[k].__op && k.indexOf('.') === -1 && k !== 'updatedAt';
         });
-        console.log(keysToSet);
 
         let setPattern = '';
         if (keysToSet.length > 0) {
@@ -1309,10 +1270,6 @@ export class MySQLStorageAdapter {
             });
         }
         return null;
-      })
-      .catch((error) => {
-        console.log('slient but deadly');
-        console.log(error);
       });
   }
 

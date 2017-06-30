@@ -1,17 +1,3 @@
-Squads-MacBook-Pro:parse-server-mysql-test Squad$ PARSE_SERVER_TEST_DB=mysql npm test
-
-> parse-server@2.5.0 pretest /Users/Squad/Github/parse-server-mysql-test
-> npm run lint
-
-
-> parse-server@2.5.0 lint /Users/Squad/Github/parse-server-mysql-test
-> echo 'lint';
-
-lint
-
-> parse-server@2.5.0 test /Users/Squad/Github/parse-server-mysql-test
-> cross-env MONGODB_VERSION=${MONGODB_VERSION:=3.2.6} MONGODB_STORAGE_ENGINE=mmapv1 TESTING=1 $COVERAGE_OPTION PARSE_SERVER_TEST_DB=mysql jasmine
-
 Jasmine started
 
   Account Lockout Policy:
@@ -460,7 +446,7 @@ Error: unauthorized: master key is required
     ✓ requires a master key and app id
     ✓ support http basic authentication with masterkey
     ✓ support http basic authentication with javascriptKey
-(node:49058) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 35): MongoError: failed to connect to server [localhost:43605] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:43605]
+(node:1386) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 35): MongoError: failed to connect to server [localhost:43605] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:43605]
 MongoError: failed to connect to server [localhost:43605] on first connect [MongoError: connect ECONNREFUSED 127.0.0.1:43605]
     at Pool.<anonymous> (/Users/Squad/Github/parse-server-mysql-test/node_modules/mongodb-core/lib/topologies/server.js:329:35)
     at emitOne (events.js:96:13)
@@ -632,330 +618,10 @@ Error: unauthorized: master key is required
     ✓ Should fail a request
     ✓ Should fail with missing options
 
-object found here
-{ updatedAt: 2017-06-30T07:40:29.178Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:29.179Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
   Parse.Push
     ✓ should properly send push
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:30.204Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
     ✓ should properly send push with lowercaseIncrement
     ✓ should not allow clients to query _PushStatus
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.273Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.725Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.725Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:40:31.726Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
     ✓ should allow master key to query _PushStatus
     ✓ should throw error if missing push configuration
 
@@ -998,27 +664,7 @@ IN AFTER SAVE!
     ✓ create a GameScore object
     ✓ get a TestObject
     ✓ create a valid parse user
-error insert
-{ Error: Duplicate entry 'test' for key 'unique_username'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'test\' for key \'unique_username\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
     ✓ fail to create a duplicate username
-error insert
-{ Error: Duplicate entry 'dupe@dupe.dupe' for key 'unique_email'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'dupe@dupe.dupe\' for key \'unique_email\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
     ✓ ensure that email is uniquely indexed
     ✓ ensure that if people already have duplicate users, they can still sign up new users
     ✓ ensure that if people already have duplicate emails, they can still sign up new users
@@ -1059,9 +705,9 @@ here
     ✓ gets relation fields
 checking headers
 { results:
-   [ { objectId: 'jxhmtaoahB',
-       createdAt: '2017-06-30T12:41:09.000Z',
-       updatedAt: '2017-06-30T12:41:09.000Z',
+   [ { objectId: '8FYrs1Il0y',
+       createdAt: '2017-06-30T13:58:44.000Z',
+       updatedAt: '2017-06-30T13:58:44.000Z',
        a: 'b' } ] }
     ✓ ignores _RevocableSession "header" send by JS SDK
     ✓ doesnt convert interior keys of objects that use special names
@@ -1133,21 +779,21 @@ Error: unauthorized: master key is required
     ✓ invalid geoPoint withinPolygon
 TypeError: GeoPoint latitude out of bounds: 181 > 90.0.
     at Function.value (/Users/Squad/Github/parse-server-mysql-test/node_modules/parse/lib/node/ParseGeoPoint.js:192:15)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:459:26
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:453:26
     at Array.map (native)
-    at _loop (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:455:30)
-    at buildWhereClause (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:194:34)
-    at MySQLStorageAdapter.find (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1337:19)
+    at _loop (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:449:30)
+    at buildWhereClause (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:191:34)
+    at MySQLStorageAdapter.find (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1294:19)
     at /Users/Squad/Github/parse-server-mysql-test/src/Controllers/DatabaseController.js:846:39
     at process._tickDomainCallback (internal/process/next_tick.js:135:7)
     ✓ invalid latitude withinPolygon
 TypeError: GeoPoint longitude out of bounds: 181 > 180.0.
     at Function.value (/Users/Squad/Github/parse-server-mysql-test/node_modules/parse/lib/node/ParseGeoPoint.js:198:15)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:459:26
+    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:453:26
     at Array.map (native)
-    at _loop (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:455:30)
-    at buildWhereClause (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:194:34)
-    at MySQLStorageAdapter.find (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1337:19)
+    at _loop (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:449:30)
+    at buildWhereClause (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:191:34)
+    at MySQLStorageAdapter.find (/Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1294:19)
     at /Users/Squad/Github/parse-server-mysql-test/src/Controllers/DatabaseController.js:846:39
     at process._tickDomainCallback (internal/process/next_tick.js:135:7)
     ✓ invalid longitude withinPolygon
@@ -1155,37 +801,7 @@ TypeError: GeoPoint longitude out of bounds: 181 > 180.0.
 
   a GlobalConfig
     ✓ can be retrieved
-error insert
-{ Error: Duplicate entry '1' for key 'PRIMARY'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'1\' for key \'PRIMARY\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
-object found here
-{ 'params.companies': [ 'US', 'DK', 'SE' ] }
-{ companies: [ 'US', 'DK', 'SE' ] }
-params
-[]
     ✓ can be updated when a master key exists
-error insert
-{ Error: Duplicate entry '1' for key 'PRIMARY'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'1\' for key \'PRIMARY\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
-object found here
-{ 'params.file': { __type: 'File', name: 'name', url: 'http://url' } }
-{ file: { __type: 'File', name: 'name', url: 'http://url' } }
-params
-[]
 { result: true }
 ParseConfig {
   attributes:
@@ -1193,37 +809,7 @@ ParseConfig {
      companies: [ 'US', 'DK' ] },
   _escapedAttributes: {} }
     ✓ can add and retrive files
-error insert
-{ Error: Duplicate entry '1' for key 'PRIMARY'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'1\' for key \'PRIMARY\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
-object found here
-{ 'params.point': { __type: 'GeoPoint', latitude: 10, longitude: -20 } }
-{ point: { __type: 'GeoPoint', latitude: 10, longitude: -20 } }
-params
-[]
     ✓ can add and retrive Geopoints
-error insert
-{ Error: Duplicate entry '1' for key 'PRIMARY'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'1\' for key \'PRIMARY\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
-object found here
-{ 'params.companies': { __op: 'Delete' }, 'params.foo': 'bar' }
-{ companies: undefined, foo: 'bar' }
-params
-[]
     ✓ properly handles delete op
 Error: unauthorized: master key is required
     at promiseEnforceMasterKeyAccess (/Users/Squad/Github/parse-server-mysql-test/src/middlewares.js:280:19)
@@ -1421,83 +1007,13 @@ Error: unauthorized: master key is required
     ✓ can create publisher/sub with custom adapter
     ✓ can create publisher/sub with custom function adapter
 
-error insert
-{ Error: Incorrect string value: '\xD0\xA1\xD1\x8B\xD1\x80...' for column 'subject' at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Incorrect string value: \'\\xD0\\xA1\\xD1\\x8B\\xD1\\x80...\' for column \'subject\' at row 1',
-  code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD',
-  errno: 1366,
-  sqlState: '#HY000' }
-here
   Parse.Query Full Text Search testing
     ✓ fullTextSearch: $search
-error insert
-{ Error: Incorrect string value: '\xD0\xA1\xD1\x8B\xD1\x80...' for column 'subject' at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Incorrect string value: \'\\xD0\\xA1\\xD1\\x8B\\xD1\\x80...\' for column \'subject\' at row 1',
-  code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD',
-  errno: 1366,
-  sqlState: '#HY000' }
-here
     ✓ fullTextSearch: $search, sort
-error insert
-{ Error: Incorrect string value: '\xD0\xA1\xD1\x8B\xD1\x80...' for column 'subject' at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Incorrect string value: \'\\xD0\\xA1\\xD1\\x8B\\xD1\\x80...\' for column \'subject\' at row 1',
-  code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD',
-  errno: 1366,
-  sqlState: '#HY000' }
-here
     ✓ fullTextSearch: $language
-error insert
-{ Error: Incorrect string value: '\xD0\xA1\xD1\x8B\xD1\x80...' for column 'subject' at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Incorrect string value: \'\\xD0\\xA1\\xD1\\x8B\\xD1\\x80...\' for column \'subject\' at row 1',
-  code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD',
-  errno: 1366,
-  sqlState: '#HY000' }
-here
     ✓ fullTextSearch: $search, invalid input
-error insert
-{ Error: Incorrect string value: '\xD0\xA1\xD1\x8B\xD1\x80...' for column 'subject' at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Incorrect string value: \'\\xD0\\xA1\\xD1\\x8B\\xD1\\x80...\' for column \'subject\' at row 1',
-  code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD',
-  errno: 1366,
-  sqlState: '#HY000' }
-here
     ✓ fullTextSearch: $language, invalid input
-error insert
-{ Error: Incorrect string value: '\xD0\xA1\xD1\x8B\xD1\x80...' for column 'subject' at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Incorrect string value: \'\\xD0\\xA1\\xD1\\x8B\\xD1\\x80...\' for column \'subject\' at row 1',
-  code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD',
-  errno: 1366,
-  sqlState: '#HY000' }
-here
     ✓ fullTextSearch: $caseSensitive, invalid input
-error insert
-{ Error: Incorrect string value: '\xD0\xA1\xD1\x8B\xD1\x80...' for column 'subject' at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Incorrect string value: \'\\xD0\\xA1\\xD1\\x8B\\xD1\\x80...\' for column \'subject\' at row 1',
-  code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD',
-  errno: 1366,
-  sqlState: '#HY000' }
-here
     ✓ fullTextSearch: $diacriticSensitive, invalid input
 
   Parse.Query testing
@@ -1580,14 +1096,6 @@ here
     ✓ include user
     ✓ or queries
     ✓ or complex queries
-what the hek
-Attempted to add a field that already exists
-what the hek
-Attempted to add a field that already exists
-what the hek
-Attempted to add a field that already exists
-what the hek
-Attempted to add a field that already exists
     ✓ async methods
     ✓ query.each
     ✓ query.each async
@@ -1619,16 +1127,6 @@ Attempted to add a field that already exists
     ✓ simple add and remove relation
     ✓ query relation without schema
     ✓ relations are constructed right from query
-error insert
-{ Error: Duplicate entry 'l0iRKae80e-DqqV1m6hYw' for key 'PRIMARY'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'l0iRKae80e-DqqV1m6hYw\' for key \'PRIMARY\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
     ✓ compound add and remove relation
     ✓ queries with relations
     ✓ queries on relation fields
@@ -1651,16 +1149,6 @@ here
     ✓ should not recursively load the same role multiple times
     ✓ should recursively load roles
     ✓ _Role object should not save without name.
-error insert
-{ Error: Duplicate entry 'MyRole' for key 'unique_name'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'MyRole\' for key \'unique_name\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
     ✓ Different _Role objects cannot have the same name.
     ✓ Should properly resolve roles
     ✓ can create role and query empty users
@@ -1903,189 +1391,17 @@ there
     ✓ can get push time in string format
     ✓ can get push time in number format
     ✓ can throw on getPushTime in invalid format
-object found here
-{ updatedAt: 2017-06-30T07:45:31.688Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.688Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.688Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.688Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.688Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.688Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.689Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.689Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.689Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.689Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:31.689Z,
-  numSent: { __op: 'Increment', amount: 5 },
-  'sentPerType.android': { __op: 'Increment', amount: 5 },
-  count: { __op: 'Increment', amount: -5 } }
-{ android: { __op: 'Increment', amount: 5 } }
-sentPerType
-[]
     ✓ properly increment badges
-object found here
-{ updatedAt: 2017-06-30T07:45:33.301Z,
-  numSent: { __op: 'Increment', amount: 10 },
-  'sentPerType.ios': { __op: 'Increment', amount: 10 },
-  count: { __op: 'Increment', amount: -10 } }
-{ ios: { __op: 'Increment', amount: 10 } }
-sentPerType
-[]
     ✓ properly set badges to 1
-object found here
-{ updatedAt: 2017-06-30T07:45:34.748Z,
-  numSent: { __op: 'Increment', amount: 5 },
-  'sentPerType.ios': { __op: 'Increment', amount: 5 },
-  count: { __op: 'Increment', amount: -5 } }
-{ ios: { __op: 'Increment', amount: 5 } }
-sentPerType
-[]
     ✓ properly set badges to 1 with complex query #2903 #3022
-object found here
-{ updatedAt: 2017-06-30T07:45:35.505Z,
-  numSent: { __op: 'Increment', amount: 10 },
-  numFailed: { __op: 'Increment', amount: 5 },
-  'sentPerType.ios': { __op: 'Increment', amount: 10 },
-  'failedPerType.android': { __op: 'Increment', amount: 5 },
-  count: { __op: 'Increment', amount: -15 } }
-{ ios: { __op: 'Increment', amount: 10 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:35.505Z,
-  numSent: { __op: 'Increment', amount: 10 },
-  numFailed: { __op: 'Increment', amount: 5 },
-  'sentPerType.ios': { __op: 'Increment', amount: 10 },
-  'failedPerType.android': { __op: 'Increment', amount: 5 },
-  count: { __op: 'Increment', amount: -15 } }
-{ android: { __op: 'Increment', amount: 5 } }
-failedPerType
-[]
     ✓ properly creates _PushStatus
     ✓ should properly report failures in _PushStatus
-object found here
-{ updatedAt: 2017-06-30T07:45:37.476Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:37.476Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
-object found here
-{ updatedAt: 2017-06-30T07:45:37.476Z,
-  numSent: { __op: 'Increment', amount: 1 },
-  'sentPerType.ios': { __op: 'Increment', amount: 1 },
-  count: { __op: 'Increment', amount: -1 } }
-{ ios: { __op: 'Increment', amount: 1 } }
-sentPerType
-[]
     ✓ should support full RESTQuery for increment
-object found here
-{ updatedAt: 2017-06-30T07:45:38.916Z,
-  numSent: { __op: 'Increment', amount: 5 },
-  'sentPerType.ios': { __op: 'Increment', amount: 5 },
-  count: { __op: 'Increment', amount: -5 } }
-{ ios: { __op: 'Increment', amount: 5 } }
-sentPerType
-[]
     ✓ should support object type for alert
     ✓ should flatten
     ✓ properly transforms push time
-object found here
-{ updatedAt: 2017-06-30T07:45:41.174Z,
-  numSent: { __op: 'Increment', amount: 10 },
-  'sentPerType.ios': { __op: 'Increment', amount: 10 },
-  count: { __op: 'Increment', amount: -10 } }
-{ ios: { __op: 'Increment', amount: 10 } }
-sentPerType
-[]
     ✓ should not schedule push when not configured
     ✓ should schedule push when configured
-object found here
-{ updatedAt: 2017-06-30T07:45:42.222Z,
-  numSent: { __op: 'Increment', amount: 5 },
-  'sentPerType.ios': { __op: 'Increment', amount: 5 },
-  count: { __op: 'Increment', amount: -5 } }
-{ ios: { __op: 'Increment', amount: 5 } }
-sentPerType
-[]
     ✓ should not enqueue push when device token is not set
 
   PushRouter
@@ -2121,12 +1437,6 @@ sentPerType
 
   rest create
     ✓ handles _id
-object found here
-{ subdoc: { wu: 'clan', foo: 'bar' },
-  updatedAt: '2017-06-30T07:45:50.369Z' }
-{ wu: 'clan', foo: 'bar' }
-subdoc
-[ 'subdoc' ]
     ✓ handles object and subdocument
     ✓ handles create on non-existent class when disabled client class creation
     ✓ handles create on existent class when disabled client class creation
@@ -2148,32 +1458,6 @@ subdoc
   rest query
     ✓ basic query
     ✓ query with limit
-error insert
-{ Error: Column count doesn't match value count at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Column count doesn\'t match value count at row 1',
-  code: 'ER_WRONG_VALUE_COUNT_ON_ROW',
-  errno: 1136,
-  sqlState: '#21S01' }
-here
-(node:49058) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 94): Error: Column count doesn't match value count at row 1
-    ✗ query for user w/ legacy credentials without masterKey has them stripped from results
-      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
-error insert
-{ Error: Column count doesn't match value count at row 1
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Column count doesn\'t match value count at row 1',
-  code: 'ER_WRONG_VALUE_COUNT_ON_ROW',
-  errno: 1136,
-  sqlState: '#21S01' }
-here
-(node:49058) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 95): Error: Column count doesn't match value count at row 1
-    ✗ query for user w/ legacy credentials with masterKey has them stripped from results
-      - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
     ✓ query with include
     ✓ query non-existent class when disabled client class creation
     ✓ query existent class when disabled client class creation
@@ -2342,16 +1626,6 @@ Error: unauthorized: master key is required
 
   Uniqueness
     ✓ fail when create duplicate value in unique field
-error insert
-{ Error: Duplicate entry 'QCJWC2lM8X' for key 'unique_ptr'
-    at PromiseConnection.query (/Users/Squad/Github/parse-server-mysql-test/node_modules/mysql2/promise.js:75:20)
-    at /Users/Squad/Github/parse-server-mysql-test/src/Adapters/Storage/MySQL/MySQLStorageAdapter.js:1015:33
-    at process._tickDomainCallback (internal/process/next_tick.js:135:7)
-  message: 'Duplicate entry \'QCJWC2lM8X\' for key \'unique_ptr\'',
-  code: 'ER_DUP_ENTRY',
-  errno: 1062,
-  sqlState: '#23000' }
-here
     ✓ unique indexing works on pointer fields
     ✓ fails when attempting to ensure uniqueness of fields that are not currently unique
 
@@ -2433,16 +1707,6 @@ here
 
   verbose logs
     ✓ mask sensitive information in _User class
-
-**************************************************
-*                    Failures                    *
-**************************************************
-
-1) rest query query for user w/ legacy credentials without masterKey has them stripped from results
-  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
-
-2) rest query query for user w/ legacy credentials with masterKey has them stripped from results
-  - Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
 
 **************************************************
 *                    Pending                     *
@@ -2568,9 +1832,13 @@ here
 40) rest create test specified session length
   Temporarily disabled with xit
 
-41) Uniqueness can do compound uniqueness
+41) rest query query for user w/ legacy credentials without masterKey has them stripped from results
   Temporarily disabled with xit
 
-Executed 1279 of 1323 specs (2 FAILED) (41 PENDING) (3 SKIPPED) in 9 mins 52 secs.
-npm ERR! Test failed.  See above for more details.
-Squads-MacBook-Pro:parse-server-mysql-test Squad$
+42) rest query query for user w/ legacy credentials with masterKey has them stripped from results
+  Temporarily disabled with xit
+
+43) Uniqueness can do compound uniqueness
+  Temporarily disabled with xit
+
+Executed 1277 of 1323 specs INCOMPLETE (43 PENDING) (3 SKIPPED) in 9 mins 23 secs.
