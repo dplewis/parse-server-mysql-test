@@ -25,7 +25,7 @@ const debug = function(){
 const parseTypeToPostgresType = type => {
   switch (type.type) {
   case 'String': return 'text';
-  case 'Date': return 'timestamp';
+  case 'Date': return 'timestamp(6)';
   case 'Object': return 'json';
   case 'File': return 'text';
   case 'Boolean': return 'boolean';
@@ -59,13 +59,23 @@ const toPostgresValue = value => {
       if (!value.iso) {
         return null;
       }
-      return new Date(value.iso).toISOString().slice(0, 19).replace('T', ' ')
+      return formatDateToMySQL(value.iso);
     }
     if (value.__type === 'File') {
       return value.name;
     }
   }
   return value;
+}
+
+const formatDateToMySQL = value => {
+  return new Date(value).toISOString().replace('T', ' ').replace('Z', '');
+}
+
+const formatMySQLDate = value => {
+  const date = value;
+  date.setHours(date.getHours() - 5);
+  return date;
 }
 
 const transformValue = value => {
@@ -309,9 +319,14 @@ const buildWhereClause = ({ schema, query, index }) => {
           const not = notIn ? ' NOT ' : '';
           if (isArrayField) {
             const operator = notIn ? ' != ' : ' = ';
-            patterns.push(`JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') ${operator} 1`);
-            values.push(fieldName, JSON.stringify(baseArray));
-            index += 2;
+            const inPatterns = [];
+            values.push(fieldName);
+            baseArray.forEach((listElem, listIndex) => {
+              values.push(JSON.stringify(listElem));
+              inPatterns.push(`JSON_CONTAINS(\`$${index}:name\`, '$${index + 1 + listIndex}:name') ${operator} 1`);
+            });
+            patterns.push(`${inPatterns.join(' || ')}`);
+            index = index + 1 + inPatterns.length;
           } else {
             const inPatterns = [];
             values.push(fieldName);
@@ -406,7 +421,7 @@ const buildWhereClause = ({ schema, query, index }) => {
       if (fieldValue.$maxDistance) {
         const distance = fieldValue.$maxDistance;
         const distanceInKM = distance * 6371 * 1000;
-        patterns.push(`ST_Distance_Sphere(\`$${index}:name\`, ST_GeomFromText('POINT($${index + 1}:name $${index + 2}:name)'), $${index + 3}:name)`);
+        patterns.push(`ST_Distance_Sphere(\`$${index}:name\`, ST_GeomFromText('POINT($${index + 1}:name $${index + 2}:name)')) <= $${index + 3}:name`);
         values.push(fieldName, point.longitude, point.latitude, distanceInKM);
         index += 4;
       } else {
@@ -685,9 +700,9 @@ export class MySQLStorageAdapter {
       if (parseType.type === 'Date') {
         valuesArray.push(parseTypeToPostgresType(parseType));
         if (fieldName === 'createdAt') {
-          patternsArray.push(`\`$${index}:name\` $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP`);
+          patternsArray.push(`\`$${index}:name\` $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP(6)`);
         } else if (fieldName === 'updatedAt') {
-          patternsArray.push(`\`$${index}:name\` $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`);
+          patternsArray.push(`\`$${index}:name\` $${index + 1}:raw DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)`);
         } else {
           patternsArray.push(`\`$${index}:name\` $${index + 1}:raw NULL`);
         }
@@ -733,7 +748,7 @@ export class MySQLStorageAdapter {
         if (type.type !== 'Relation') {
           let postgresType = parseTypeToPostgresType(type);
           if (type.type === 'Date') {
-            postgresType = 'timestamp null default null';
+            postgresType = 'timestamp(6) null default null';
           }
           promise = this.database.query('ALTER TABLE `$1:name` ADD COLUMN `$2:name` $3:name', [className, fieldName, postgresType])
             .catch((error) => {
@@ -1128,7 +1143,7 @@ export class MySQLStorageAdapter {
         // index += 2;
       } else if (fieldName === 'updatedAt' || fieldName === 'finishedAt') { //TODO: stop special casing this. It should check for __type === 'Date' and use .iso
         updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`)
-        values.push(fieldName, new Date(fieldValue).toISOString().slice(0, 19).replace('T', ' '));
+        values.push(fieldName, formatDateToMySQL(fieldValue));
         index += 2;
       } else if (typeof fieldValue === 'string') {
         updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
@@ -1375,33 +1390,33 @@ export class MySQLStorageAdapter {
         });
         //TODO: remove this reliance on the mongo format. DB adapter shouldn't know there is a difference between created at and any other date field.
         if (object.createdAt) {
-          object.createdAt = object.createdAt.toISOString();
+          object.createdAt = formatMySQLDate(object.createdAt).toISOString();
         }
         if (object.updatedAt) {
-          object.updatedAt = object.updatedAt.toISOString();
+          object.updatedAt = formatMySQLDate(object.updatedAt).toISOString();
         }
-        if (object.expiresAt) {
-          object.expiresAt = { __type: 'Date', iso: object.expiresAt.toISOString() };
-        }
-        if (object._email_verify_token_expires_at) {
-          object._email_verify_token_expires_at = { __type: 'Date', iso: object._email_verify_token_expires_at.toISOString() };
-        }
-        if (object._account_lockout_expires_at) {
-          object._account_lockout_expires_at = { __type: 'Date', iso: object._account_lockout_expires_at.toISOString() };
-        }
-        if (object._perishable_token_expires_at) {
-          object._perishable_token_expires_at = { __type: 'Date', iso: object._perishable_token_expires_at.toISOString() };
-        }
-        if (object._password_changed_at) {
-          object._password_changed_at = { __type: 'Date', iso: object._password_changed_at.toISOString() };
-        }
+        // if (object.expiresAt) {
+        //   object.expiresAt = { __type: 'Date', iso: object.expiresAt.toISOString() };
+        // }
+        // if (object._email_verify_token_expires_at) {
+        //   object._email_verify_token_expires_at = { __type: 'Date', iso: object._email_verify_token_expires_at.toISOString() };
+        // }
+        // if (object._account_lockout_expires_at) {
+        //   object._account_lockout_expires_at = { __type: 'Date', iso: object._account_lockout_expires_at.toISOString() };
+        // }
+        // if (object._perishable_token_expires_at) {
+        //   object._perishable_token_expires_at = { __type: 'Date', iso: object._perishable_token_expires_at.toISOString() };
+        // }
+        // if (object._password_changed_at) {
+        //   object._password_changed_at = { __type: 'Date', iso: object._password_changed_at.toISOString() };
+        // }
 
         for (const fieldName in object) {
           if (object[fieldName] === null) {
             delete object[fieldName];
           }
           if (object[fieldName] instanceof Date) {
-            object[fieldName] = { __type: 'Date', iso: object[fieldName].toISOString() };
+            object[fieldName] = { __type: 'Date', iso: formatMySQLDate(object[fieldName]) };
           }
         }
         return object;

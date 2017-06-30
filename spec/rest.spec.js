@@ -28,7 +28,7 @@ describe('rest create', () => {
       });
   });
 
-  it_exclude_dbs(['mysql'])('handles array, object, date', (done) => {
+  it('handles array, object, date', (done) => {
     const now = new Date();
     var obj = {
       array: [1, 2, 3],
@@ -42,6 +42,7 @@ describe('rest create', () => {
         date: { type: 'Date' },
       } }, {}, {}))
       .then(results => {
+        console.log(results);
         expect(results.length).toEqual(1);
         var mob = results[0];
         expect(mob.array instanceof Array).toBe(true);
@@ -357,7 +358,7 @@ describe('rest create', () => {
       });
   });
 
-  it_exclude_dbs(['mysql'])("test specified session length", (done) => {
+  it("test specified session length", (done) => {
     var user = {
       username: 'asdf',
       password: 'zxcv',

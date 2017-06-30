@@ -205,7 +205,7 @@ describe('Parse.Object testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("createdAt doesn't change", function(done) {
+  it("createdAt doesn't change", function(done) {
     var object = new TestObject({ foo: "bar" });
     object.save(null, {
       success: function() {
@@ -278,6 +278,9 @@ describe('Parse.Object testing', () => {
         });
         on_db('postgres', () => {
           fail('should not succeed');
+        });
+        on_db('mysql', () => {
+          equal(obj.get("foo"), null);
         });
         done();
       },
@@ -1413,7 +1416,7 @@ describe('Parse.Object testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("fetchAll updates dates", function(done) {
+  it("fetchAll updates dates", function(done) {
     var updatedObject;
     var object = new TestObject();
     object.set("x", 7);

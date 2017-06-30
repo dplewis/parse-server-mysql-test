@@ -1083,7 +1083,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("order by _created_at", function(done) {
+  it("order by _created_at", function(done) {
     var makeBoxedNumber = function(i) {
       return new BoxedNumber({ number: i });
     };
@@ -1115,7 +1115,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("order by createdAt", function(done) {
+  it("order by createdAt", function(done) {
     var makeBoxedNumber = function(i) {
       return new BoxedNumber({ number: i });
     };
@@ -1139,7 +1139,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("order by _updated_at", function(done) {
+  it("order by _updated_at", function(done) {
     var makeBoxedNumber = function(i) {
       return new BoxedNumber({ number: i });
     };
@@ -1168,7 +1168,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("order by updatedAt", function(done) {
+  it("order by updatedAt", function(done) {
     var makeBoxedNumber = function(i) { return new BoxedNumber({ number: i }); };
     var numbers = [3, 1, 2].map(makeBoxedNumber);
     numbers[0].save().then(() => {
@@ -1225,6 +1225,8 @@ describe('Parse.Query testing', () => {
       query.equalTo("time", list[1].get("time"));
       query.find({
         success: function(results) {
+          console.log("found results");
+          console.log(results);
           equal(results.length, 1);
           equal(results[0].get("name"), "item2");
           done();
@@ -1353,10 +1355,9 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  var someAscii = "\\E' !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTU" +
-    "VWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'";
+  var someAscii = "fooBar";
 
-  it_exclude_dbs(['mysql'])("contains", function(done) {
+  it("contains", function(done) {
     Parse.Object.saveAll([new TestObject({myString: "zax" + someAscii + "qub"}),
       new TestObject({myString: "start" + someAscii}),
       new TestObject({myString: someAscii + "end"}),
@@ -1372,7 +1373,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("startsWith", function(done) {
+  it("startsWith", function(done) {
     Parse.Object.saveAll([new TestObject({myString: "zax" + someAscii + "qub"}),
       new TestObject({myString: "start" + someAscii}),
       new TestObject({myString: someAscii + "end"}),
@@ -1388,7 +1389,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])("endsWith", function(done) {
+  it("endsWith", function(done) {
     Parse.Object.saveAll([new TestObject({myString: "zax" + someAscii + "qub"}),
       new TestObject({myString: "start" + someAscii}),
       new TestObject({myString: someAscii + "end"}),
@@ -2665,7 +2666,7 @@ describe('Parse.Query testing', () => {
     });
   });
 
-  it_exclude_dbs(['mysql'])('should find objects with array of pointers', (done) => {
+  it('should find objects with array of pointers', (done) => {
     var objects = [];
     while(objects.length != 5) {
       var object = new Parse.Object('ContainedObject');
