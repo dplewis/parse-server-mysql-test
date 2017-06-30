@@ -1,8 +1,5 @@
 language: node_js
 dist: trusty
-node_js:
-- '6.10'
-- '7.10'
 
 services:
   - redis-server
@@ -18,18 +15,42 @@ cache:
   directories:
   - node_modules
 
-env:
-  - DB=mysql PARSE_SERVER_TEST_DB=mysql
-  - DB=mariadb PARSE_SERVER_TEST_DB=mysql
-  - PARSE_SERVER_TEST_CACHE=redis
 
 global:
 - COVERAGE_OPTION='./node_modules/.bin/nyc'
 
+matrix:
+  include:
+    - node_js: 6.10
+      env:
+        - DB=mariadb
+        - PARSE_SERVER_TEST_DB=mysql
+      addons:
+        mariadb: 10.2
+    - node_js: 6.10
+      env:
+        - DB=mysql
+        - PARSE_SERVER_TEST_DB=mysql
+    - node_js: 6.10
+      env: PARSE_SERVER_TEST_CACHE=redis
+
+    - node_js: 7.10
+      env:
+        - DB=mariadb
+        - PARSE_SERVER_TEST_DB=mysql
+      addons:
+        mariadb: 10.2
+    - node_js: 7.10
+      env:
+        - DB=mysql
+        - PARSE_SERVER_TEST_DB=mysql
+    - node_js: 7.10
+      env: PARSE_SERVER_TEST_CACHE=redis
+
 before_install:
--  chmod +x ./resources/*
-- ./resources/travis_mysql_5.7.sh
-- ./resources/mysql-reset-root-password.sh
+- if [[ $DB == "mysql" ]]; then chmod +x ./resources/*
+- if [[ $DB == "mysql" ]]; then ./resources/travis_mysql_5.7.sh
+- if [[ $DB == "mysql" ]]; then ./resources/mysql-reset-root-password.sh
 - mysql -e 'CREATE DATABASE parse_server_mysql_adapter_test_database;'
 
 before_script:
