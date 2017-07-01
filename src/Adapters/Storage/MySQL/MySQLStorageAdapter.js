@@ -8,7 +8,6 @@ import {
   validateKeys,
   toMySQLValue,
   buildWhereClause,
-  formatDateToMySQL,
   transformUpdate,
 } from './MySQLTransform';
 

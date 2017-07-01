@@ -801,6 +801,5 @@ module.exports = {
   validateKeys,
   toMySQLValue,
   buildWhereClause,
-  formatDateToMySQL,
   transformUpdate,
 };
