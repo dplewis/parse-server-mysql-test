@@ -9,6 +9,7 @@ import {
   toMySQLValue,
   buildWhereClause,
   formatDateToMySQL,
+  transformUpdate,
 } from './MySQLTransform';
 
 const parser = require('./MySQLConfigParser');
@@ -525,231 +526,17 @@ export class MySQLStorageAdapter {
   // Return value not currently well specified.
   findOneAndUpdate(className, schema, query, update) {
     debug('findOneAndUpdate', className, query, update);
-    return this.updateObjectsByQuery(className, schema, query, update).then((val) => val);
+    return this.updateObjectsByQuery(className, schema, query, update);
   }
 
   // Apply the update to all objects that match the given Parse Query.
   updateObjectsByQuery(className, schema, query, update) {
     debug('updateObjectsByQuery', className, query, update);
-    const updatePatterns = [];
-    const values = [className]
-    let index = 2;
     schema = toMySQLSchema(schema);
-
-    const originalUpdate = {...update};
-    update = handleDotFields(update);
-    // Resolve authData first,
-    // So we don't end up with multiple key updates
-    for (const fieldName in update) {
-      const authDataMatch = fieldName.match(/^_auth_data_([a-zA-Z0-9_]+)$/);
-      if (authDataMatch) {
-        var provider = authDataMatch[1];
-        const value = update[fieldName];
-        delete update[fieldName];
-        update['authData'] = update['authData'] || {};
-        update['authData'][provider] = value;
-      }
-    }
-
-    for (const fieldName in update) {
-      const fieldValue = update[fieldName];
-      if (fieldValue === null) {
-        updatePatterns.push(`$${index}:name = NULL`);
-        values.push(fieldName);
-        index += 1;
-      } else if (fieldName == 'authData') {
-        // This recursively sets the json_object
-        // Only 1 level deep
-        const generate = (jsonb, key, value) => {
-          return `JSON_SET(COALESCE(\`${fieldName}\`, '{}'), '$.${key}', CAST('${value}' AS JSON))`;
-        }
-        const lastKey = `$${index}:name`;
-        const fieldNameIndex = index;
-        index += 1;
-        values.push(`\`${fieldName}\``);
-        const update = Object.keys(fieldValue).reduce((lastKey, key) => {
-          const str = generate(lastKey, `$${index}:name`, `$${index + 1}:name`)
-          index += 2;
-          let value = fieldValue[key];
-          if (value) {
-            if (value.__op === 'Delete') {
-              value = null;
-            } else {
-              value = JSON.stringify(value)
-            }
-          }
-          values.push(key, value);
-          return str;
-        }, lastKey);
-        updatePatterns.push(`$${fieldNameIndex}:name = ${update}`);
-      } else if (fieldValue.__op === 'Increment') {
-        updatePatterns.push(`\`$${index}:name\` = COALESCE(\`$${index}:name\`, 0) + $${index + 1}:name`);
-        values.push(fieldName, fieldValue.amount);
-        index += 2;
-      } else if (fieldValue.__op === 'Add') {
-        updatePatterns.push(`\`$${index}:name\`= JSON_ARRAY_INSERT(COALESCE(\`$${index}:name\`, '[]'), CONCAT('$[',JSON_LENGTH(\`$${index}:name\`),']'), '$${index + 1}:name')`);
-        values.push(fieldName, JSON.stringify(fieldValue.objects));
-        index += 2;
-      } else if (fieldValue.__op === 'Delete') {
-        updatePatterns.push(`\`$${index}:name\` = $${index + 1}`)
-        values.push(fieldName, null);
-        index += 2;
-      } else if (fieldValue.__op === 'Remove') {
-        fieldValue.objects.map((obj) => {
-          updatePatterns.push(`\`$${index}:name\` = JSON_REMOVE(\`$${index}:name\`, REPLACE(JSON_SEARCH(COALESCE(\`$${index}:name\`,'[]'), 'one', '$${index + 1}:name'),'"',''))`)
-          if (typeof obj === 'object') {
-            values.push(fieldName, JSON.stringify(obj));
-          } else {
-            values.push(fieldName, obj);
-          }
-          index += 2;
-        });
-        // updatePatterns.push(`\`$${index}:name\` = array_remove(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`)
-        // values.push(fieldName, JSON.stringify(fieldValue.objects));
-        // index += 2;
-      } else if (fieldValue.__op === 'AddUnique') {
-        fieldValue.objects.map((obj) => {
-          updatePatterns.push(`\`$${index}:name\` = if (JSON_CONTAINS(\`$${index}:name\`, '$${index + 1}:name') = 0, JSON_MERGE(\`$${index}:name\`,'$${index + 1}:name'),\`$${index}:name\`)`);
-          if (typeof obj === 'object') {
-            values.push(fieldName, JSON.stringify(obj));
-          } else {
-            values.push(fieldName, obj);
-          }
-          index += 2;
-        });
-        // updatePatterns.push(`\`$${index}:name\` = array_add_unique(COALESCE($${index}:name, '[]':name), $${index + 1}:name)`);
-        // values.push(fieldName, JSON.stringify(fieldValue.objects));
-        // index += 2;
-      } else if (fieldName === 'updatedAt' || fieldName === 'finishedAt') { //TODO: stop special casing this. It should check for __type === 'Date' and use .iso
-        updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`)
-        values.push(fieldName, formatDateToMySQL(fieldValue));
-        index += 2;
-      } else if (typeof fieldValue === 'string') {
-        updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-        values.push(fieldName, fieldValue);
-        index += 2;
-      } else if (typeof fieldValue === 'boolean') {
-        updatePatterns.push(`\`$${index}:name\` = $${index + 1}:name`);
-        values.push(fieldName, fieldValue);
-        index += 2;
-      } else if (fieldValue.__type === 'Pointer') {
-        updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-        values.push(fieldName, fieldValue.objectId);
-        index += 2;
-      } else if (fieldValue.__type === 'Date') {
-        updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-        values.push(fieldName, toMySQLValue(fieldValue));
-        index += 2;
-      } else if (fieldValue instanceof Date) {
-        updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-        values.push(fieldName, fieldValue);
-        index += 2;
-      } else if (fieldValue.__type === 'File') {
-        updatePatterns.push(`\`$${index}:name\` = '$${index + 1}:name'`);
-        values.push(fieldName, toMySQLValue(fieldValue));
-        index += 2;
-      } else if (fieldValue.__type === 'GeoPoint') {
-        updatePatterns.push(`\`$${index}:name\` = POINT($${index + 1}, $${index + 2})`);
-        values.push(fieldName, fieldValue.longitude, fieldValue.latitude);
-        index += 3;
-      } else if (fieldValue.__type === 'Relation') {
-        // noop
-      } else if (typeof fieldValue === 'number') {
-        updatePatterns.push(`\`$${index}:name\` = $${index + 1}`);
-        values.push(fieldName, fieldValue);
-        index += 2;
-      } else if (typeof fieldValue === 'object'
-                    && schema.fields[fieldName]
-                    && schema.fields[fieldName].type === 'Object') {
-
-        const keysToSet = Object.keys(originalUpdate).filter(k => {
-          // choose top level fields that don't have operation or . (dot) field
-          return !originalUpdate[k].__op && k.indexOf('.') === -1 && k !== 'updatedAt';
-        });
-
-        let setPattern = '';
-        if (keysToSet.length > 0) {
-          setPattern = keysToSet.map(() => {
-            return `CAST('${JSON.stringify(fieldValue)}' AS JSON)`;
-          });
-        }
-        const keysToReplace = Object.keys(originalUpdate).filter(k => {
-          // choose top level fields that dont have operation
-          return !originalUpdate[k].__op && k.split('.').length === 2 && k.split(".")[0] === fieldName;
-        }).map(k => k.split('.')[1]);
-
-        let replacePattern = '';
-        if (keysToReplace.length > 0) {
-          replacePattern = keysToReplace.map((c) => {
-            if (typeof fieldValue[c] === 'object') {
-              return `'$.${c}', CAST('${JSON.stringify(fieldValue[c])}' AS JSON)`;
-            } else {
-              return `'$.${c}', '${fieldValue[c]}'`;
-            }
-          }).join(' || ');
-
-          keysToReplace.forEach((key) => {
-            delete fieldValue[key];
-          });
-        }
-
-        const keysToIncrement = Object.keys(originalUpdate).filter(k => {
-          // choose top level fields that have a increment operation set
-          return originalUpdate[k].__op === 'Increment' && k.split('.').length === 2 && k.split(".")[0] === fieldName;
-        }).map(k => k.split('.')[1]);
-
-        let incrementPatterns = '';
-        if (keysToIncrement.length > 0) {
-          incrementPatterns = keysToIncrement.map((c) => {
-            const amount = fieldValue[c].amount;
-            return `'$.${c}', COALESCE(\`$${index}:name\`->>'$.${c}','0') + ${amount}`;
-          }).join(' || ');
-
-          keysToIncrement.forEach((key) => {
-            delete fieldValue[key];
-          });
-        }
-
-        const keysToDelete = Object.keys(originalUpdate).filter(k => {
-          // choose top level fields that have a delete operation set
-          return originalUpdate[k].__op === 'Delete' && k.split('.').length === 2 && k.split(".")[0] === fieldName;
-        }).map(k => k.split('.')[1]);
-
-        const deletePatterns = keysToDelete.reduce((p, c, i) => {
-          return `'$.$${index + 1 + i}:name'`;
-        }, ', ');
-
-        if (keysToDelete.length > 0) {
-          updatePatterns.push(`\`$${index}:name\` = JSON_REMOVE(\`$${index}:name\`, ${deletePatterns})`);
-        }
-        if (keysToIncrement.length > 0) {
-          updatePatterns.push(`\`$${index}:name\` = JSON_SET(COALESCE(\`$${index}:name\`, '{}'), ${incrementPatterns})`);
-        }
-        if (keysToReplace.length > 0) {
-          updatePatterns.push(`\`$${index}:name\` = JSON_SET(COALESCE(\`$${index}:name\`, '{}'), ${replacePattern})`);
-        }
-        if (keysToSet.length > 0) {
-          updatePatterns.push(`\`$${index}:name\` = ${setPattern}`);
-        }
-
-        values.push(fieldName, ...keysToDelete, JSON.stringify(fieldValue));
-        index += 2 + keysToDelete.length;
-      } else if (Array.isArray(fieldValue)
-                    && schema.fields[fieldName]
-                    && schema.fields[fieldName].type === 'Array') {
-        updatePatterns.push(`$${index}:name = '$${index + 1}:name'`);
-        values.push(fieldName, JSON.stringify(fieldValue));
-        index += 2;
-      } else {
-        debug('Not supported update', fieldName, fieldValue);
-        return Promise.reject(new Parse.Error(Parse.Error.OPERATION_FORBIDDEN, `MySQL doesn't support update ${JSON.stringify(fieldValue)} yet`));
-      }
-    }
-
-    const where = buildWhereClause({ schema, index, query })
-    values.push(...where.values);
-
-    const qs = `UPDATE \`$1:name\` SET ${updatePatterns.join(',')} WHERE ${where.pattern}`;
+    update = transformUpdate(schema, update);
+    const where = buildWhereClause({ schema, query, index: update.index })
+    const values = [className].push(...where.values).push(...update.values);
+    const qs = `UPDATE \`$1:name\` SET ${update.pattern} WHERE ${where.pattern}`;
     debug('update: ', qs, values);
     return this.connect()
       .then(() => this.database.query(qs, values))
