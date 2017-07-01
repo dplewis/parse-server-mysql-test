@@ -525,7 +525,7 @@ export class MySQLStorageAdapter {
   // Return value not currently well specified.
   findOneAndUpdate(className, schema, query, update) {
     debug('findOneAndUpdate', className, query, update);
-    return this.updateObjectsByQuery(className, schema, query, update);
+    return this.updateObjectsByQuery(className, schema, query, update).then((val) => val);
   }
 
   // Apply the update to all objects that match the given Parse Query.
