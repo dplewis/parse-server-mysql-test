@@ -4,7 +4,7 @@ const MongoStorageAdapter = require('../src/Adapters/Storage/Mongo/MongoStorageA
 const mongoURI = 'mongodb://localhost:27017/parseServerMongoAdapterTestDatabase';
 const PostgresStorageAdapter = require('../src/Adapters/Storage/Postgres/PostgresStorageAdapter');
 const postgresURI = 'postgres://localhost:5432/parse_server_postgres_adapter_test_database';
-const MySQLStorageAdapter = require('../src/Adapters/Storage/MySQL/MySQLStorageAdapter');
+const MySQLStorageAdapter = require('parse-server-mysql-adapter');
 const mysqlURI = 'mysql://root@localhost:3306/parse_server_mysql_adapter_test_database';
 const Parse = require('parse/node');
 const rp = require('request-promise');
@@ -17,7 +17,7 @@ const fullTextHelper = () => {
     }
   } else if (process.env.PARSE_SERVER_TEST_DB === 'mysql') {
     if (!databaseAdapter) {
-      databaseAdapter = new MySQLStorageAdapter({ uri: mysqlURI });
+      databaseAdapter = new MySQLStorageAdapter(mysqlURI).getAdapter();
     }
   } else {
     databaseAdapter = new MongoStorageAdapter({ uri: mongoURI });

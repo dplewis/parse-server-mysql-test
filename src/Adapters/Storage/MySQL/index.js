@@ -9,9 +9,9 @@ import {
   toMySQLValue,
   buildWhereClause,
   formatDateToMySQL,
-} from './MySQLTransform';
+} from './Transform';
 
-const parser = require('./MySQLConfigParser');
+const parser = require('./Parser');
 const mysql = require('mysql2/promise');
 const MySQLRelationDoesNotExistError = 'ER_NO_SUCH_TABLE';
 const MySQLDuplicateColumnError = 'ER_DUP_FIELDNAME';
@@ -30,7 +30,7 @@ const debug = function(){
   log.debug.apply(log, args);
 }
 
-export class MySQLStorageAdapter {
+export class Adapter {
   // Private
   _collectionPrefix: string;
   _uri: string;
@@ -966,5 +966,5 @@ export class MySQLStorageAdapter {
   }
 }
 
-export default MySQLStorageAdapter;
-module.exports = MySQLStorageAdapter;
+export default Adapter;
+module.exports = Adapter;

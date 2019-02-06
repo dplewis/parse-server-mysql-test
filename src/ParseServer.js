@@ -56,7 +56,8 @@ import SchemaCache              from './Controllers/SchemaCache';
 import ParsePushAdapter         from 'parse-server-push-adapter';
 import MongoStorageAdapter      from './Adapters/Storage/Mongo/MongoStorageAdapter';
 import PostgresStorageAdapter   from './Adapters/Storage/Postgres/PostgresStorageAdapter';
-import MySQLStorageAdapter   from './Adapters/Storage/MySQL/MySQLStorageAdapter';
+import MySQLStorageAdapter   from 'parse-server-mysql-adapter';
+import MariaDBStorageAdapter   from './Adapters/Storage/MariaDB/Adapter';
 
 import { ParseServerRESTController } from './ParseServerRESTController';
 // Mutate the Parse object to add the Cloud Code handlers
@@ -302,11 +303,19 @@ class ParseServer {
         databaseOptions
       });
     case 'mysql:':
-      return new MySQLStorageAdapter({
-        uri: databaseURI,
-        collectionPrefix,
-        databaseOptions
-      });
+      if (process.env.PARSE_SERVER_TEST_DB === 'mariadb') {
+        return new MariaDBStorageAdapter({
+          uri: databaseURI,
+          collectionPrefix,
+          databaseOptions
+        });
+      } else {
+        return new MySQLStorageAdapter({
+          uri: databaseURI,
+          collectionPrefix,
+          databaseOptions
+        });
+      }
     default:
       return new MongoStorageAdapter({
         uri: databaseURI,

@@ -32,27 +32,30 @@ var MongoStorageAdapter = require('../src/Adapters/Storage/Mongo/MongoStorageAda
 const GridStoreAdapter = require('../src/Adapters/Files/GridStoreAdapter').GridStoreAdapter;
 const FSAdapter = require('parse-server-fs-adapter');
 const PostgresStorageAdapter = require('../src/Adapters/Storage/Postgres/PostgresStorageAdapter');
-const MySQLStorageAdapter = require('../src/Adapters/Storage/MySQL/MySQLStorageAdapter');
+const MySQLStorageAdapter = require('parse-server-mysql-adapter');
+const MariaDBStorageAdapter = require('../src/Adapters/Storage/MariaDB/Adapter');
 const RedisCacheAdapter = require('../src/Adapters/Cache/RedisCacheAdapter').default;
 
 const mongoURI = 'mongodb://localhost:27017/parseServerMongoAdapterTestDatabase';
 const postgresURI = 'postgres://localhost:5432/parse_server_postgres_adapter_test_database';
 const mysqlURI = 'mysql://root@localhost:3306/parse_server_mysql_adapter_test_database';
+const mariadbURI = 'mysql://root@localhost:3306/parse_server_mariadb_adapter_test_database';
 
 let databaseAdapter;
 // need to bind for mocking mocha
 
 let startDB = () => {};
 let stopDB = () => {};
-
 if (process.env.PARSE_SERVER_TEST_DB === 'postgres') {
   databaseAdapter = new PostgresStorageAdapter({
     uri: process.env.PARSE_SERVER_TEST_DATABASE_URI || postgresURI,
     collectionPrefix: 'test_',
   });
 } else if (process.env.PARSE_SERVER_TEST_DB === 'mysql') {
-  databaseAdapter = new MySQLStorageAdapter({
-    uri: process.env.PARSE_SERVER_TEST_DATABASE_URI || mysqlURI,
+  databaseAdapter = new MySQLStorageAdapter(mysqlURI).getAdapter();
+} else if (process.env.PARSE_SERVER_TEST_DB === 'mariadb') {
+  databaseAdapter = new MariaDBStorageAdapter({
+    uri: process.env.PARSE_SERVER_TEST_DATABASE_URI || mariadbURI,
     collectionPrefix: 'test_',
   });
 } else {
@@ -216,6 +219,9 @@ afterEach(function(done) {
       TestUtils.destroyAllDataPermanently().then(done, done);
     }, done);
     on_db('mysql', () => {
+      TestUtils.destroyAllDataPermanently().then(done, done);
+    }, done);
+    on_db('mariadb', () => {
       TestUtils.destroyAllDataPermanently().then(done, done);
     }, done);
   };
